@@ -1,6 +1,5 @@
 
 <?php
-
 /*
 Plugin Name: Research Ajou
 Plugin URI: https://github.com/live4574/wp_psycholgocial_research
@@ -10,41 +9,19 @@ Author: Lee
 Author URI: https://github.com/live4574
 License: GPL2
 */
-/*  Copyright 2019  Lee  (email : adolfd@naver.com)
+//Include
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License, version 2, as 
-    published by the Free Software Foundation.
+include_once(plugin_dir_path(__FILE__) . 'inc/shortcode.php');
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+//User section
 
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
-    function activate_plugin_name(){
-        require_once plugin_dir_path(__FILE__) . 'includes/
-            class-wp-research-activator.php';
+add_action('admin_menu','survey_menu');
+function survey_menu(){
+    add_menu_page('Survey','Survey','administrator','research-settings','research_plugin_settings_page');
+}
+add_action('admin_init','research_plugin_settings');
 
-        Plugin_Name_Activator::activate();
-    }//activator
-
-    function deactivate_plugin_name(){
-        require_once plugin_dir_path(__FILE__) . 'includes/
-            class-wp-research-deactivator.php';
-        Plugin_Name_Deactivator::deactivate();
-    }//deactivator
-
-    register_activation_hook(__FILE__,'activate_plugin_name');
-    register_deactivation_hook(__FILE__, 'deactivate_plugin_name');
-    require plugin_dir_path(__FILE__) . 'includes/class-wp-research.php';
-
-    function run_plugin_name(){
-        $plugin = new WP_Research();
-        $plugin->run();
-    }
-    run_plugin_name();
+function survey_plugin_settings(){
+    register_setting('research-settings-group')
+}
 ?>
