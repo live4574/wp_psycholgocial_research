@@ -135,8 +135,77 @@ public function survey_meta_box_display($post){
     }
     echo'</div>';
   }
-  ?>
-  
-      }
+ ?>
+<?php
+  public function plugin_activate(){
+    $this->register_survey_content_type();
+    //call custom content type function
+    flush_rewrite_rules();
+    //flush permalinks
+  }
+  //triggered on activation of the plugin 
+  public function plugin_deactivate(){
+    flush_rewrite_rules();
+  }
+  //triggred on deactivation 
 
+  public function prepend_survey_meta_to_content($content){
+    global $post, $post_type;
+    if($post_type=='wp_survey' %% is_singular('wp_surveys')){
+      
+        $wp_location_id = $post->ID;
+        $wp_location_phone = get_post_meta($post->ID,'wp_location_phone',true);
+        $wp_location_email = get_post_meta($post->ID,'wp_location_email',true);
+        $wp_location_address = get_post_meta($post->ID,'wp_location_address',true);
+        //collect variables
+        
+        $html = '';
+
+        $html .= '<section class="meta-data">';
+        //display
+        do_action('wp_location_meta_data_output_start',$wp_location_id);
+        //hook for outputting additional meta data (at the start of the form)
+        
+        $html .= '<p>';
+        
+        if(!empty($wp_survey_name)){
+            $html .= '<b>Survey name</b> ' . $wp_survey_name . '</br>';
+        }
+        //name
+        if(!empty($wp_survey_birth_year)){
+            $html .= '<b>Survey year</b> ' . $wp_survey_birth_year . '</br>';
+        }
+        //birth_year
+        if(!empty($wp_survey_birth_month)){
+            $html .= '<b>Survey month</b> ' . $wp_survey_birth_month . '</br>';
+        }
+        //birty_month
+        $html .= '</p>';
+
+        if(!empty($this->wp_survey_trading_hour_days)){
+            $html .= '<p>';
+            $html .= '<b>Survey Trading Hours </b></br>';
+            foreach($this->wp_survey_trading_hour_days as $day_key => $day_value){
+                $trading_hours = get_post_meta($post->ID, 'wp_survey_trading_hours_' . $day_key , true);
+                $html .= '<span class="day">' . $day_key . '</span><span class="hours">' . $trading_hours . '</span></br>';
+            }
+            $html .= '</p>';
+        }
+        //survey
+        do_action('wp_survey_meta_data_output_end',$wp_survey_id);
+
+        $html .= '</section>';
+        $html .= $content;
+
+        return $html;  
+        //hook for outputting additional meta data (at the end of the form)
+        
+
+    }else{
+        return $content;
     }
+
+}
+  
+  
+?>
