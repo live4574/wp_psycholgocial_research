@@ -22,7 +22,8 @@ class wp_simple_survey{
 	include(plugin_dir_path(__FILE__) . 'inc/wp_research_ajou_widget.php');
 	//include widgets
 }
-publci function __construct(){
+
+public function __construct(){
 	add_action('init', array($this,'set_survey_hour_days')); //set the default survey hour days(used by the content type)
     add_action('init', array($this,'register_survey_content_type')); //register location content type
     add_action('add_meta_boxes', array($this,'add_location_meta_boxes')); //add meta boexs
@@ -112,4 +113,30 @@ public function survey_meta_box_display($post){
 	<label for="wp_survey_birth_year">출생년도를 적어주세요</label>
 	<small>Birth year contact</small>
             <input type="name" name="wp_survey_birth_year" id="wp_survey_birth_year" value="<?php echo $wp_survey_birth_year;?>"/>
-    
+    </div>
+    <div class="field">
+      <label for="wp_survey_birth_month">Month</label>
+      <small>your birth month</small>
+      <textarea name="wp_survey_birth_month" id="wp_survey_birth_month"><?php echo $wp_survey_birth_month;?></textarea>
+    </div>
+    <?php
+    //survey hours
+    if(!empty($this->wp_location_survey_hours_days)){
+      echo '<div class="field">';
+      echo '<label>Survey Hours</label>';
+      echo '<small>Survey hours for the location(e.g9am-5mp)</small>';
+      
+      foreach($this->wp_survey_trading_hour_days as $day_key =>$day_value){
+        //go through all registered survey hour days
+      $wp_survey_trading_hour_days=get_post_meta($post->ID,'wp_survey_survey_hours_' . $day_key,true);
+      //collect survey hour meta data
+      echo '<label for="wp_survey_trading_hour_days_' .$day_key.'">' . $day_key . '</label>';
+      echo '<input types="text" name="wp_survey_trading_hours_' . $day_key . '"id="wp_survey_trading_hours_' . $day_key . '" value="' , $wp_survey_trading_hour_value . '"/>';
+    }
+    echo'</div>';
+  }
+  ?>
+  
+      }
+
+    }
