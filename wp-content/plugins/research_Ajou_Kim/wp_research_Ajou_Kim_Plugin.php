@@ -23,7 +23,7 @@ class wp_simple_location{
 	//include widgets
 }
 publci function __construct(){
-	add_action('init', array($this,'set_location_trading_hour_days')); 
+	add_action('init', array($this,'set_location_survey_hour_days')); 
     add_action('init', array($this,'register_location_content_type')); 
     add_action('add_meta_boxes', array($this,'add_location_meta_boxes')); 
     add_action('save_post_wp_locations', array($this,'save_location')); 
