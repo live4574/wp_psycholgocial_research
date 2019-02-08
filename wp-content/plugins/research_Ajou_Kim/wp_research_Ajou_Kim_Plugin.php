@@ -92,3 +92,24 @@ public function add_survey_meta_boxes(){
 }
 //adding meta box for survey content type
 
+
+public function survey_meta_box_display($post){
+	wp_once_field('wp_survey_once','wp_survey_once_field');
+	//set once field
+	$wp_survey_phone=get_post_meta($post->ID,'wp_survey_name',true);
+	$wp_survey_birth_year=get_post_meta($post->ID,'wp_survey_birth_year',true);
+	$wp_survey_birth_month=get_post_meta($post->ID,'wp_survey_birth_month',true);
+	//variables
+}
+//display function used for custom survey meta box
+?>
+<div class="field">
+	<label for="wp_sruvey_phone">이름을 적어주세요</label>
+	<small>main contact name</small>
+	<input type="name" name="wp_survey_name" id="wp_survey_name" value="<?php echo $wp_survey_name;?>"/>
+</div>
+<div class="field">
+	<label for="wp_survey_birth_year">출생년도를 적어주세요</label>
+	<small>Birth year contact</small>
+            <input type="name" name="wp_survey_birth_year" id="wp_survey_birth_year" value="<?php echo $wp_survey_birth_year;?>"/>
+    
