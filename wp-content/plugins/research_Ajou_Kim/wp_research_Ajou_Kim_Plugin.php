@@ -206,6 +206,113 @@ public function survey_meta_box_display($post){
     }
 
 }
-  
-  
+  public function get_survey_output($argument""){
+
+    $default_args = array(
+        'survey_id'   => '',
+        'number_of_surveys'   => -1
+    );
+    //default args
+    
+
+    if(!empty($arguments) && is_array($arguments)){
+        //update default args if we passed in new args
+        foreach($arguments as $arg_key => $arg_val){
+          //go through each supplied argument
+            if(array_key_exists($arg_key, $default_args)){
+                $default_args[$arg_key] = $arg_val;
+            }
+            //if this argument exists in our default argument, update its value    
+        }
+    }
+
+    $survey_args = array(
+        'post_type'     => 'wp_surveys',
+        'posts_per_page'=> $default_args['number_of_surveys'],
+        'post_status'   => 'publish'
+    );
+    //find surveys
+    if(!empty($default_args['survey_id'])){
+        $survey_args['include'] = $default_args['survey_id'];
+    }//if we passed in a single survey to display
+    
+
+    $html = '';
+    //output
+    $surveys = get_posts($survey_args);
+    if($surveys){
+      //if we have surveys 
+        $html .= '<article class="survey_list cf">';
+        //foreach survey
+        foreach($surveys as $survey){
+            $html .= '<section class="survey">';
+                $wp_survey_id = $survey->ID;
+                $wp_survey_title = get_the_title($wp_survey_id);
+                $wp_survey_thumbnail = get_the_post_thumbnail($wp_survey_id,'thumbnail');
+                $wp_survey_content = apply_filters('the_content', $survey->post_content);
+                //collect survey data
+                
+                if(!empty($wp_survey_content)){
+                    $wp_survey_content = strip_shortcodes(wp_trim_words($wp_survey_content, 40, '...'));
+                }
+                $wp_survey_permalink = get_permalink($wp_survey_id);
+                $wp_survey_name = get_post_meta($wp_survey_name,'wp_survey_name',true);
+                $wp_survey_birth_year = get_post_meta($wp_birth_year,'wp_birth_year',true);
+
+                $html = apply_filters('wp_survey_before_main_content', $html);
+
+                //apply the filter before our main content starts 
+                //(lets third parties hook into the HTML output to output data)
+
+                $html .= '<h2 class="title">';
+                    $html .= '<a href="' . $wp_survey_permalink . '" title="view survey">';
+                        $html .= $wp_survey_title;
+                    $html .= '</a>';
+                $html .= '</h2>';
+                //title
+
+                //image & content
+                if(!empty($wp_survey_thumbnail) || !empty($wp_survey_content)){
+
+                    $html .= '<p class="image_content">';
+                    if(!empty($wp_survey_thumbnail)){
+                        $html .= $wp_survey_thumbnail;
+                    }
+                    if(!empty($wp_survey_content)){
+                        $html .=  $wp_survey_content;
+                    }
+
+                    $html .= '</p>';
+                }
+
+                //name, birth year
+                if(!empty($wp_survey_name) || !empty($wp_survey_birth_year)){
+                    $html .= '<p class="name_year">';
+                    if(!empty($wp_survey_name)){
+                        $html .= '<b>Name: </b>' . $wp_survey_name . '</br>';
+                    }
+                    if(!empty($wp_survey_birth_year)){
+                        $html .= '<b>Birth year: </b>' . $wp_survey_birth_year;
+                    }
+                    $html .= '</p>';
+                }
+
+                $html = apply_filters('wp_survey_after_main_content', $html);
+
+                //apply the filter after the main content, before it ends 
+                //(lets third parties hook into the HTML output to output data)
+
+                $html .= '<a class="link" href="' . $wp_survey_permalink . '" title="view survey">View Survey</a>';
+            $html .= '</section>';
+        }
+        //readmore
+                
+        $html .= '</article>';
+        $html .= '<div class="cf"></div>';
+    }
+
+    return $html;
+  }
+  //main function for displaying survey(for shortcodes and widgets)
+
 ?>
