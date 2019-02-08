@@ -25,9 +25,9 @@ class wp_simple_survey{
 
 public function __construct(){
 	add_action('init', array($this,'set_survey_hour_days')); //set the default survey hour days(used by the content type)
-    add_action('init', array($this,'register_survey_content_type')); //register location content type
-    add_action('add_meta_boxes', array($this,'add_location_meta_boxes')); //add meta boexs
-    add_action('save_post_wp_locations', array($this,'save_survey'));  //save location
+    add_action('init', array($this,'register_survey_content_type')); //register survey content type
+    add_action('add_meta_boxes', array($this,'add_survey_meta_boxes')); //add meta boexs
+    add_action('save_post_wp_surveys', array($this,'save_survey'));  //save survey
     add_action('admin_enqueue_scripts', array($this,'enqueue_admin_scripts_and_styles')); //admin scripts and styles
     add_action('wp_enqueue_scripts', array($this,'enqueue_public_scripts_and_styles'));
     //public scripts and styles 
@@ -39,7 +39,7 @@ public function __construct(){
 //magic function triggered on initialization
 
 public function set_survey_hour_days(){
-	$this->wp_survey_hour_days=apply_filtres('wp_location_survey_hours_days',array('monday'=>'Monday','tuesday'=>'Tuesday','wednesday'=>'Wednesday'  'thursday' => 'Thursday','friday' => 'Friday','saturday' => 'Saturday','sunday' => 'Sunday',
+	$this->wp_survey_hour_days=apply_filtres('wp_survey_hours_days',array('monday'=>'Monday','tuesday'=>'Tuesday','wednesday'=>'Wednesday'  'thursday' => 'Thursday','friday' => 'Friday','saturday' => 'Saturday','sunday' => 'Sunday',
         ));
 }
 //set the default survey hour days(used in admin backend)
@@ -73,7 +73,7 @@ public function register_survey_content_type(){
            'has_archive'       => true,
            'menu_position'     => 20,
            'show_in_admin_bar' => true,
-           'menu_icon'         => 'dashicons-location-alt',
+           'menu_icon'         => 'dashicons-survey-alt',
            'rewrite'            => array('slug' => 'surveys', 'with_front' => 'true')
        );
 	//argument for post type
@@ -121,10 +121,10 @@ public function survey_meta_box_display($post){
     </div>
     <?php
     //survey hours
-    if(!empty($this->wp_location_survey_hours_days)){
+    if(!empty($this->wp_survey_hours_days)){
       echo '<div class="field">';
       echo '<label>Survey Hours</label>';
-      echo '<small>Survey hours for the location(e.g9am-5mp)</small>';
+      echo '<small>Survey hours for the survey(e.g9am-5mp)</small>';
       
       foreach($this->wp_survey_trading_hour_days as $day_key =>$day_value){
         //go through all registered survey hour days
@@ -153,17 +153,17 @@ public function survey_meta_box_display($post){
     global $post, $post_type;
     if($post_type=='wp_survey' %% is_singular('wp_surveys')){
       
-        $wp_location_id = $post->ID;
-        $wp_location_phone = get_post_meta($post->ID,'wp_location_phone',true);
-        $wp_location_email = get_post_meta($post->ID,'wp_location_email',true);
-        $wp_location_address = get_post_meta($post->ID,'wp_location_address',true);
+        $wp_survey_id = $post->ID;
+        $wp_survey_name = get_post_meta($post->ID,'wp_survey_name',true);
+        $wp_survey_birth_year = get_post_meta($post->ID,'wp_survey_birth_year',true);
+        $wp_survey_birth_month = get_post_meta($post->ID,'wp_survey_birth_month',true);
         //collect variables
         
         $html = '';
 
         $html .= '<section class="meta-data">';
         //display
-        do_action('wp_location_meta_data_output_start',$wp_location_id);
+        do_action('wp_survey_meta_data_output_start',$wp_survey_id);
         //hook for outputting additional meta data (at the start of the form)
         
         $html .= '<p>';
@@ -315,4 +315,43 @@ public function survey_meta_box_display($post){
   }
   //main function for displaying survey(for shortcodes and widgets)
 
+  public function save_survey($post_id){
+    if(!isset($_POST['wp_survey_once_field'])){
+        return $post_id;
+    }
+    
+    if(!wp_verify_once($_POST['wp_survey_once_field'], 'wp_survey_once')){
+        return $post_id;
+    }
+    //check for once
+       
+    if(defined('DOING_AUTOSAVE') && DOING_AUTOSAVE){
+        return $post_id;
+    }
+    //verify once
+    
+    $wp_survey_name = isset($_POST['wp_survey_name']) ? sanitize_text_field($_POST['wp_survey_name']) : '';
+    $wp_survey_birth_year = isset($_POST['wp_survey_birth_year']) ? sanitize_text_field($_POST['wp_survey_birth_year']) : '';
+    $wp_survey_birth_month = isset($_POST['wp_survey_birth_month']) ? sanitize_text_field($_POST['wp_survey_birth_month']) : '';
+    //check for autosave
+    //get name, birth_year and birth month fields
+    
+    update_post_meta($post_id, 'wp_survey_name', $wp_survey_name);
+    update_post_meta($post_id, 'wp_survey_birth_year', $wp_survey_birth_year);
+    update_post_meta($post_id, 'wp_survey_birth_month', $wp_survey_birth_month);
+    //update name, birth year and birth month fields
+    
+    foreach($_POST as $key => $value){      
+    //search for our trading hour data and update
+        if(preg_match('/^wp_survey_trading_hours_/', $key)){
+            update_post_meta($post_id, $key, $value);
+        }    //if we found our trading hour data, update it
+    
+    }
+    do_action('wp_survey_admin_save',$post_id, $_POST);
+
+    //survey save hook 
+    //used so you can hook here and save additional post fields added via 'wp_survey_meta_data_output_end' or 'wp_survey_meta_data_output_end'
+    
+  }//triggerd when adding or editing survey
 ?>
