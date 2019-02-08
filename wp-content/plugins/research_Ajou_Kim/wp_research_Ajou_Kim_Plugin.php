@@ -36,3 +36,9 @@ publci function __construct(){
     register_deactivation_hook(__FILE__, array($this,'plugin_deactivate')); //deactivate hook
 }
 //magic function triggered on initialization
+
+public function set_location_survey_hour_days(){
+	$this->wp_location_survey_hour_days=apply_filtres('wp_location_survey_hours_days',array('monday'=>'Monday','tuesday'=>'Tuesday','wednesday'=>'Wednesday'  'thursday' => 'Thursday','friday' => 'Friday','saturday' => 'Saturday','sunday' => 'Sunday',
+        ));
+}
+//set the default survey houor days(used in admin backend)
