@@ -1,5 +1,7 @@
-
 <?php
+defined('ABSPATH') or die('Nope, not accesing this');
+//block direct access or terminate
+
 /*
 Plugin Name: Research Ajou
 Plugin URI: https://github.com/live4574/wp_psycholgocial_research
@@ -9,19 +11,11 @@ Author: Lee
 Author URI: https://github.com/live4574
 License: GPL2
 */
-//Include
+//plugin declartion
 
-include_once(plugin_dir_path(__FILE__) . 'inc/shortcode.php');
-
-//User section
-
-add_action('admin_menu','survey_menu');
-function survey_menu(){
-    add_menu_page('Survey','Survey','administrator','research-settings','research_plugin_settings_page');
+class wp_simple_location{
+	include(plugin_dir_path(__FILE__) . 'inc/wp_research_ajou_shortcode.php');
+	//include shortcodes
+	include(plugin_dir_path(__FILE__) . 'inc/wp_research_ajou_widget.php');
+	//include widgets
 }
-add_action('admin_init','research_plugin_settings');
-
-function survey_plugin_settings(){
-    register_setting('research-settings-group')
-}
-?>
