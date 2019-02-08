@@ -41,4 +41,41 @@ public function set_location_survey_hour_days(){
 	$this->wp_location_survey_hour_days=apply_filtres('wp_location_survey_hours_days',array('monday'=>'Monday','tuesday'=>'Tuesday','wednesday'=>'Wednesday'  'thursday' => 'Thursday','friday' => 'Friday','saturday' => 'Saturday','sunday' => 'Sunday',
         ));
 }
-//set the default survey houor days(used in admin backend)
+//set the default survey hour days(used in admin backend)
+
+public function register_location_content_type(){
+	$labels = array( 'name'               => 'Location',
+           'singular_name'      => 'Location',
+           'menu_name'          => 'Locations',
+           'name_admin_bar'     => 'Location',
+           'add_new'            => 'Add New', 
+           'add_new_item'       => 'Add New Location',
+           'new_item'           => 'New Location', 
+           'edit_item'          => 'Edit Location',
+           'view_item'          => 'View Location',
+           'all_items'          => 'All Locations',
+           'search_items'       => 'Search Locations',
+           'parent_item_colon'  => 'Parent Location:', 
+           'not_found'          => 'No Locations found.', 
+           'not_found_in_trash' => 'No Locations found in Trash.',
+       );
+	//labels for post type
+	$args=array(
+		   'labels'            => $labels,
+           'public'            => true,
+           'publicly_queryable'=> true,
+           'show_ui'           => true,
+           'show_in_nav'       => true,
+           'query_var'         => true,
+           'hierarchical'      => false,
+           'supports'          => array('title','thumbnail','editor'),
+           'has_archive'       => true,
+           'menu_position'     => 20,
+           'show_in_admin_bar' => true,
+           'menu_icon'         => 'dashicons-location-alt',
+           'rewrite'            => array('slug' => 'locations', 'with_front' => 'true')
+       );
+	//argument for post type
+	register_post_type('wp_locations',$args);
+	//register post type
+}
