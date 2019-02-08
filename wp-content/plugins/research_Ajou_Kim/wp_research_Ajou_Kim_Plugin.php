@@ -79,3 +79,16 @@ public function register_survey_content_type(){
 	register_post_type('wp_surveys',$args);
 	//register post type
 }
+
+public function add_survey_meta_boxes(){
+	add_meta_box(
+		'wp_survey_meta_box',//id
+		'Survey Information', //name
+		array($this,'survey_meta_box_display'),//display function
+		'wp_surveys',//post type
+		'normal',//survey
+		'default'//priority
+	);
+}
+//adding meta box for survey content type
+
