@@ -354,4 +354,15 @@ public function survey_meta_box_display($post){
     //used so you can hook here and save additional post fields added via 'wp_survey_meta_data_output_end' or 'wp_survey_meta_data_output_end'
     
   }//triggerd when adding or editing survey
+
+public function enqueue_admin_scripts_and_styles(){
+    wp_enqueue_style('wp_survey_admin_styles', plugin_dir_url(__FILE__) . '/css/wp_research_ajou_admin_styles.css');
+}
+//enqueus scripts and stles on the back end
+
+public function enqueue_public_scripts_and_styles(){
+    wp_enqueue_style('wp_survey_public_styles', plugin_dir_url(__FILE__). '/css/wp_research_ajou_public_styles.css');
+}
+//enqueues scripts and styled on the front end
+
 ?>
