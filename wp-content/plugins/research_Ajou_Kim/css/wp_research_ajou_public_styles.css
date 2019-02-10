@@ -1,0 +1,34 @@
+/*
+ * Wp Ajou Survey Public Styles
+ * Styled for the front-end of the website
+ */
+
+/*clearfix*/
+.cf:before,
+.cf:after {
+    content: " "; 
+    display: table; /
+}
+.cf:after {
+    clear: both;
+}
+
+/*survey listing*/
+.survey_list{
+	float: left;
+	width: 100%;
+}
+.survey_list .survey{
+	float: left;
+	width: 100%;
+}
+.survey_list .survey img{
+	margin: 0px 15px 15px 0px;
+	float: left;
+}
+.survey_list .survey .name_birth_year{
+	clear: both;
+}
+.name_list .name .readmore{
+	
+}
