@@ -4,20 +4,17 @@ defined('ABSPATH') or die('Nope, not accessing this');
 
 class wp_survey_widget extends WP_widget{
 
-}
-//main widget used for displaying survey
-
-public function __construct(){
-    parent::__construct(
-        'wp_survey_widget',
-        'WP Survey Widget', 
-        array('description' => 'A widget that displays your surveys')
-    );
-    //set base values for the widget (override parent)
-    
-    add_action('widgets_init',array($this,'register_wp_survey_widgets'));
-}
-//initialise widget values
+    public function __construct(){
+        parent::__construct(
+            'wp_survey_widget',
+            'WP Survey Widget', 
+            array('description' => 'A widget that displays your surveys')
+        );
+        //set base values for the widget (override parent)
+        
+        add_action('widgets_init',array($this,'register_wp_survey_widgets'));
+    }
+    //initialise widget values
 
   public function form($instance){
         //collect variables 
@@ -66,53 +63,59 @@ public function __construct(){
     //handles the back-end admin of the widget
     //$instance - saved values for the form
     
-public function update($new_instance, $old_instance){
+    public function update($new_instance, $old_instance){
 
-    $instance = array();
+        $instance = array();
 
-    $instance['survey_id'] = $new_instance['survey_id'];
-    $instance['number_of_surveys'] = $new_instance['number_of_surveys'];
+        $instance['survey_id'] = $new_instance['survey_id'];
+        $instance['number_of_surveys'] = $new_instance['number_of_surveys'];
 
-    return $instance;
-}
-    //handles updating the widget 
-//$new_instance - new values, $old_instance - old saved values
-
-public function widget( $args, $instance ) {
-
-    //get wp_simple_survey class (as it builds out output)
-    global $wp_simple_surveys;
-
-    //pass any arguments if we have any from the widget
-    $arguments = array();
-    //if we specify a survey
-
-    //if we specify a single survey
-    if($instance['survey_id'] != 'default'){
-        $arguments['survey_id'] = $instance['survey_id'];
+        return $instance;
     }
-    //if we specify a number of surveys
-    if($instance['number_of_surveys'] != 'default'){
-        $arguments['number_of_surveys'] = $instance['number_of_surveys'];
+        //handles updating the widget 
+    //$new_instance - new values, $old_instance - old saved values
+
+    public function widget( $args, $instance ) {
+
+        //get wp_simple_survey class (as it builds out output)
+        global $wp_simple_surveys;
+
+        //pass any arguments if we have any from the widget
+        $arguments = array();
+        //if we specify a survey
+
+        //if we specify a single survey
+        if($instance['survey_id'] != 'default'){
+            $arguments['survey_id'] = $instance['survey_id'];
+        }
+        //if we specify a number of surveys
+        if($instance['number_of_surveys'] != 'default'){
+            $arguments['number_of_surveys'] = $instance['number_of_surveys'];
+        }
+
+        $html = '';
+        //get the output
+        $html .= $args['before_widget'];
+        $html .= $args['before_title'];
+        $html .= 'Surveys';
+        $html .= $args['after_title'];
+        
+        $html .= $wp_simple_surveys->get_surveys_output($arguments);
+        //uses the main output function of the survey class
+        $html .= $args['after_widget'];
+
+        echo $html;
     }
+    //handles public display of the widget
+    //$args - arguments set by the widget area, $instance - saved values
 
-    $html = '';
-    //get the output
-    $html .= $args['before_widget'];
-    $html .= $args['before_title'];
-    $html .= 'Surveys';
-    $html .= $args['after_title'];
-    
-    $html .= $wp_simple_surveys->get_surveys_output($arguments);
-    //uses the main output function of the survey class
-    $html .= $args['after_widget'];
+    public function register_wp_survey_widgets(){
+        register_widget('wp_survey_widget');
+    }
+    //registers our widget for use
 
-    echo $html;
 }
-//handles public display of the widget
-//$args - arguments set by the widget area, $instance - saved values
+//main widget used for displaying survey
 
-public function register_wp_survey_widgets(){
-    register_widget('wp_survey_widget');
-}
-//registers our widget for use
+ $wp_survey_widget=new wp_survey_widget;
+ ?>

@@ -15,128 +15,134 @@ License: GPL2
 
 
 class wp_simple_survey{
-	include(plugin_dir_path(__FILE__) . 'inc/wp_research_ajou_shortcode.php');
-	//include shortcodes
-	include(plugin_dir_path(__FILE__) . 'inc/wp_research_ajou_widget.php');
-	//include widgets
   private $wp_ajou_survey_seconds=array();
   //properties
-}
 
-public function __construct(){
-	add_action('init', array($this,'set_survey_hour_days')); //set the default survey hour days(used by the content type)
-    add_action('init', array($this,'register_survey_content_type')); //register survey content type
-    add_action('add_meta_boxes', array($this,'add_survey_meta_boxes')); //add meta boexs
-    add_action('save_post_wp_surveys', array($this,'save_survey'));  //save survey
-    add_action('admin_enqueue_scripts', array($this,'enqueue_admin_scripts_and_styles')); //admin scripts and styles
-    add_action('wp_enqueue_scripts', array($this,'enqueue_public_scripts_and_styles'));
-    //public scripts and styles 
-    add_filter('the_content', array($this,'prepend_survey_meta_to_content')); 
-    //gets our meta data and dispayed it before the content
-    register_activation_hook(__FILE__, array($this,'plugin_activate')); //activate hook
-    register_deactivation_hook(__FILE__, array($this,'plugin_deactivate')); //deactivate hook
-}
-//magic function triggered on initialization
+  public function __construct(){
+  	add_action('init', array($this,'set_survey_hour_days')); //set the default survey hour days(used by the content type)
+      add_action('init', array($this,'register_survey_content_type')); //register survey content type
+      add_action('add_meta_boxes', array($this,'add_survey_meta_boxes')); //add meta boexs
+      add_action('save_post_wp_surveys', array($this,'save_survey'));  //save survey
+      add_action('admin_enqueue_scripts', array($this,'enqueue_admin_scripts_and_styles')); //admin scripts and styles
+      add_action('wp_enqueue_scripts', array($this,'enqueue_public_scripts_and_styles'));
+      //public scripts and styles 
+      add_filter('the_content', array($this,'prepend_survey_meta_to_content')); 
+      //gets our meta data and dispayed it before the content
+      register_activation_hook(__FILE__, array($this,'plugin_activate')); //activate hook
+      register_deactivation_hook(__FILE__, array($this,'plugin_deactivate')); //deactivate hook
+  }
+  //magic function triggered on initialization
 
-public function set_survey_hour_days(){
-	$this->wp_survey_hour_days=apply_filtres('wp_survey_hours_days',array('monday'=>'Monday','tuesday'=>'Tuesday','wednesday'=>'Wednesday'  'thursday' => 'Thursday','friday' => 'Friday','saturday' => 'Saturday','sunday' => 'Sunday',
-        ));
-}
-//set the default survey hour days(used in admin backend)
+  public function set_survey_hour_days(){
+  	$this->wp_survey_hour_days=apply_filtres('wp_survey_hours_days',array('monday'=>'Monday','tuesday'=>'Tuesday','wednesday'=>'Wednesday' ,'thursday' => 'Thursday','friday' => 'Friday','saturday' => 'Saturday','sunday' => 'Sunday',
+          ));
+  }
+  //set the default survey hour days(used in admin backend)
 
-public function register_survey_content_type(){
-	$labels = array( 'name'               => 'Survey_Ajou',
-           'singular_name'      => 'Survey_Ajou',
-           'menu_name'          => 'Survey_Ajou',
-           'name_admin_bar'     => 'Survey_Ajou',
-           'add_new'            => 'Add New', 
-           'add_new_item'       => 'Add New Survey',
-           'new_item'           => 'New Survey', 
-           'edit_item'          => 'Edit Survey',
-           'view_item'          => 'View Survey',
-           'all_items'          => 'All Surveys',
-           'search_items'       => 'Search Surveys',
-           'parent_item_colon'  => 'Parent Surveys:', 
-           'not_found'          => 'No Surveys found.', 
-           'not_found_in_trash' => 'No Surveys found in Trash.',
-       );
-	//labels for post type
-	$args=array(
-		   'labels'            => $labels,
-           'public'            => true,
-           'publicly_queryable'=> true,
-           'show_ui'           => true,
-           'show_in_nav'       => true,
-           'query_var'         => true,
-           'hierarchical'      => false,
-           'supports'          => array('title','thumbnail','editor'),
-           'has_archive'       => true,
-           'menu_position'     => 20,
-           'show_in_admin_bar' => true,
-           'menu_icon'         => 'dashicons-survey-alt',
-           'rewrite'            => array('slug' => 'surveys', 'with_front' => 'true')
-       );
-	//argument for post type
-	register_post_type('wp_surveys',$args);
-	//register post type
-}
+  public function register_survey_content_type(){
+  	$labels = array( 'name'               => 'Survey_Ajou',
+             'singular_name'      => 'Survey_Ajou',
+             'menu_name'          => 'Survey_Ajou',
+             'name_admin_bar'     => 'Survey_Ajou',
+             'add_new'            => 'Add New', 
+             'add_new_item'       => 'Add New Survey',
+             'new_item'           => 'New Survey', 
+             'edit_item'          => 'Edit Survey',
+             'view_item'          => 'View Survey',
+             'all_items'          => 'All Surveys',
+             'search_items'       => 'Search Surveys',
+             'parent_item_colon'  => 'Parent Surveys:', 
+             'not_found'          => 'No Surveys found.', 
+             'not_found_in_trash' => 'No Surveys found in Trash.',
+         );
+  	//labels for post type
+  	$args=array(
+  		   'labels'            => $labels,
+             'public'            => true,
+             'publicly_queryable'=> true,
+             'show_ui'           => true,
+             'show_in_nav'       => true,
+             'query_var'         => true,
+             'hierarchical'      => false,
+             'supports'          => array('title','thumbnail','editor'),
+             'has_archive'       => true,
+             'menu_position'     => 20,
+             'show_in_admin_bar' => true,
+             'menu_icon'         => 'dashicons-survey-alt',
+             'rewrite'            => array('slug' => 'surveys', 'with_front' => 'true')
+         );
+  	//argument for post type
+  	register_post_type('wp_surveys',$args);
+  	//register post type
+  }
 
-public function add_survey_meta_boxes(){
-	add_meta_box(
-		'wp_survey_meta_box',//id
-		'Survey Information', //name
-		array($this,'survey_meta_box_display'),//display function
-		'wp_surveys',//post type
-		'normal',//survey
-		'default'//priority
-	);
-}
-//adding meta box for survey content type
+  public function add_survey_meta_boxes(){
+  	add_meta_box(
+  		'wp_survey_meta_box',//id
+  		'Survey Information', //name
+  		array($this,'survey_meta_box_display'),//display function
+  		'wp_surveys',//post type
+  		'normal',//survey
+  		'default'//priority
+  	);
+  }
+  //adding meta box for survey content type
 
 
-public function survey_meta_box_display($post){
-	wp_once_field('wp_survey_once','wp_survey_once_field');
-	//set once field
-	$wp_survey_phone=get_post_meta($post->ID,'wp_survey_name',true);
-	$wp_survey_birth_year=get_post_meta($post->ID,'wp_survey_birth_year',true);
-	$wp_survey_birth_month=get_post_meta($post->ID,'wp_survey_birth_month',true);
-	//variables
-}
-//display function used for custom survey meta box
-?>
-<div class="field">
-	<label for="wp_sruvey_phone">이름을 적어주세요</label>
-	<small>main contact name</small>
-	<input type="name" name="wp_survey_name" id="wp_survey_name" value="<?php echo $wp_survey_name;?>"/>
-</div>
-<div class="field">
-	<label for="wp_survey_birth_year">출생년도를 적어주세요</label>
-	<small>Birth year contact</small>
-            <input type="name" name="wp_survey_birth_year" id="wp_survey_birth_year" value="<?php echo $wp_survey_birth_year;?>"/>
-    </div>
-    <div class="field">
-      <label for="wp_survey_birth_month">Month</label>
-      <small>your birth month</small>
-      <textarea name="wp_survey_birth_month" id="wp_survey_birth_month"><?php echo $wp_survey_birth_month;?></textarea>
+  public function survey_meta_box_display($post){
+  	wp_once_field('wp_survey_once','wp_survey_once_field');
+  	//set once field
+  	$wp_survey_phone=get_post_meta($post->ID,'wp_survey_name',true);
+  	$wp_survey_birth_year=get_post_meta($post->ID,'wp_survey_birth_year',true);
+  	$wp_survey_birth_month=get_post_meta($post->ID,'wp_survey_birth_month',true);
+  	//variables
+  
+    //display function used for custom survey meta box
+    ?>
+    <p>추가 정보를 입력하세요</p>
+    <div class="field-container">
+      <?php
+      do_action('wp_survey_admin_form_start');
+      ?>
+      <div class="field">
+  	   <label for="wp_sruvey_phone">이름을 적어주세요</label>
+  	   <small>main contact name</small>
+  	   <input type="name" name="wp_survey_name" id="wp_survey_name" value="<?php echo $wp_survey_name;?>"/>
+      </div>
+      <div class="field">
+    	<label for="wp_survey_birth_year">출생년도를 적어주세요</label>
+    	<small>Birth year contact</small>
+                <input type="name" name="wp_survey_birth_year" id="wp_survey_birth_year" value="<?php echo $wp_survey_birth_year;?>"/>
+      </div>
+      <div class="field">
+        <label for="wp_survey_birth_month">Month</label>
+        <small>your birth month</small>
+        <textarea name="wp_survey_birth_month" id="wp_survey_birth_month"><?php echo $wp_survey_birth_month;?></textarea>
+      </div>
+      <?php
+      //survey hours
+      if(!empty($this->wp_survey_hours_days)){
+        echo '<div class="field">';
+          echo '<label>Survey Hours</label>';
+          echo '<small>Survey hours for the survey(e.g9am-5mp)</small>';
+        
+          foreach($this->wp_survey_trading_hour_days as $day_key =>$day_value){
+          //go through all registered survey hour days
+          $wp_survey_trading_hour_days=get_post_meta($post->ID,'wp_survey_survey_hours_' . $day_key,true);
+          //collect survey hour meta data
+          echo '<label for="wp_survey_trading_hour_days_' .$day_key.'">' . $day_key . '</label>';
+          echo '<input types="text" name="wp_survey_trading_hours_' . $day_key . '"id="wp_survey_trading_hours_' . $day_key . '" value="' , $wp_survey_trading_hour_value . '"/>';
+          }
+          echo'</div>';
+      }
+      ?>
+    <?php
+    //after main form hoook
+    do_action('wp_survey_admin_form_end');
+    ?>
     </div>
     <?php
-    //survey hours
-    if(!empty($this->wp_survey_hours_days)){
-      echo '<div class="field">';
-      echo '<label>Survey Hours</label>';
-      echo '<small>Survey hours for the survey(e.g9am-5mp)</small>';
-      
-      foreach($this->wp_survey_trading_hour_days as $day_key =>$day_value){
-        //go through all registered survey hour days
-      $wp_survey_trading_hour_days=get_post_meta($post->ID,'wp_survey_survey_hours_' . $day_key,true);
-      //collect survey hour meta data
-      echo '<label for="wp_survey_trading_hour_days_' .$day_key.'">' . $day_key . '</label>';
-      echo '<input types="text" name="wp_survey_trading_hours_' . $day_key . '"id="wp_survey_trading_hours_' . $day_key . '" value="' , $wp_survey_trading_hour_value . '"/>';
-    }
-    echo'</div>';
   }
- ?>
-<?php
   public function plugin_activate(){
     $this->register_survey_content_type();
     //call custom content type function
@@ -151,7 +157,7 @@ public function survey_meta_box_display($post){
 
   public function prepend_survey_meta_to_content($content){
     global $post, $post_type;
-    if($post_type=='wp_survey' %% is_singular('wp_surveys')){
+    if($post_type=='wp_survey' && is_singular('wp_surveys')){
       
         $wp_survey_id = $post->ID;
         $wp_survey_name = get_post_meta($post->ID,'wp_survey_name',true);
@@ -205,8 +211,8 @@ public function survey_meta_box_display($post){
         return $content;
     }
 
-}
-  public function get_survey_output($argument""){
+  }
+  public function get_survey_output($argument= ""){
 
     $default_args = array(
         'survey_id'   => '',
@@ -313,56 +319,64 @@ public function survey_meta_box_display($post){
 
     return $html;
   }
-  //main function for displaying survey(for shortcodes and widgets)
+    //main function for displaying survey(for shortcodes and widgets)
 
-  public function save_survey($post_id){
-    if(!isset($_POST['wp_survey_once_field'])){
-        return $post_id;
-    }
-    
-    if(!wp_verify_once($_POST['wp_survey_once_field'], 'wp_survey_once')){
-        return $post_id;
-    }
-    //check for once
-       
-    if(defined('DOING_AUTOSAVE') && DOING_AUTOSAVE){
-        return $post_id;
-    }
-    //verify once
-    
-    $wp_survey_name = isset($_POST['wp_survey_name']) ? sanitize_text_field($_POST['wp_survey_name']) : '';
-    $wp_survey_birth_year = isset($_POST['wp_survey_birth_year']) ? sanitize_text_field($_POST['wp_survey_birth_year']) : '';
-    $wp_survey_birth_month = isset($_POST['wp_survey_birth_month']) ? sanitize_text_field($_POST['wp_survey_birth_month']) : '';
-    //check for autosave
-    //get name, birth_year and birth month fields
-    
-    update_post_meta($post_id, 'wp_survey_name', $wp_survey_name);
-    update_post_meta($post_id, 'wp_survey_birth_year', $wp_survey_birth_year);
-    update_post_meta($post_id, 'wp_survey_birth_month', $wp_survey_birth_month);
-    //update name, birth year and birth month fields
-    
-    foreach($_POST as $key => $value){      
-    //search for our trading hour data and update
-        if(preg_match('/^wp_survey_trading_hours_/', $key)){
-            update_post_meta($post_id, $key, $value);
-        }    //if we found our trading hour data, update it
-    
-    }
-    do_action('wp_survey_admin_save',$post_id, $_POST);
+    public function save_survey($post_id){
+      if(!isset($_POST['wp_survey_once_field'])){
+          return $post_id;
+      }
+      
+      if(!wp_verify_once($_POST['wp_survey_once_field'], 'wp_survey_once')){
+          return $post_id;
+      }
+      //check for once
+         
+      if(defined('DOING_AUTOSAVE') && DOING_AUTOSAVE){
+          return $post_id;
+      }
+      //verify once
+      
+      $wp_survey_name = isset($_POST['wp_survey_name']) ? sanitize_text_field($_POST['wp_survey_name']) : '';
+      $wp_survey_birth_year = isset($_POST['wp_survey_birth_year']) ? sanitize_text_field($_POST['wp_survey_birth_year']) : '';
+      $wp_survey_birth_month = isset($_POST['wp_survey_birth_month']) ? sanitize_text_field($_POST['wp_survey_birth_month']) : '';
+      //check for autosave
+      //get name, birth_year and birth month fields
+      
+      update_post_meta($post_id, 'wp_survey_name', $wp_survey_name);
+      update_post_meta($post_id, 'wp_survey_birth_year', $wp_survey_birth_year);
+      update_post_meta($post_id, 'wp_survey_birth_month', $wp_survey_birth_month);
+      //update name, birth year and birth month fields
+      
+      foreach($_POST as $key => $value){      
+      //search for our trading hour data and update
+          if(preg_match('/^wp_survey_trading_hours_/', $key)){
+              update_post_meta($post_id, $key, $value);
+          }    //if we found our trading hour data, update it
+      
+      }
+      do_action('wp_survey_admin_save',$post_id, $_POST);
 
-    //survey save hook 
-    //used so you can hook here and save additional post fields added via 'wp_survey_meta_data_output_end' or 'wp_survey_meta_data_output_end'
-    
-  }//triggerd when adding or editing survey
+      //survey save hook 
+      //used so you can hook here and save additional post fields added via 'wp_survey_meta_data_output_end' or 'wp_survey_meta_data_output_end'
+      
+    }//triggerd when adding or editing survey
 
-public function enqueue_admin_scripts_and_styles(){
-    wp_enqueue_style('wp_survey_admin_styles', plugin_dir_url(__FILE__) . '/css/wp_research_ajou_admin_styles.css');
+  public function enqueue_admin_scripts_and_styles(){
+      wp_enqueue_style('wp_survey_admin_styles', plugin_dir_url(__FILE__) . '/css/wp_research_ajou_admin_styles.css');
+  }
+  //enqueus scripts and stles on the back end
+
+  public function enqueue_public_scripts_and_styles(){
+      wp_enqueue_style('wp_survey_public_styles', plugin_dir_url(__FILE__). '/css/wp_research_ajou_public_styles.css');
+  }
+  //enqueues scripts and styled on the front end
 }
-//enqueus scripts and stles on the back end
+  
+  $wp_simple_survey=new wp_simple_survey;
 
-public function enqueue_public_scripts_and_styles(){
-    wp_enqueue_style('wp_survey_public_styles', plugin_dir_url(__FILE__). '/css/wp_research_ajou_public_styles.css');
-}
-//enqueues scripts and styled on the front end
+  include_once(plugin_dir_path(__FILE__) . 'inc/wp_research_ajou_shortcode.php');
+  //include shortcodes
+  include_once(plugin_dir_path(__FILE__) . 'inc/wp_research_ajou_widget.php');
+  //include widgets
 
 ?>
