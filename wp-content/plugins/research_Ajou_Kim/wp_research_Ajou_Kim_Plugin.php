@@ -13,14 +13,14 @@ License: GPL2
 */
 //plugin declartion
 
-private $wp_ajou_survey_seconds=array();
-//properties
 
 class wp_simple_survey{
 	include(plugin_dir_path(__FILE__) . 'inc/wp_research_ajou_shortcode.php');
 	//include shortcodes
 	include(plugin_dir_path(__FILE__) . 'inc/wp_research_ajou_widget.php');
 	//include widgets
+  private $wp_ajou_survey_seconds=array();
+  //properties
 }
 
 public function __construct(){
