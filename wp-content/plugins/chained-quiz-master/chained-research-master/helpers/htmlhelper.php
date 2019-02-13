@@ -6,7 +6,7 @@ function chained_redirect($url) {
 }
 
 // function to conditionally add DB fields
-function chainedquiz_add_db_fields($fields, $table) {
+function chainedresearch_add_db_fields($fields, $table) {
 		global $wpdb;
 		
 		// check fields

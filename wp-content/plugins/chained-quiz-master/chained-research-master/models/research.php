@@ -1,9 +1,9 @@
 <?php
-class ChainedQuizQuiz {
+class ChainedResearchResearch {
 	function add($vars) {
 		global $wpdb;
 		
-		$result = $wpdb->query($wpdb->prepare("INSERT INTO ".CHAINED_QUIZZES." SET
+		$result = $wpdb->query($wpdb->prepare("INSERT INTO ".CHAINED_RESEARCHES." SET
 			title=%s, output=%s, email_admin=%d, email_user=%d", 
 			$vars['title'], $vars['output'], @$vars['email_admin'], @$vars['email_user']));
 			
@@ -14,7 +14,7 @@ class ChainedQuizQuiz {
 	function save($vars, $id) {
 		global $wpdb;
 		
-		$result = $wpdb->query($wpdb->prepare("UPDATE ".CHAINED_QUIZZES." SET
+		$result = $wpdb->query($wpdb->prepare("UPDATE ".CHAINED_RESEARCHES." SET
 			title=%s, output=%s, email_admin=%d, email_user=%d WHERE id=%d", 
 			$vars['title'], $vars['output'], @$vars['email_admin'], @$vars['email_user'], $id));
 			
@@ -26,36 +26,36 @@ class ChainedQuizQuiz {
 		global $wpdb;
 		
 		// delete questions
-		$wpdb->query($wpdb->prepare("DELETE FROM ".CHAINED_QUESTIONS." WHERE quiz_id=%d", $id));
+		$wpdb->query($wpdb->prepare("DELETE FROM ".CHAINED_QUESTIONS." WHERE Research_id=%d", $id));
 		
 		// delete choices
-		$wpdb->query($wpdb->prepare("DELETE FROM ".CHAINED_CHOICES." WHERE quiz_id=%d", $id));
+		$wpdb->query($wpdb->prepare("DELETE FROM ".CHAINED_CHOICES." WHERE Research_id=%d", $id));
 		
 		// delete completed records
-		$wpdb->query($wpdb->prepare("DELETE FROM ".CHAINED_COMPLETED." WHERE quiz_id=%d", $id));
+		$wpdb->query($wpdb->prepare("DELETE FROM ".CHAINED_COMPLETED." WHERE Research_id=%d", $id));
 		
-		// delete the quiz
-		$wpdb->query($wpdb->prepare("DELETE FROM ".CHAINED_QUIZZES." WHERE id=%d", $id));
+		// delete the Research
+		$wpdb->query($wpdb->prepare("DELETE FROM ".CHAINED_RESEARCHES." WHERE id=%d", $id));
 	}
 
-	function finalize($quiz, $points) {		
+	function finalize($Research, $points) {		
 	    global $wpdb, $user_ID;
 	    
 	    $user_id = empty($user_ID) ? 0 : $user_ID;
 	    
-		 $_result = new ChainedQuizResult();
+		 $_result = new ChainedResearchResult();
 		 // calculate result
-		 $result = $_result->calculate($quiz, $points);
+		 $result = $_result->calculate($Research, $points);
 		 
 		 // get final screen and replace vars
-		 $output = stripslashes($quiz->output);
+		 $output = stripslashes($Research->output);
 		 $output = str_replace('{{result-title}}', @$result->title, $output);
 		 $output = str_replace('{{result-text}}', stripslashes(@$result->description), $output);
 		 $output = str_replace('{{points}}', $points, $output);
 		 $output = str_replace('{{questions}}', $_POST['total_questions'], $output);
 		 
 		 // email user / admin?
-		 $this->send_emails($quiz, $output);
+		 $this->send_emails($Research, $output);
 		 
 		 $output = do_shortcode($output);
 		 $output = wpautop($output);
@@ -63,16 +63,16 @@ class ChainedQuizQuiz {
 		 // now insert in completed
 		 if(!empty($_SESSION['chained_completion_id'])) {
 		 	$wpdb->query( $wpdb->prepare("UPDATE ".CHAINED_COMPLETED." SET
-		 		quiz_id = %d, points = %d, result_id = %d, datetime = NOW(), ip = %s, user_id = %d, 
+		 		Research_id = %d, points = %d, result_id = %d, datetime = NOW(), ip = %s, user_id = %d, 
 		 		snapshot = %s WHERE id=%d",
-		 		$quiz->id, $points, @$result->id, $_SERVER['REMOTE_ADDR'], $user_id, $output, $_SESSION['chained_completion_id']));
+		 		$Research->id, $points, @$result->id, $_SERVER['REMOTE_ADDR'], $user_id, $output, $_SESSION['chained_completion_id']));
 		 	unset($_SESSION['chained_completion_id']);	
 		 }	 
 		 else {
 		 	// normally this shouldn't happen, but just in case
 		 	$wpdb->query( $wpdb->prepare("INSERT INTO ".CHAINED_COMPLETED." SET
-		 		quiz_id = %d, points = %d, result_id = %d, datetime = NOW(), ip = %s, user_id = %d, snapshot = %s",
-		 		$quiz->id, $points, @$result->id, $_SERVER['REMOTE_ADDR'], $user_id, $output));
+		 		Research_id = %d, points = %d, result_id = %d, datetime = NOW(), ip = %s, user_id = %d, snapshot = %s",
+		 		$Research->id, $points, @$result->id, $_SERVER['REMOTE_ADDR'], $user_id, $output));
 		 }
 		 
 		 // if the result needs to redirect, replace the output with the redirect URL
@@ -82,18 +82,18 @@ class ChainedQuizQuiz {
    } // end finalize
    
    // send email to user and admin if required
-   function send_emails($quiz, $output) {
+   function send_emails($Research, $output) {
    	global $user_ID;
    	
-   	if(empty($quiz->email_admin) and empty($quiz->email_user)) return true;
+   	if(empty($Research->email_admin) and empty($Research->email_user)) return true;
    	$admin_email = chained_admin_email();
    	
    	$headers  = 'MIME-Version: 1.0' . "\r\n";
 		$headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
 		$headers .= 'From: '.$admin_email . "\r\n";
    	
-   	if(!empty($quiz->email_admin)) {
-   		$subject = sprintf(__('User results on %s', 'chained'), stripslashes($quiz->title));
+   	if(!empty($Research->email_admin)) {
+   		$subject = sprintf(__('User results on %s', 'chained'), stripslashes($Research->title));
    		
 			if($user_ID) {
 				$user = get_userdata($user_ID);
@@ -110,8 +110,8 @@ class ChainedQuizQuiz {
 			wp_mail($admin_email, $subject, $message, $headers);
    	}
    	
-   	if(!empty($quiz->email_user)) {
-   		$subject = sprintf(__('Your results on %s', 'chained'), stripslashes($quiz->title));
+   	if(!empty($Research->email_user)) {
+   		$subject = sprintf(__('Your results on %s', 'chained'), stripslashes($Research->title));
    		
 			if($user_ID) {
 				$user = get_userdata($user_ID);

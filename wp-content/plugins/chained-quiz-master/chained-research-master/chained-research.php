@@ -1,8 +1,8 @@
 <?php
 /*
-Plugin Name: Chained Quiz
-Plugin URI: http://calendarscripts.info/chained-quiz.html
-Description: Create a chained quiz where the upcoming questions can depend on the previous answer
+Plugin Name: Chained research
+Plugin URI: http://calendarscripts.info/chained-research.html
+Description: Create a chained research where the upcoming questions can depend on the previous answer
 Author: Kiboko Labs
 Version: 0.8.7
 Author URI: http://calendarscripts.info/
@@ -16,10 +16,10 @@ define( 'CHAINED_URL', plugin_dir_url( __FILE__ ));
 
 // require controllers and models
 require_once(CHAINED_PATH.'/models/basic.php');
-require_once(CHAINED_PATH.'/models/quiz.php');
+require_once(CHAINED_PATH.'/models/research.php');
 require_once(CHAINED_PATH.'/models/result.php');
 require_once(CHAINED_PATH.'/models/question.php');
-require_once(CHAINED_PATH.'/controllers/quizzes.php');
+require_once(CHAINED_PATH.'/controllers/researches.php');
 require_once(CHAINED_PATH.'/controllers/results.php');
 require_once(CHAINED_PATH.'/controllers/questions.php');
 require_once(CHAINED_PATH.'/controllers/completed.php');
@@ -27,16 +27,16 @@ require_once(CHAINED_PATH.'/controllers/shortcodes.php');
 require_once(CHAINED_PATH.'/controllers/ajax.php');
 require_once(CHAINED_PATH.'/helpers/htmlhelper.php');
 
-add_action('init', array("ChainedQuiz", "init"));
+add_action('init', array("Chainedresearch", "init"));
 
-register_activation_hook(__FILE__, array("ChainedQuiz", "install"));
-add_action('admin_menu', array("ChainedQuiz", "menu"));
-add_action('admin_enqueue_scripts', array("ChainedQuiz", "scripts"));
+register_activation_hook(__FILE__, array("Chainedresearch", "install"));
+add_action('admin_menu', array("Chainedresearch", "menu"));
+add_action('admin_enqueue_scripts', array("Chainedresearch", "scripts"));
 
 // show the things on the front-end
-add_action( 'wp_enqueue_scripts', array("ChainedQuiz", "scripts"));
+add_action( 'wp_enqueue_scripts', array("Chainedresearch", "scripts"));
 
 
 // other actions
-add_action('wp_ajax_chainedquiz_ajax', 'chainedquiz_ajax');
-add_action('wp_ajax_nopriv_chainedquiz_ajax', 'chainedquiz_ajax');
+add_action('wp_ajax_chainedresearch_ajax', 'chainedresearch_ajax');
+add_action('wp_ajax_nopriv_chainedresearch_ajax', 'chainedresearch_ajax');

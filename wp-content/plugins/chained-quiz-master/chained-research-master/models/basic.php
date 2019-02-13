@@ -1,15 +1,15 @@
 <?php
 // main model containing general config and UI functions
-class ChainedQuiz {
+class ChainedResearch {
    static function install($update = false) {
    	global $wpdb;	
    	$wpdb -> show_errors();
    	
    	if(!$update) self::init();
 	  
-	   // quizzes
-   	if($wpdb->get_var("SHOW TABLES LIKE '".CHAINED_QUIZZES."'") != CHAINED_QUIZZES) {        
-			$sql = "CREATE TABLE `" . CHAINED_QUIZZES . "` (
+	   // Researches
+   	if($wpdb->get_var("SHOW TABLES LIKE '".CHAINED_RESEARCHES."'") != CHAINED_RESEARCHES) {        
+			$sql = "CREATE TABLE `" . CHAINED_RESEARCHES . "` (
 				  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
 				  `title` VARCHAR(255) NOT NULL DEFAULT '',
 				  `output` TEXT				  
@@ -22,7 +22,7 @@ class ChainedQuiz {
    	if($wpdb->get_var("SHOW TABLES LIKE '".CHAINED_QUESTIONS."'") != CHAINED_QUESTIONS) {        
 			$sql = "CREATE TABLE `" . CHAINED_QUESTIONS . "` (
 				  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-				  `quiz_id` INT UNSIGNED NOT NULL DEFAULT 0,
+				  `Research_id` INT UNSIGNED NOT NULL DEFAULT 0,
 				  `title` VARCHAR(255) NOT NULL DEFAULT '',
 				  `question` TEXT,
 				  `qtype` VARCHAR(20) NOT NULL DEFAULT '',
@@ -36,7 +36,7 @@ class ChainedQuiz {
      if($wpdb->get_var("SHOW TABLES LIKE '".CHAINED_CHOICES."'") != CHAINED_CHOICES) {        
 			$sql = "CREATE TABLE `" . CHAINED_CHOICES . "` (
 				  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-				  `quiz_id` INT UNSIGNED NOT NULL DEFAULT 0,
+				  `Research_id` INT UNSIGNED NOT NULL DEFAULT 0,
 				  `question_id` INT UNSIGNED NOT NULL DEFAULT 0,
 				  `choice` TEXT,
 				  `points` DECIMAL(4,2) NOT NULL DEFAULT '0.00',
@@ -51,7 +51,7 @@ class ChainedQuiz {
 	  if($wpdb->get_var("SHOW TABLES LIKE '".CHAINED_RESULTS."'") != CHAINED_RESULTS) {        
 			$sql = "CREATE TABLE `" . CHAINED_RESULTS . "` (
 				  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-				  `quiz_id` INT UNSIGNED NOT NULL DEFAULT 0,
+				  `Research_id` INT UNSIGNED NOT NULL DEFAULT 0,
 				  `points_bottom` DECIMAL(8,2) NOT NULL DEFAULT '0.00',
 				  `points_top` DECIMAL(8,2) NOT NULL DEFAULT '0.00',
 				  `title` VARCHAR(255) NOT NULL DEFAULT '',
@@ -61,11 +61,11 @@ class ChainedQuiz {
 			$wpdb->query($sql);
 	  } 
 	  
-	  // completed quizzes	
+	  // completed Researches	
 	  if($wpdb->get_var("SHOW TABLES LIKE '".CHAINED_COMPLETED."'") != CHAINED_COMPLETED) {        
 			$sql = "CREATE TABLE `" . CHAINED_COMPLETED . "` (
 				  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-				  `quiz_id` INT UNSIGNED NOT NULL DEFAULT 0,
+				  `Research_id` INT UNSIGNED NOT NULL DEFAULT 0,
 				  `points` DECIMAL(8,2) NOT NULL DEFAULT '0.00',
 				  `result_id` INT UNSIGNED NOT NULL DEFAULT 0,
 				  `datetime` DATETIME,
@@ -81,7 +81,7 @@ class ChainedQuiz {
 	  if($wpdb->get_var("SHOW TABLES LIKE '".CHAINED_USER_ANSWERS."'") != CHAINED_USER_ANSWERS) {        
 			$sql = "CREATE TABLE `" . CHAINED_USER_ANSWERS . "` (
 				  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-				  `quiz_id` INT UNSIGNED NOT NULL DEFAULT 0,
+				  `Research_id` INT UNSIGNED NOT NULL DEFAULT 0,
 				  `completion_id` INT UNSIGNED NOT NULL DEFAULT 0,
 				  `question_id` INT UNSIGNED NOT NULL DEFAULT 0,
 				  `answer` TEXT,
@@ -92,51 +92,51 @@ class ChainedQuiz {
 	  } 	 
 	  
 	  
-	  chainedquiz_add_db_fields(array(
+	  chainedResearch_add_db_fields(array(
 	  	  array("name" => 'autocontinue', 'type' => 'TINYINT UNSIGNED NOT NULL DEFAULT 0'),
 	  	  array("name" => 'sort_order', 'type' => 'INT UNSIGNED NOT NULL DEFAULT 0'),
 	  ), CHAINED_QUESTIONS);
 	  
-	  chainedquiz_add_db_fields(array(
+	  chainedResearch_add_db_fields(array(
 	  	  array("name" => 'redirect_url', 'type' => "VARCHAR(255) NOT NULL DEFAULT ''"),
 	  ), CHAINED_RESULTS);
 	  
-	  chainedquiz_add_db_fields(array(
+	  chainedResearch_add_db_fields(array(
 	  	  array("name" => 'email_admin', 'type' => "TINYINT UNSIGNED NOT NULL DEFAULT 0"),
 	  	  array("name" => 'email_user', 'type' => "TINYINT UNSIGNED NOT NULL DEFAULT 0"),
-	  ), CHAINED_QUIZZES);
+	  ), CHAINED_RESEARCJES);
 	  
-	  chainedquiz_add_db_fields(array(
+	  chainedResearch_add_db_fields(array(
 	  	  array("name" => 'not_empty', 'type' => "TINYINT NOT NULL DEFAULT 0"), /*When initially creating a record, it is empty. If it remains so we have to delete it.*/
 	  ), CHAINED_COMPLETED);
 	  
-	  // fix sort order once for old quizzes (in version 0.7.5)
+	  // fix sort order once for old Researches (in version 0.7.5)
 		if(get_option('chained_fixed_sort_order') != 1) {
-			ChainedQuizQuestions :: fix_sort_order_global();
+			ChainedResearchQuestions :: fix_sort_order_global();
 			update_option('chained_fixed_sort_order', 1);
 		}	
 		
 		// update not_empty = 1 for all completed records prior to version 0.8.7 and DB version 0.66
-		$version = get_option('chainedquiz_version');
+		$version = get_option('chainedResearch_version');
 		if($version < 0.67) {
 			$wpdb->query("UPDATE ".CHAINED_COMPLETED." SET not_empty=1");
 		}
 	  
-	  update_option('chainedquiz_version', "0.67");
+	  update_option('chainedResearch_version', "0.67");
 	  // exit;
    }
    
    // main menu
    static function menu() {
-   	add_menu_page(__('Chained Quiz', 'chained'), __('Chained Quiz', 'chained'), "manage_options", "chained_quizzes", 
-   		array('ChainedQuizQuizzes', "manage"));
+   	add_menu_page(__('Chained Research', 'chained'), __('Chained Research', 'chained'), "manage_options", "chained_Researches", 
+   		array('ChainedResearchResearches', "manage"));
    		
-   	add_submenu_page(NULL, __('Chained Quiz Results', 'chained'), __('Chained Quiz Results', 'chained'), 'manage_options', 
-   		'chainedquiz_results', array('ChainedQuizResults','manage'));	
-   	add_submenu_page(NULL, __('Chained Quiz Questions', 'chained'), __('Chained Quiz Questions', 'chained'), 'manage_options', 
-   		'chainedquiz_questions', array('ChainedQuizQuestions','manage'));	
-   	add_submenu_page(NULL, __('Users Completed Quiz', 'chained'), __('Users Completed Quiz', 'chained'), 'manage_options', 
-   		'chainedquiz_list', array('ChainedQuizCompleted','manage'));		
+   	add_submenu_page(NULL, __('Chained Research Results', 'chained'), __('Chained Research Results', 'chained'), 'manage_options', 
+   		'chainedResearch_results', array('ChainedResearchResults','manage'));	
+   	add_submenu_page(NULL, __('Chained Research Questions', 'chained'), __('Chained Research Questions', 'chained'), 'manage_options', 
+   		'chainedResearch_questions', array('ChainedResearchQuestions','manage'));	
+   	add_submenu_page(NULL, __('Users Completed Research', 'chained'), __('Users Completed Research', 'chained'), 'manage_options', 
+   		'chainedResearch_list', array('ChainedResearchCompleted','manage'));		
 	}
 	
 	// CSS and JS
@@ -147,7 +147,7 @@ class ChainedQuiz {
    
    	wp_enqueue_script('jquery');
 	   
-	   // Chained quiz's own Javascript
+	   // Chained Research's own Javascript
 		wp_register_script(
 				'chained-common',
 				CHAINED_URL.'js/common.js',
@@ -168,7 +168,7 @@ class ChainedQuiz {
 		if (!session_id()) @session_start();
 		
 		// define table names 
-		define( 'CHAINED_QUIZZES', $wpdb->prefix. "chained_quizzes");
+		define( 'CHAINED_RESEARCHES', $wpdb->prefix. "chained_Researches");
 		define( 'CHAINED_QUESTIONS', $wpdb->prefix. "chained_questions");
 		define( 'CHAINED_CHOICES', $wpdb->prefix. "chained_choices");
 		define( 'CHAINED_RESULTS', $wpdb->prefix. "chained_results");
@@ -178,15 +178,15 @@ class ChainedQuiz {
 		define( 'CHAINED_VERSION', get_option('chained_version'));
 				
 		// shortcodes
-		add_shortcode('chained-quiz', array("ChainedQuizShortcodes", "quiz"));	
+		add_shortcode('chained-Research', array("ChainedResearchShortcodes", "Research"));	
 		
 		// once daily delete empty records older than 1 day
-		if(get_option('chainedquiz_cleanup') != date("Y-m-d")) {
+		if(get_option('chainedResearch_cleanup') != date("Y-m-d")) {
 			$wpdb->query("DELETE FROM ".CHAINED_COMPLETED." WHERE not_empty=0 AND datetime < '".current_time('mysql')."' - INTERVAL 24 HOUR");
-			update_option('chainedquiz_cleanup', date("Y-m-d"));
+			update_option('chainedResearch_cleanup', date("Y-m-d"));
 		}
 				
-		$version = get_option('chainedquiz_version');
+		$version = get_option('chainedResearch_version');
 		if($version < '0.67') self::install(true);
 	}
 			

@@ -1,12 +1,12 @@
 <div class="wrap">
-	<h1><?php printf(__('Add/Edit Question in "%s"', 'chained'), $quiz->title)?></h1>
+	<h1><?php printf(__('Add/Edit Question in "%s"', 'chained'), $Research->title)?></h1>
 	
-	<p><a href="admin.php?page=chained_quizzes"><?php _e('Back to quizzes', 'chained')?></a> | <a href="admin.php?page=chainedquiz_questions&quiz_id=<?php echo $quiz->id?>"><?php _e('Back to questions', 'chained')?></a>
-		| <a href="admin.php?page=chainedquiz_results&quiz_id=<?php echo $quiz->id?>"><?php _e('Manage Results', 'chained')?></a>
-		| <a href="admin.php?page=chained_quizzes&action=edit&id=<?php echo $quiz->id?>"><?php _e('Edit This Quiz', 'chained')?></a>
+	<p><a href="admin.php?page=chained_Researches"><?php _e('Back to Researches', 'chained')?></a> | <a href="admin.php?page=chainedResearch_questions&Research_id=<?php echo $Research->id?>"><?php _e('Back to questions', 'chained')?></a>
+		| <a href="admin.php?page=chainedResearch_results&Research_id=<?php echo $Research->id?>"><?php _e('Manage Results', 'chained')?></a>
+		| <a href="admin.php?page=chained_Researches&action=edit&id=<?php echo $Research->id?>"><?php _e('Edit This Research', 'chained')?></a>
 	</p>
 	
-	<form method="post" onsubmit="return chainedQuizValidate(this);">
+	<form method="post" onsubmit="return chainedResearchValidate(this);">
 		<p><label><?php _e('Question title', 'chained')?></label> <input type="text" name="title" size="40" value="<?php echo @$question->title?>"></p>
 		<p><label><?php _e('Question contents', 'chained')?></label> <?php echo wp_editor(stripslashes(@$question->question), 'question')?></p>
 		<p><label><?php _e('Question type:', 'chained')?></label> <select name="qtype" onchange="this.value == 'radio' ? jQuery('#chainedAutoContinue').show() : jQuery('#chainedAutoContinue').hide();">
@@ -19,7 +19,7 @@
 		
 		<h3><?php _e('Choices/Answers for this question', 'chained')?></h3>
 		
-		<p> <input type="button" value="<?php _e('Add more rows', 'chained')?>" onclick="chainedQuizAddChoice();" class="button"></p>
+		<p> <input type="button" value="<?php _e('Add more rows', 'chained')?>" onclick="chainedResearchAddChoice();" class="button"></p>
 		
 		<div id="answerRows">
 			<?php if(!empty($choices) and sizeof($choices)):
@@ -33,13 +33,13 @@
 		
 		<p><input type="submit" value="<?php _e('Save question and answers','chained')?>" class="button-primary"></p>
 		<input type="hidden" name="ok" value="1">
-		<input type="hidden" name="quiz_id" value="<?php echo $quiz->id?>">
+		<input type="hidden" name="Research_id" value="<?php echo $Research->id?>">
 	</form>
 </div>
 
 <script type="text/javascript" >
 var numChoices = 1;
-function chainedQuizAddChoice() {
+function chainedResearchAddChoice() {
 	html = '<?php ob_start();
 	include(CHAINED_PATH."/views/choice.html.php");
 	$content = ob_get_clean();	
@@ -53,7 +53,7 @@ function chainedQuizAddChoice() {
 	jQuery('#answerRows').append(html);
 }
 
-function chainedQuizValidate(frm) {
+function chainedResearchValidate(frm) {
 	if(frm.title.value == '') {
 		alert("<?php _e('Please enter question title', 'chained')?>");
 		frm.title.focus();
