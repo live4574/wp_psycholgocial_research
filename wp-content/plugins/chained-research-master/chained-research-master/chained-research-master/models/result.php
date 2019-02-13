@@ -4,8 +4,8 @@ class ChainedResearchResult {
 		global $wpdb;
 		
 		$result = $wpdb->query($wpdb->prepare("INSERT INTO ".CHAINED_RESULTS." SET
-			Research_id=%d, points_bottom=%s, points_top=%s, title=%s, description=%s, redirect_url=%s", 
-			$vars['Research_id'], $vars['points_bottom'], $vars['points_top'], $vars['title'], 
+			research_id=%d, points_bottom=%s, points_top=%s, title=%s, description=%s, redirect_url=%s", 
+			$vars['research_id'], $vars['points_bottom'], $vars['points_top'], $vars['title'], 
 			$vars['description'], $vars['redirect_url']));
 			
 		if($result === false) throw new Exception(__('DB Error', 'chained'));
@@ -35,12 +35,12 @@ class ChainedResearchResult {
 	}
 
 	// calculate result based on points collected
-	function calculate($Research, $points) {
+	function calculate($research, $points) {
 		global $wpdb;
 		
 		// select all results order by best
 		$results = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".CHAINED_RESULTS." 
-			WHERE Research_id = %d ORDER BY points_bottom DESC", $Research->id));
+			WHERE research_id = %d ORDER BY points_bottom DESC", $research->id));
 		foreach($results as $result) {
 			if($result->points_bottom <= $points and $points <= $result->points_top) return $result;
     }	

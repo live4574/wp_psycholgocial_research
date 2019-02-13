@@ -1,10 +1,10 @@
 <?php
-class ChainedQuizCompleted {
+class ChainedResearchCompleted {
 	static function manage() {
 		global $wpdb;
 		
-		// select quiz
-		$quiz = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".CHAINED_QUIZZES." WHERE id=%d", $_GET['quiz_id']));
+		// select research
+		$research = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".CHAINED_QUIZZES." WHERE id=%d", $_GET['research_id']));
 		$ob = empty($_GET['ob']) ? 'tC.id' : $_GET['ob'];
 		$dir = empty($_GET['dir'])  ? 'desc' : $_GET['dir'];
 		
@@ -17,15 +17,15 @@ class ChainedQuizCompleted {
 		}		
 		
 		if(!empty($_POST['cleanup_all'])) {
-			$wpdb->query($wpdb->prepare("DELETE FROM ".CHAINED_COMPLETED." WHERE quiz_id=%d", $quiz->id));
-			chained_redirect("admin.php?page=chainedquiz_list&quiz_id=".$quiz->id);	 
+			$wpdb->query($wpdb->prepare("DELETE FROM ".CHAINED_COMPLETED." WHERE research_id=%d", $research->id));
+			chained_redirect("admin.php?page=chainedresearch_list&research_id=".$research->id);	 
 		}
 		
 		$records = $wpdb->get_results( $wpdb->prepare("SELECT SQL_CALC_FOUND_ROWS tC.*, tU.user_nicename as user_nicename, tR.title as result_title
 			FROM ".CHAINED_COMPLETED." tC LEFT JOIN ".CHAINED_RESULTS." tR ON tR.id = tC.result_id
 			LEFT JOIN {$wpdb->users} tU ON tU.ID = tC.user_id
-			WHERE tC.quiz_id=%d AND tC.not_empty=1
-			ORDER BY $ob $dir $limit_sql", $quiz->id));
+			WHERE tC.research_id=%d AND tC.not_empty=1
+			ORDER BY $ob $dir $limit_sql", $research->id));
 			
 		$count = $wpdb->get_var("SELECT FOUND_ROWS()"); 	
 		
@@ -100,7 +100,7 @@ class ChainedQuizCompleted {
 			$csv=implode($newline,$rows);		
 			
 			$now = gmdate('D, d M Y H:i:s') . ' GMT';	
-			$filename = 'quiz-'.$quiz->id.'-results.csv';	
+			$filename = 'research-'.$research->id.'-results.csv';	
 			header('Content-Type: ' . kiboko_get_mime_type());
 			header('Expires: ' . $now);
 			header('Content-Disposition: attachment; filename="'.$filename.'"');

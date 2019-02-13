@@ -5,12 +5,12 @@ class ChainedResearchQuestion {
 		
 		// sort order
 		$sort_order = $wpdb->get_var($wpdb->prepare("SELECT MAX(sort_order) FROM ".CHAINED_QUESTIONS."
-			WHERE Research_id=%d", $vars['Research_id']));
+			WHERE research_id=%d", $vars['research_id']));
 		$sort_order++;	 
 		
 		$result = $wpdb->query($wpdb->prepare("INSERT INTO ".CHAINED_QUESTIONS." SET
-			Research_id=%d, question=%s, qtype=%s, rank=%d, title=%s, autocontinue=%d, sort_order=%d", 
-			$vars['Research_id'], $vars['question'], $vars['qtype'], @$vars['rank'], $vars['title'], 
+			research_id=%d, question=%s, qtype=%s, rank=%d, title=%s, autocontinue=%d, sort_order=%d", 
+			$vars['research_id'], $vars['question'], $vars['qtype'], @$vars['rank'], $vars['title'], 
 			@$vars['autocontinue'], $sort_order));
 			
 		if($result === false) throw new Exception(__('DB Error', 'chained'));
@@ -71,8 +71,8 @@ class ChainedResearchQuestion {
 		
 			// now insert the choice
 			$wpdb->query( $wpdb->prepare("INSERT INTO ".CHAINED_CHOICES." SET
-				question_id=%d, choice=%s, points=%s, is_correct=%d, goto=%s, Research_id=%d", 
-				$id, $answer, $_POST['points'][($counter-2)], $correct, $_POST['goto'][($counter-2)], $_POST['Research_id']) );
+				question_id=%d, choice=%s, points=%s, is_correct=%d, goto=%s, research_id=%d", 
+				$id, $answer, $_POST['points'][($counter-2)], $correct, $_POST['goto'][($counter-2)], $_POST['research_id']) );
 		}
 	} // end save_choices
 
@@ -88,12 +88,12 @@ class ChainedResearchQuestion {
   function display_choices($question, $choices) {
   	   $autocontinue = '';
   	   if($question->qtype == 'radio' and $question->autocontinue) {
-  	   	$autocontinue = "onclick=\"chainedResearch.goon(".$question->Research_id.", '".admin_url('admin-ajax.php')."');\"";
+  	   	$autocontinue = "onclick=\"chainedResearch.goon(".$question->research_id.", '".admin_url('admin-ajax.php')."');\"";
   	   }  	   
   	   
 		switch($question->qtype) {
 			case 'text':
-				return "<div class='chained-Research-choice'><textarea class='chained-Research-frontend' name='answer'></textarea></div>";
+				return "<div class='chained-research-choice'><textarea class='chained-research-frontend' name='answer'></textarea></div>";
 			break;
 			case 'radio':
 			case 'checkbox':
@@ -104,7 +104,7 @@ class ChainedResearchQuestion {
 				foreach($choices as $choice) {
 					$choice_text = stripslashes($choice->choice);
 					
-					$output .= "<div class='chained-Research-choice'><label class='chained-Research-label'><input class='chained-Research-frontend chained-Research-$type' type='$type' name='$name' value='".$choice->id."' $autocontinue> $choice_text</label></div>";
+					$output .= "<div class='chained-research-choice'><label class='chained-research-label'><input class='chained-research-frontend chained-research-$type' type='$type' name='$name' value='".$choice->id."' $autocontinue> $choice_text</label></div>";
 				}
 						
 				return $output;
@@ -132,7 +132,7 @@ class ChainedResearchQuestion {
   	return $points;	
   }
   
-  // gets the next question in a Research, depending on the given answer
+  // gets the next question in a research, depending on the given answer
   function next($question, $answer) {
  		global $wpdb; 	
  		
@@ -168,7 +168,7 @@ class ChainedResearchQuestion {
 		$goto = array_flip($goto);
 		$key = array_shift($goto);
 		
-		//let's treat textareas in different way. If answer is not found, let's not finalize the Research but go to next
+		//let's treat textareas in different way. If answer is not found, let's not finalize the research but go to next
 		if($question->qtype == 'text' and empty($key)) $key = 'next';
 		
 		// echo $key.'x'; 
@@ -177,13 +177,13 @@ class ChainedResearchQuestion {
 		if($key == 'next') {
 			// select next question by sort_order
 			$question = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".CHAINED_QUESTIONS." 
-				WHERE Research_id=%d AND sort_order > %d ORDER BY sort_order LIMIT 1", $question->Research_id, $question->sort_order));
+				WHERE research_id=%d AND sort_order > %d ORDER BY sort_order LIMIT 1", $question->research_id, $question->sort_order));
 			return $question;	
 		}
 	
 	  if(is_numeric($key)) {
 	  	$question = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".CHAINED_QUESTIONS." 
-				WHERE Research_id=%d AND id=%d LIMIT 1", $question->Research_id, $key));
+				WHERE research_id=%d AND id=%d LIMIT 1", $question->research_id, $key));
 			return $question;	
 	  }
 	

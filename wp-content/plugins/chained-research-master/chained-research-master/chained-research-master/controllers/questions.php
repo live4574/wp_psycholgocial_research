@@ -22,20 +22,20 @@ class ChainedResearchQuestions {
 		
 		if(!empty($_POST['ok'])) {
 			try {
-				$_POST['Research_id'] = $_GET['Research_id'];
+				$_POST['research_id'] = $_GET['research_id'];
 				$qid = $_question->add($_POST);		
 				$_question->save_choices($_POST, $qid);	
-				chained_redirect("admin.php?page=chainedResearch_questions&Research_id=".$_GET['Research_id']);
+				chained_redirect("admin.php?page=chainedresearch_questions&research_id=".$_GET['research_id']);
 			}
 			catch(Exception $e) {
 				$error = $e->getMessage();
 			}
 		}
 		
-		$Research = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".CHAINED_RESEARCHES." WHERE id=%d", $_GET['Research_id']));
+		$research = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".CHAINED_QUIZZES." WHERE id=%d", $_GET['research_id']));
 		
 		// select other questions for the go-to dropdown
-		$other_questions = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".CHAINED_QUESTIONS." WHERE Research_id=%d ORDER BY title", $Research->id));
+		$other_questions = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".CHAINED_QUESTIONS." WHERE research_id=%d ORDER BY title", $research->id));
 		
 		include(CHAINED_PATH.'/views/question.html.php');
 	} // end add_question
@@ -54,19 +54,19 @@ class ChainedResearchQuestions {
 			}
 		}
 		
-		// select the Research and question		
+		// select the research and question		
 		$question = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".CHAINED_QUESTIONS." WHERE id=%d", $_GET['id']));
-		$Research = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".CHAINED_RESEARCHES." WHERE id=%d", $question->Research_id));
+		$research = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".CHAINED_QUIZZES." WHERE id=%d", $question->research_id));
 
 		// select question choices
 		$choices = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".CHAINED_CHOICES." WHERE question_id=%d ORDER BY id ", $question->id));	
 		
 		// select other questions for the go-to dropdown
 		$other_questions = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".CHAINED_QUESTIONS." 
-			WHERE Research_id=%d AND id!=%d ORDER BY title", $Research->id, $question->id));	
+			WHERE research_id=%d AND id!=%d ORDER BY title", $research->id, $question->id));	
 		
 		include(CHAINED_PATH.'/views/question.html.php');
-	} // end edit_Research
+	} // end edit_research
 	
 	// list and delete questions
 	static function list_questions() {
@@ -87,14 +87,14 @@ class ChainedResearchQuestions {
 				
 				// shift others
 				$wpdb->query($wpdb->prepare("UPDATE ".CHAINED_QUESTIONS." SET sort_order=sort_order+1 
-				  WHERE id!=%d AND sort_order=%d AND Research_id=%d", $_GET['move'], $new_order, $_GET['Research_id']));
+				  WHERE id!=%d AND sort_order=%d AND research_id=%d", $_GET['move'], $new_order, $_GET['research_id']));
 			}
 			else {
 				$new_order = $question->sort_order+1;			
 	
 				// shift others
 				$wpdb->query($wpdb->prepare("UPDATE ".CHAINED_QUESTIONS." SET sort_order=sort_order-1 
-	  				WHERE id!=%d AND sort_order=%d AND Research_id=%d", $_GET['move'], $new_order, $_GET['Research_id']));
+	  				WHERE id!=%d AND sort_order=%d AND research_id=%d", $_GET['move'], $new_order, $_GET['research_id']));
 			}
 			
 			// change this one
@@ -102,28 +102,28 @@ class ChainedResearchQuestions {
 				$new_order, $_GET['move']));
 				
 			// redirect 	
-			chained_redirect('admin.php?page=chainedResearch_questions&Research_id=' . $_GET['Research_id']);
+			chained_redirect('admin.php?page=chainedresearch_questions&research_id=' . $_GET['research_id']);
 		}
 		
-		$Research = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".CHAINED_RESEARCHES." WHERE id=%d", $_GET['Research_id']));
-		$questions = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".CHAINED_QUESTIONS." WHERE Research_id=%d ORDER BY sort_order, id", $_GET['Research_id']));
+		$research = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".CHAINED_QUIZZES." WHERE id=%d", $_GET['research_id']));
+		$questions = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".CHAINED_QUESTIONS." WHERE research_id=%d ORDER BY sort_order, id", $_GET['research_id']));
 		$count = sizeof($questions);
 		include(CHAINED_PATH."/views/questions.html.php");
-	} // end list_Researches
+	} // end list_researchzes
 	
-	// initially fix sort order of the questions in all Researches
+	// initially fix sort order of the questions in all researchzes
 	// it sets order based on question ID
 	static function fix_sort_order_global() {
 		global $wpdb;
 		
-		$Researches = $wpdb->get_results("SELECT id FROM ".CHAINED_RESEARCHES);
+		$researchzes = $wpdb->get_results("SELECT id FROM ".CHAINED_QUIZZES);
 		
-		foreach($Researchzes as $Research) {
-			$min_id = $wpdb->get_var($wpdb->prepare("SELECT MIN(id) FROM ".CHAINED_QUESTIONS." WHERE Research_id=%d", $Research->id));
+		foreach($researchzes as $research) {
+			$min_id = $wpdb->get_var($wpdb->prepare("SELECT MIN(id) FROM ".CHAINED_QUESTIONS." WHERE research_id=%d", $research->id));
 			$min_id--;
 			
 			$wpdb->query($wpdb->prepare("UPDATE ".CHAINED_QUESTIONS." SET
-				sort_order = id - %d WHERE Research_id=%d", $min_id, $Research->id));
+				sort_order = id - %d WHERE research_id=%d", $min_id, $research->id));
 		}
 		
 	}	// end fix_sort_order_global

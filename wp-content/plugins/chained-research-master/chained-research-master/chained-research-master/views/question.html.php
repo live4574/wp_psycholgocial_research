@@ -1,9 +1,9 @@
 <div class="wrap">
-	<h1><?php printf(__('Add/Edit Question in "%s"', 'chained'), $Research->title)?></h1>
+	<h1><?php printf(__('Add/Edit Question in "%s"', 'chained'), $research->title)?></h1>
 	
-	<p><a href="admin.php?page=chained_Researches"><?php _e('Back to Researches', 'chained')?></a> | <a href="admin.php?page=chainedResearch_questions&Research_id=<?php echo $Research->id?>"><?php _e('Back to questions', 'chained')?></a>
-		| <a href="admin.php?page=chainedResearch_results&Research_id=<?php echo $Research->id?>"><?php _e('Manage Results', 'chained')?></a>
-		| <a href="admin.php?page=chained_Researches&action=edit&id=<?php echo $Research->id?>"><?php _e('Edit This Research', 'chained')?></a>
+	<p><a href="admin.php?page=chained_researchzes"><?php _e('Back to researchzes', 'chained')?></a> | <a href="admin.php?page=chainedresearch_questions&research_id=<?php echo $research->id?>"><?php _e('Back to questions', 'chained')?></a>
+		| <a href="admin.php?page=chainedresearch_results&research_id=<?php echo $research->id?>"><?php _e('Manage Results', 'chained')?></a>
+		| <a href="admin.php?page=chained_researchzes&action=edit&id=<?php echo $research->id?>"><?php _e('Edit This Research', 'chained')?></a>
 	</p>
 	
 	<form method="post" onsubmit="return chainedResearchValidate(this);">
@@ -33,7 +33,7 @@
 		
 		<p><input type="submit" value="<?php _e('Save question and answers','chained')?>" class="button-primary"></p>
 		<input type="hidden" name="ok" value="1">
-		<input type="hidden" name="Research_id" value="<?php echo $Research->id?>">
+		<input type="hidden" name="research_id" value="<?php echo $research->id?>">
 	</form>
 </div>
 

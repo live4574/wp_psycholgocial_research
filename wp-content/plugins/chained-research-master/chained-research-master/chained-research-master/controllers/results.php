@@ -5,14 +5,14 @@ class ChainedResearchResults {
 		global $wpdb;
  		$_result = new ChainedResearchResult();
 		
- 		// select Research
-		$Research = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".CHAINED_RESEARCHES." WHERE id=%d", $_GET['Research_id']));
+ 		// select research
+		$research = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".CHAINED_QUIZZES." WHERE id=%d", $_GET['research_id']));
  		
  		if(!empty($_POST['add'])) {
  			try {
- 				$_POST['Research_id'] = $Research->id;
+ 				$_POST['research_id'] = $research->id;
  				$_result->add($_POST);
- 				chained_redirect("admin.php?page=chainedResearch_results&Research_id=".$Research->id);
+ 				chained_redirect("admin.php?page=chainedresearch_results&research_id=".$research->id);
  			}
  			catch(Exception $e) {
  				$error = __('The result was not added', 'chained');
@@ -39,7 +39,7 @@ class ChainedResearchResults {
  		}
  		
  		// select results
- 		$results = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".CHAINED_RESULTS." WHERE Research_id=%d ORDER BY id", $Research->id));
+ 		$results = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".CHAINED_RESULTS." WHERE research_id=%d ORDER BY id", $research->id));
  		include(CHAINED_PATH."/views/results.html.php");
 	} // end manage()
 }

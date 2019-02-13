@@ -1,9 +1,9 @@
 <div class="wrap">
 	<h1><?php _e('Manage Research Results/Outcomes', 'chained')?></h1>
 	
-	<p><a href="admin.php?page=chained_Researches"><?php _e('Back to Researches', 'chained')?></a>
-		| <a href="admin.php?page=chainedResearch_questions&Research_id=<?php echo $Research->id?>"><?php _e('Manage Questions', 'chained')?></a>
-		| <a href="admin.php?page=chained_Researches&action=edit&id=<?php echo $Research->id?>"><?php _e('Edit This Research', 'chained')?></a>
+	<p><a href="admin.php?page=chained_researchzes"><?php _e('Back to researchzes', 'chained')?></a>
+		| <a href="admin.php?page=chainedresearch_questions&research_id=<?php echo $research->id?>"><?php _e('Manage Questions', 'chained')?></a>
+		| <a href="admin.php?page=chained_researchzes&action=edit&id=<?php echo $research->id?>"><?php _e('Edit This Research', 'chained')?></a>
 	</p>
 	
 	<form method="post" onsubmit="return validateChainedResult(this);">
@@ -12,7 +12,7 @@
 		<p><?php _e('Min. points:', 'chained')?> <input type="text" size="4" name="points_bottom"> 
 		<?php _e('Max. points:', 'chained')?> <input type="text" size="4" name="points_top"></p>
 		<p><label><?php _e('Optional redirect URL', 'chained')?></label> <input type="text" name="redirect_url" size="60"><br />
-		<i><?php _e('If you enter this, the Research will redirect to the URL instead of showing the "Final Output".', 'chained');?></i></p>
+		<i><?php _e('If you enter this, the research will redirect to the URL instead of showing the "Final Output".', 'chained');?></i></p>
 		<p><input type="submit" name="add" value="<?php _e('Add Result', 'chained')?>" class="button-primary"></p>
 	</form>
 	
@@ -24,7 +24,7 @@
 		<p><?php _e('Min. points:', 'chained')?> <input type="text" size="4" name="points_bottom" value="<?php echo $result->points_bottom?>"> 
 		<?php _e('Max. points:', 'chained')?> <input type="text" size="4" name="points_top" value="<?php echo $result->points_top?>"></p>
 		<p><label><?php _e('Optional redirect URL', 'chained')?></label> <input type="text" name="redirect_url" size="60" value="<?php echo $result->redirect_url?>"><br />
-		<i><?php _e('If you enter this, the Research will redirect to the URL instead of showing the "Final Output".', 'chained');?></i></p>
+		<i><?php _e('If you enter this, the research will redirect to the URL instead of showing the "Final Output".', 'chained');?></i></p>
 		<p><input type="submit" name="save" value="<?php _e('Save Result', 'chained')?>" class="button-primary">
 		<input type="button" value="<?php _e('Delete Result', 'chained')?>" onclick="confirmDelChainedResult(this.form);" class="button"></p>
 		<input type="hidden" name="id" value="<?php echo $result->id?>">
