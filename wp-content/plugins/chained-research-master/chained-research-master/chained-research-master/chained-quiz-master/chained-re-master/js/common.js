@@ -13,18 +13,22 @@ chainedQuiz.goon = function(quizID, url) {
 	jQuery('#chained-quiz-form-' + quizID + ' .' + chkClass).each(function(){
 		if(this.checked) anyChecked = true; 	
 	});
-	
+	if(!anyChecked&&(qType=='none')){
+		alert(chained_i18n.please_answer);
+		jQuery('#chained-quiz-action-' + quizID).removeAttr('disabled');
+		return false;
+	}
 	if(!anyChecked && (qType != 'text')) {
 		alert(chained_i18n.please_answer);
 		jQuery('#chained-quiz-action-' + quizID).removeAttr('disabled');
 		return false;
 	}
 
-  if(qType == 'text' && jQuery('#chained-quiz-form-' + quizID + ' textarea[name=answer]').val() == '') {
+    if(qType == 'text' && jQuery('#chained-quiz-form-' + quizID + ' textarea[name=answer]').val() == '') {
   		alert(chained_i18n.please_answer);
   		jQuery('#chained-quiz-action-' + quizID).removeAttr('disabled');
 		return false;
-  }
+    }
 	
 	// submit the answer by ajax
 	data = jQuery('#chained-quiz-form-'+quizID).serialize();
@@ -67,10 +71,13 @@ chainedQuiz.initializeQuestion = function(quizID) {
 			// enable button			
 			jQuery('#chained-quiz-action-' + quizID).removeAttr('disabled');
 		}
+		else if(this.type=='none'){
+			jQuery('#chained-quiz-action-' +quizID).prop('disabled',true);
+		}
 	});
 	
 	jQuery(".chained-quiz-frontend").keyup(function() {
-		if(this.type == 'textarea') {
+		if(this.type == 'textarea'|| this.type=='none') {
 			jQuery('#chained-quiz-action-' + quizID).removeAttr('disabled');
 		}
 	});

@@ -12,7 +12,7 @@
 		
 		<p><label><?php _e('Final Output', 'chained')?></label> <?php echo wp_editor($output, 'output')?></p>
 		
-		<p><?php _e('This is the content that is shown to the user after they complete the quiz. The following variables can be used:', 'chained')?></p>
+		<p><?php _e('This is the content that is shown to the user after they complete the research. The following variables can be used:', 'chained')?></p>
 		
 		<ul>
 			<li>{{result-title}} <?php _e('- The result (grade) title', 'chained')?></li>
