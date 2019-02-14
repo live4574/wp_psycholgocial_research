@@ -5,7 +5,6 @@
 		| <a href="admin.php?page=chained_quizzes&action=edit&id=<?php echo $quiz->id?>"><?php _e('Edit This Research', 'chained')?></a>
 	</p>
 	
-		<h3 align="center"><a href="http://wordpress.org/support/view/plugin-reviews/chained-quiz" target="_blank"><?php _e('Please rate us 5 Stars!', 'chained')?></a></h3>
 	
 	<?php if(sizeof($records)):?>
 		<p><a href="admin.php?page=chainedquiz_list&quiz_id=<?php echo $quiz->id?>&chained_export=1&noheader=1"><?php _e('Export CSV', 'chained')?></a>
