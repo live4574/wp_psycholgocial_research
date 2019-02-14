@@ -1,7 +1,7 @@
 <div class="wrap">
 	<h1><?php printf(__('Manage Questions in %s', 'chained'), $quiz->title);?> </h1>
 	
-	<p><a href="admin.php?page=chained_quizzes"><?php _e('Back to quizzes', 'chained')?></a>
+	<p><a href="admin.php?page=chained_quizzes"><?php _e('Back to researchs', 'chained')?></a>
 		| <a href="admin.php?page=chainedquiz_results&quiz_id=<?php echo $quiz->id?>"><?php _e('Manage Results', 'chained')?></a>
 		| <a href="admin.php?page=chained_quizzes&action=edit&id=<?php echo $quiz->id?>"><?php _e('Edit This Research', 'chained')?></a>
 	</p>

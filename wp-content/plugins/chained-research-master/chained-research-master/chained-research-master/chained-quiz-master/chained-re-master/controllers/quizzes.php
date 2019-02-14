@@ -29,7 +29,7 @@ class ChainedQuizQuizzes {
 			}
 		}
 		
-		$output = __('Congratulations, you completed the <span>quiz!</span>
+		$output = __('수고하셨습니다 <span>설문이 끝났습니다!</span>
 <h2>{{result-title}}</h2>
 {{result-text}}
 
@@ -80,7 +80,7 @@ You achieved {{points}} points from {{questions}} questions.', 'chained');
 		// match posts to exams
 		foreach($quizzes as $cnt=>$quiz) {
 			foreach($posts as $post) {
-				if(strstr($post->post_content,"[chained-quiz ".$quiz->id."]")) {
+				if(strstr($post->post_content,"[chained-research ".$quiz->id."]")) {
 					$quizzes[$cnt]->post=$post;			
 					break;
 				}
@@ -96,7 +96,7 @@ You achieved {{points}} points from {{questions}} questions.', 'chained');
 	   
 	   // select the quiz
 	   $quiz = $wpdb -> get_row($wpdb->prepare("SELECT * FROM ".CHAINED_QUIZZES." WHERE id=%d", $quiz_id));
-	   if(empty($quiz->id)) die(__('Quiz not found', 'chained'));
+	   if(empty($quiz->id)) die(__('Research not found', 'chained'));
 	   
 	   // completion ID already created?
 		if(empty($_SESSION['chained_completion_id'])) {			

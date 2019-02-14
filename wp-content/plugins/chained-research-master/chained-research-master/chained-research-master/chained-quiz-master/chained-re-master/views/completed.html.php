@@ -53,7 +53,6 @@
 				</div>
 			</form>
 			
-			<h3>Did you know?</h3>
 	
 	
 	<?php else:?>
