@@ -1,7 +1,7 @@
 <div class="wrap">
 	<h1><?php _e('Add/Edit Chained Research', 'chained')?></h1>
 	
-	<p><a href="admin.php?page=chained_researchzes"><?php _e('Back to researchzes', 'chained')?></a>
+	<p><a href="admin.php?page=chained_researchzes"><?php _e('Back to researches', 'chained')?></a>
 	<?php if(!empty($research->id)):?>
 		| <a href="admin.php?page=chainedresearch_questions&research_id=<?php echo $research->id?>"><?php _e('Manage Questions', 'chained')?></a>
 		| <a href="admin.php?page=chainedresearch_results&research_id=<?php echo $research->id?>"><?php _e('Manage Results / Outcomes', 'chained')?></a>

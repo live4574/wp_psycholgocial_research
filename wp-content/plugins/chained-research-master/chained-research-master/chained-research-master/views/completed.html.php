@@ -1,5 +1,5 @@
 <div class="wrap">
-	<h1><?php printf(__('Users who submitted quiz "%s"', 'chained'), $quiz->title)?></h1>
+	<h1><?php printf(__('Users who submitted research "%s"', 'chained'), $quiz->title)?></h1>
 	<p><a href="admin.php?page=chained_quizzes"><?php _e('Back to quizzes', 'chained')?></a> | <a href="admin.php?page=chainedquiz_questions&quiz_id=<?php echo $quiz->id?>"><?php _e('Manage questions', 'chained')?></a>
 		| <a href="admin.php?page=chainedquiz_results&quiz_id=<?php echo $quiz->id?>"><?php _e('Manage Results', 'chained')?></a>
 		| <a href="admin.php?page=chained_quizzes&action=edit&id=<?php echo $quiz->id?>"><?php _e('Edit This Research', 'chained')?></a>
@@ -45,7 +45,7 @@
 			<a href="admin.php?page=chainedquiz_list&quiz_id=<?php echo $quiz->id?>&offset=<?php echo ($offset + 25)?>&ob=<?php echo $ob?>&dir=<?php echo $dir?>"><?php _e('next page', 'chained')?></a> <?php endif;?></p>
 			
 			<form method="post">
-				<p><input type="checkbox" onclick="this.checked ? jQuery('#chainedCleanupButton').show() : jQuery('#chainedCleanupButton').hide();"> <?php _e('Show me a button to cleanup all submitted data on this quiz.', 'chained')?></p>
+				<p><input type="checkbox" onclick="this.checked ? jQuery('#chainedCleanupButton').show() : jQuery('#chainedCleanupButton').hide();"> <?php _e('Show me a button to cleanup all submitted data on this research.', 'chained')?></p>
 				
 				<div id="chainedCleanupButton" style="display:none;">
 					<p style="color:red;"><b><?php _e('These operations cannot be undone!', 'chained')?></b></p>
@@ -53,11 +53,11 @@
 				</div>
 			</form>
 			
-			<h3>Did you know?</h3>
+			<h3>Ajou Univ research</h3>
 	
-		<p>Now you can use <a href="http://blog.calendarscripts.info/chained-quiz-logic-free-add-on-for-watupro/" target="_blank">this tool</a> to transfer your quizzes to the best premium quiz plugin <a href="http://calendarscripts.info/watupro/" target="_blank">WatuPRO</a>. This will give you access to premuim support and a lot of great fatures like user registration, randomizing, categorization, super-high flexibility, lots of question types, and more.</p>
+	
 	<?php else:?>
-		<p><?php _e('No one has submitted this quiz yet.', 'chained')?></p>
+		<p><?php _e('No one has submitted this research yet.', 'chained')?></p>
 		
 	<?php endif;?>
 </div>
