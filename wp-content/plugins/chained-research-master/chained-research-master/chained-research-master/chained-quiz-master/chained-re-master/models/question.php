@@ -92,8 +92,9 @@ class ChainedQuizQuestion {
   	   }  	   
   	   
 		switch($question->qtype) {
-			case'none':
-				return;
+			case 'none':
+				return "<div class='chained-quiz-choice' style='display:none'><textarea class='chained-quiz-frontend' name='answer'>none</textarea></div>";
+			break;
 			case 'text':
 				return "<div class='chained-quiz-choice'><textarea class='chained-quiz-frontend' name='answer'></textarea></div>";
 			break;

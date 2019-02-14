@@ -3,7 +3,7 @@ class ChainedQuizCompleted {
 	static function manage() {
 		global $wpdb;
 		
-		// select quiz
+		// select research
 		$quiz = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".CHAINED_QUIZZES." WHERE id=%d", $_GET['quiz_id']));
 		$ob = empty($_GET['ob']) ? 'tC.id' : $_GET['ob'];
 		$dir = empty($_GET['dir'])  ? 'desc' : $_GET['dir'];

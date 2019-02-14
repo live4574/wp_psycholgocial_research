@@ -6,7 +6,6 @@ function chainedquiz_ajax() {
 	switch($action) {
 		// answer a question or quiz
 		case 'answer':
-		case 0: 
 		default:
 			echo ChainedQuizQuizzes :: answer_question();
 		break;

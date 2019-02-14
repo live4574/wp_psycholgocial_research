@@ -13,6 +13,10 @@ chainedQuiz.goon = function(quizID, url) {
 	jQuery('#chained-quiz-form-' + quizID + ' .' + chkClass).each(function(){
 		if(this.checked) anyChecked = true; 	
 	});
+	if(qType=='none'){
+		this.checked=true;
+		anyChecked=true;
+	}
 	if(!anyChecked&&(qType=='none')){
 		alert(chained_i18n.please_answer);
 		jQuery('#chained-quiz-action-' + quizID).removeAttr('disabled');
@@ -23,7 +27,7 @@ chainedQuiz.goon = function(quizID, url) {
 		jQuery('#chained-quiz-action-' + quizID).removeAttr('disabled');
 		return false;
 	}
-
+	
     if(qType == 'text' && jQuery('#chained-quiz-form-' + quizID + ' textarea[name=answer]').val() == '') {
   		alert(chained_i18n.please_answer);
   		jQuery('#chained-quiz-action-' + quizID).removeAttr('disabled');
@@ -72,7 +76,7 @@ chainedQuiz.initializeQuestion = function(quizID) {
 			jQuery('#chained-quiz-action-' + quizID).removeAttr('disabled');
 		}
 		else if(this.type=='none'){
-			jQuery('#chained-quiz-action-' +quizID).prop('disabled',true);
+			jQuery('#chained-quiz-action-' +quizID).removeAttr('disabled');
 		}
 	});
 	
