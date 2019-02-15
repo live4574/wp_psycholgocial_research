@@ -14,11 +14,12 @@ chainedQuiz.goon = function(quizID, url) {
 		if(this.checked) anyChecked = true; 	
 	});
 	if(qType=='none'&&jQuery('#chained-quiz-form-' + quizID + ' textarea[name=answer]').val() == ''){
+		//jQuery('#chained-quiz-form-' + quizID + ' textarea[name=answer]').val() == "nonetype"
 		alert(chained_i18n.please_answer);
 		jQuery('#chained-quiz-action-' + quizID).removeAttr('disabled');
-		return false;
+		false;
 	}
-	if(!anyChecked && (qType != 'text')) {
+	if(!anyChecked && (qType != 'text') &&(qType!='none')) {
 		alert(chained_i18n.please_answer);
 		jQuery('#chained-quiz-action-' + quizID).removeAttr('disabled');
 		return false;
