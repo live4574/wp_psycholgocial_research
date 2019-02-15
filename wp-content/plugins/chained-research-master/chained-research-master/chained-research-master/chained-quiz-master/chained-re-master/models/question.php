@@ -78,7 +78,7 @@ class ChainedQuizQuestion {
 
 	// displays the question contents
 	function display_question($question) {
-		// for now only add stripslashes and autop, we'll soon add a filter like in Watupro
+		//   only add stripslashes and autop
 		$content = stripslashes($question->question);
 		$content = wpautop($content);
 		return $content;
@@ -148,7 +148,7 @@ class ChainedQuizQuestion {
 			}
 		} 
 		else {
-			if($question->qtype == 'text') {
+			if($question->qtype == 'text' ||$question->qtype=='none') {
 					$answer = $wpdb->get_var($wpdb->prepare("SELECT id FROM ".CHAINED_CHOICES."
 	  		  WHERE question_id=%d AND choice LIKE %s", $question->id, $answer));				
 			} 
@@ -172,7 +172,7 @@ class ChainedQuizQuestion {
 		$key = array_shift($goto);
 		
 		//let's treat textareas in different way. If answer is not found, let's not finalize the quiz but go to next
-		if($question->qtype == 'text' and empty($key)) $key = 'next';
+		if(($question->qtype == 'text'||$question->qtype=='none') and empty($key)) $key = 'next';
 		
 		// echo $key.'x'; 
 		if(empty($key) or $key == 'finalize') return false;
