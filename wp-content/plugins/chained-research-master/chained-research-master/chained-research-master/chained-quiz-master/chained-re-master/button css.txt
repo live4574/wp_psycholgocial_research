@@ -1,0 +1,18 @@
+
+.button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+.button4 {border-radius: 12px;}
+.button5 {border-radius: 50%;}
+
+
+<button class="button button5">L</button> <button class="button button5">R</button>
