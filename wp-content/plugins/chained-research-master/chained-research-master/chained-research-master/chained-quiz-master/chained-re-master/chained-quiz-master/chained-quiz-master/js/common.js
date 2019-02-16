@@ -63,7 +63,7 @@ chainedQuiz.goon = function(quizID, url) {
 
 chainedQuiz.initializeQuestion = function(quizID) {
 	jQuery(".chained-quiz-frontend").click(function() {		
-		if(this.type == 'radio' || this.type == 'checkbox') {		
+		if(this.type == 'radio' || this.type == 'checkbox'||this.type=='button') {		
 			// enable button			
 			jQuery('#chained-quiz-action-' + quizID).removeAttr('disabled');
 		}
