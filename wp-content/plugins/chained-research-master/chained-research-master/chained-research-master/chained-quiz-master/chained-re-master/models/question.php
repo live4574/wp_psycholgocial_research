@@ -99,17 +99,23 @@ class ChainedQuizQuestion {
 				return "<div class='chained-quiz-choice'><textarea class='chained-quiz-frontend' name='answer'></textarea></div>";
 			break;
 			case 'radio':
+			case 'button':
 			case 'checkbox':
 				$type = $question->qtype;
-				$name = ($question->qtype == 'radio') ? "answer": "answers[]";
-				
+				$name = ($question->qtype == 'radio' ||$question->qtype=='button') ? "answer": "answers[]"; 
+
 				$output = "";
 				foreach($choices as $choice) {
 					$choice_text = stripslashes($choice->choice);
-					
-					$output .= "<div class='chained-quiz-choice'><label class='chained-quiz-label'><input class='chained-quiz-frontend chained-quiz-$type' type='$type' name='$name' value='".$choice->id."' $autocontinue> $choice_text</label></div>";
-				}
 						
+					if($question->qtype=='button'){
+						$output .= "<div class='chained-quiz-choice'><label class='chained-quiz-label'><input class='chained-quiz-frontend chained-quiz-$type' type='$type' name='$name' value='".$choice_text."' $autocontinue></label></div>";
+					}
+					else{
+						$output .= "<div class='chained-quiz-choice'><label class='chained-quiz-label'><input class='chained-quiz-frontend chained-quiz-$type' type='$type' name='$name' value='".$choice->id."' $autocontinue> $choice_text</label></div>";	
+					}
+				}
+				
 				return $output;
 			break;
 		}
