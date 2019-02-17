@@ -78,7 +78,7 @@ class ChainedQuizQuestion {
 
 	// displays the question contents
 	function display_question($question) {
-		//   only add stripslashes and autop
+		// for now only add stripslashes and autop, we'll soon add a filter like in Watupro
 		$content = stripslashes($question->question);
 		$content = wpautop($content);
 		return $content;
@@ -92,34 +92,21 @@ class ChainedQuizQuestion {
   	   }  	   
   	   
 		switch($question->qtype) {
-			case 'none':
-				return "<div class='chained-quiz-choice' style='display:none'><textarea class='chained-quiz-frontend' name='answer'>none</textarea></div>";
-			break;
 			case 'text':
 				return "<div class='chained-quiz-choice'><textarea class='chained-quiz-frontend' name='answer'></textarea></div>";
 			break;
 			case 'radio':
-			case 'button':
 			case 'checkbox':
 				$type = $question->qtype;
-<<<<<<< HEAD:wp-content/plugins/chained-re-master/models/question.php
-				$name = (($question->qtype == 'radio') ||($question->qtype =='button'))? "answer": "answers[]"; 
-=======
-				$name = ($question->qtype == 'radio' ||$question->qtype=='button') ? "answer": "answers[]"; 
->>>>>>> a727fa24ac0139038d57e956b8c2eee393225853:wp-content/plugins/chained-research-master/chained-research-master/chained-research-master/chained-quiz-master/chained-re-master/models/question.php
-
+				$name = ($question->qtype == 'radio') ? "answer": "answers[]";
+				
 				$output = "";
 				foreach($choices as $choice) {
 					$choice_text = stripslashes($choice->choice);
-						
-					if($question->qtype=='button'){
-						$output .= "<div class='chained-quiz-choice'><label class='chained-quiz-label'><input class='chained-quiz-frontend chained-quiz-$type' type='$type' name='$name' value='".$choice_text."' $autocontinue></label></div>";
-					}
-					else{
-						$output .= "<div class='chained-quiz-choice'><label class='chained-quiz-label'><input class='chained-quiz-frontend chained-quiz-$type' type='$type' name='$name' value='".$choice->id."' $autocontinue> $choice_text</label></div>";	
-					}
+					
+					$output .= "<div class='chained-quiz-choice'><label class='chained-quiz-label'><input class='chained-quiz-frontend chained-quiz-$type' type='$type' name='$name' value='".$choice->id."' $autocontinue> $choice_text</label></div>";
 				}
-				
+						
 				return $output;
 			break;
 		}
@@ -158,7 +145,7 @@ class ChainedQuizQuestion {
 			}
 		} 
 		else {
-			if($question->qtype == 'text' ||$question->qtype=='none') {
+			if($question->qtype == 'text') {
 					$answer = $wpdb->get_var($wpdb->prepare("SELECT id FROM ".CHAINED_CHOICES."
 	  		  WHERE question_id=%d AND choice LIKE %s", $question->id, $answer));				
 			} 
@@ -182,7 +169,7 @@ class ChainedQuizQuestion {
 		$key = array_shift($goto);
 		
 		//let's treat textareas in different way. If answer is not found, let's not finalize the quiz but go to next
-		if(($question->qtype == 'text'||$question->qtype=='none') and empty($key)) $key = 'next';
+		if($question->qtype == 'text' and empty($key)) $key = 'next';
 		
 		// echo $key.'x'; 
 		if(empty($key) or $key == 'finalize') return false;
