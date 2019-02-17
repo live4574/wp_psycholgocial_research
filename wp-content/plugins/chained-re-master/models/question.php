@@ -111,8 +111,6 @@ class ChainedQuizQuestion {
 						
 					if($question->qtype=='button'){
 						$output .= "<style>.chained-quiz-choice{ display: inline;
-							border: 1px solid #bcbcbc;
-							padding: 10px;
 						}
      					</style>
      					<div class='chained-quiz-choice'><label class='chained-quiz-label'><input class='chained-quiz-frontend chained-quiz-$type' type='$type' name='$name' value='".$choice_text."' $autocontinue></label></div>";
