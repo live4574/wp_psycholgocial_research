@@ -87,7 +87,7 @@ class ChainedQuizQuestion {
   // displays the possible choices on a question
   function display_choices($question, $choices) {
   	   $autocontinue = '';
-  	   if($question->qtype == 'radio' and $question->autocontinue) {
+  	   if(($question->qtype == 'radio' ||$question->qtype=='button') and $question->autocontinue) {
   	   	$autocontinue = "onclick=\"chainedQuiz.goon(".$question->quiz_id.", '".admin_url('admin-ajax.php')."');\"";
   	   }  	   
   	   
@@ -102,11 +102,8 @@ class ChainedQuizQuestion {
 			case 'button':
 			case 'checkbox':
 				$type = $question->qtype;
-<<<<<<< HEAD:wp-content/plugins/chained-re-master/models/question.php
 				$name = (($question->qtype == 'radio') ||($question->qtype =='button'))? "answer": "answers[]"; 
-=======
-				$name = ($question->qtype == 'radio' ||$question->qtype=='button') ? "answer": "answers[]"; 
->>>>>>> a727fa24ac0139038d57e956b8c2eee393225853:wp-content/plugins/chained-research-master/chained-research-master/chained-research-master/chained-quiz-master/chained-re-master/models/question.php
+
 
 				$output = "";
 				foreach($choices as $choice) {

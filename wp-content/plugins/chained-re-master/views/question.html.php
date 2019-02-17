@@ -9,19 +9,16 @@
 	<form method="post" onsubmit="return chainedQuizValidate(this);">
 		<p><label><?php _e('Question title', 'chained')?></label> <input type="text" name="title" size="40" value="<?php echo @$question->title?>"></p>
 		<p><label><?php _e('Question contents', 'chained')?></label> <?php echo wp_editor(stripslashes(@$question->question), 'question')?></p>
-		<p><label><?php _e('Question type:', 'chained')?></label> <select name="qtype" onchange="this.value == 'radio' ? jQuery('#chainedAutoContinue').show() : jQuery('#chainedAutoContinue').hide();">
+		<p><label><?php _e('Question type:', 'chained')?></label> <select name="qtype" onchange="(this.value == 'radio' ||this.value=='button') ? jQuery('#chainedAutoContinue').show() : jQuery('#chainedAutoContinue').hide();">
 			<option value="none" <?php if(!empty($question->id) and $question->qtype == 'none') echo 'selected'?>><?php _e('None','chained')?></option>
-<<<<<<< HEAD:wp-content/plugins/chained-re-master/views/question.html.php
 			<option value="button" <?php if(!empty($question->id) and $question->qtype == 'none') echo 'selected'?>><?php _e('Button (one possible answer)','chained')?></option>
-=======
-			<option value="button" <?php if(!empty($question->id) and $question-<qtype =='button') echo 'selected'?>><?php _e('Button (one possible answer)','chained')?></option>
->>>>>>> a727fa24ac0139038d57e956b8c2eee393225853:wp-content/plugins/chained-research-master/chained-research-master/chained-research-master/chained-quiz-master/chained-re-master/views/question.html.php
+		
 			<option value="radio" <?php if(!empty($question->id) and $question->qtype == 'radio') echo 'selected'?>><?php _e('Radio buttons (one possible answer)','chained')?></option>
 			<option value="checkbox" <?php if(!empty($question->id) and $question->qtype == 'checkbox') echo 'selected'?>><?php _e('Checkboxes (multiple possible answers)','chained')?></option>
 			<option value="text" <?php if(!empty($question->id) and $question->qtype == 'text') echo 'selected'?>><?php _e('Text box (open-end, essay question)','chained')?></option>
 		</select>
 		
-		<span id="chainedAutoContinue" style="display:<?php echo (empty($question->id) or $question->qtype == 'radio') ? 'inline' : 'none';?>"><input type="checkbox" name="autocontinue" value="1" <?php if(!empty($question->autocontinue)) echo 'checked'?>> <?php _e('Automatically continue to the next question when a choice is selected', 'chained')?></span> </p>
+		<span id="chainedAutoContinue" style="display:<?php echo (empty($question->id) or $question->qtype == 'radio' or $question->qtype =='button') ? 'inline' : 'none';?>"><input type="checkbox" name="autocontinue" value="1" <?php if(!empty($question->autocontinue)) echo 'checked'?>> <?php _e('Automatically continue to the next question when a choice is selected', 'chained')?></span> </p>
 		
 		<h3><?php _e('Choices/Answers for this question', 'chained')?></h3>
 		

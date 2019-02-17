@@ -19,7 +19,7 @@ chainedQuiz.goon = function(quizID, url) {
 		jQuery('#chained-quiz-action-' + quizID).removeAttr('disabled');
 		false;
 	}
-	if(!anyChecked && (qType != 'text') &&(qType!='none' &&(qType!='button'))) {
+	if(!anyChecked && (qType != 'text') &&((qType!='none') &&(qType!='button'))) {
 		alert(chained_i18n.please_answer);
 		jQuery('#chained-quiz-action-' + quizID).removeAttr('disabled');
 		return false;
