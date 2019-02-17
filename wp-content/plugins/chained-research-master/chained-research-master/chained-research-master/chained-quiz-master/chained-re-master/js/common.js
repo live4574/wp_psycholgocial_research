@@ -13,17 +13,18 @@ chainedQuiz.goon = function(quizID, url) {
 	jQuery('#chained-quiz-form-' + quizID + ' .' + chkClass).each(function(){
 		if(this.checked) anyChecked = true; 	
 	});
-	if(!anyChecked&&(qType=='none')){
+	if(qType=='none'&&jQuery('#chained-quiz-form-' + quizID + ' textarea[name=answer]').val() == ''){
+		//jQuery('#chained-quiz-form-' + quizID + ' textarea[name=answer]').val() == "nonetype"
+		alert(chained_i18n.please_answer);
+		jQuery('#chained-quiz-action-' + quizID).removeAttr('disabled');
+		false;
+	}
+	if(!anyChecked && (qType != 'text') &&(qType!='none' &&(qType!='button'))) {
 		alert(chained_i18n.please_answer);
 		jQuery('#chained-quiz-action-' + quizID).removeAttr('disabled');
 		return false;
 	}
-	if(!anyChecked && (qType != 'text')) {
-		alert(chained_i18n.please_answer);
-		jQuery('#chained-quiz-action-' + quizID).removeAttr('disabled');
-		return false;
-	}
-
+	
     if(qType == 'text' && jQuery('#chained-quiz-form-' + quizID + ' textarea[name=answer]').val() == '') {
   		alert(chained_i18n.please_answer);
   		jQuery('#chained-quiz-action-' + quizID).removeAttr('disabled');
@@ -67,17 +68,14 @@ chainedQuiz.goon = function(quizID, url) {
 
 chainedQuiz.initializeQuestion = function(quizID) {
 	jQuery(".chained-quiz-frontend").click(function() {		
-		if(this.type == 'radio' || this.type == 'checkbox') {		
+		if(this.type == 'radio' || this.type == 'checkbox' ||this.type=='button') {		
 			// enable button			
 			jQuery('#chained-quiz-action-' + quizID).removeAttr('disabled');
-		}
-		else if(this.type=='none'){
-			jQuery('#chained-quiz-action-' +quizID).prop('disabled',true);
 		}
 	});
 	
 	jQuery(".chained-quiz-frontend").keyup(function() {
-		if(this.type == 'textarea'|| this.type=='none') {
+		if(this.type == 'textarea'||this.type=='none') {
 			jQuery('#chained-quiz-action-' + quizID).removeAttr('disabled');
 		}
 	});

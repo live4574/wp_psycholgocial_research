@@ -8,5 +8,5 @@ class ChainedQuizShortcodes {
 		ChainedQuizQuizzes :: display($quiz_id);
 		$content = ob_get_clean();
 		return $content;
-	} // end quiz()
+	} // end research()
 }

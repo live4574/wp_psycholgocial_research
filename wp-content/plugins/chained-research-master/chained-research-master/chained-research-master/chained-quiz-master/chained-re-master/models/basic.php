@@ -116,7 +116,7 @@ class ChainedQuiz {
 			update_option('chained_fixed_sort_order', 1);
 		}	
 		
-		// update not_empty = 1 for all completed records prior to version 0.8.7 and DB version 0.66
+		// update not_empty = 1 for all completed records prior to version and DB version 
 		$version = get_option('chainedquiz_version');
 		if($version < 0.67) {
 			$wpdb->query("UPDATE ".CHAINED_COMPLETED." SET not_empty=1");
@@ -152,7 +152,7 @@ class ChainedQuiz {
 				'chained-common',
 				CHAINED_URL.'js/common.js',
 				false,
-				'0.8.4',
+				'1.0',
 				false
 		);
 		wp_enqueue_script("chained-common");
@@ -178,7 +178,7 @@ class ChainedQuiz {
 		define( 'CHAINED_VERSION', get_option('chained_version'));
 				
 		// shortcodes
-		add_shortcode('chained-quiz', array("ChainedQuizShortcodes", "quiz"));	
+		add_shortcode('chained-research', array("ChainedQuizShortcodes", "quiz"));	
 		
 		// once daily delete empty records older than 1 day
 		if(get_option('chainedquiz_cleanup') != date("Y-m-d")) {
@@ -215,7 +215,7 @@ class ChainedQuiz {
 		   	
 		require(CHAINED_PATH."/views/options.php");
 	}	
-	
+	//유료
 	static function help() {
 		require(CHAINED_PATH."/views/help.php");
 	}	
