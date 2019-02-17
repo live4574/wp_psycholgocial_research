@@ -1,4 +1,9 @@
+.chained-quiz-choice{ 
+	display: inline;
+	border-radius: 110px;
+}
 .chained-quiz-action {
 	padding-top: 20px;
 	padding-bottom: 20px;
+	border-radius: 13em/3em;
 }
