@@ -116,11 +116,11 @@ class ChainedQuizQuestion {
 						}
 						.chained-quiz-choice{ 
 							display: inline;
-							margin: 30px;
-							margine-right:30px;
+							margin-left:20px;
+							margin-right:20px;
 						}
      					</style>
-     					<div class='chained-quiz-choice'><label class='chained-quiz-label'><input class='chained-quiz-frontend chained-quiz-$type' type='$type' style= 'width:130pt; height:250t; border-radius: 13em/8em' name='$name' value='".$choice_text."' $autocontinue></label></div>";
+     					<div class='chained-quiz-choice'><label class='chained-quiz-label'><input class='chained-quiz-frontend chained-quiz-$type' type='$type' style= 'width:80pt; height:80pt; border-radius: 13em/8em' name='$name' value='".$choice_text."' $autocontinue></label></div>";
 					}
 					else{
 						$output .= "<div class='chained-quiz-choice'><label class='chained-quiz-label'><input class='chained-quiz-frontend chained-quiz-$type' type='$type' name='$name' value='".$choice->id."' $autocontinue> $choice_text</label></div>";	
