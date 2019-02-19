@@ -53,6 +53,7 @@
 
 <script type="text/javascript" >
 var numChoices = 1;
+var numTargets=1;
 function chainedQuizAddChoice() {
 	html = '<?php ob_start();
 	include(CHAINED_PATH."/views/choice.html.php");
@@ -66,20 +67,6 @@ function chainedQuizAddChoice() {
 	
 	jQuery('#answerRows').append(html);
 }
-var numTargets=1;
-function chainedQuizAddTarget() {
-	html = '<?php ob_start();
-	include(CHAINED_PATH."/views/target.html.php");
-	$content = ob_get_clean();	
-	$content = str_replace("\n", '', $content);
-	echo $content; ?>';
-	
-	// the correct checkbox value
-	numChoices++;
-	html = html.replace('name="is_correct[]" value="1"', 'name="is_correct[]" value="'+numTargets+'"');
-	
-	jQuery('#answerRows').append(html);
-}
 
 function chainedQuizValidate(frm) {
 	if(frm.title.value == '') {
@@ -89,5 +76,18 @@ function chainedQuizValidate(frm) {
 	}
 	
 	return true;
+}
+function chainedQuizAddTarget() {
+	html = '<?php ob_start();
+	include(CHAINED_PATH."/views/target.html.php");
+	$content = ob_get_clean();	
+	$content = str_replace("\n", '', $content);
+	echo $content; ?>';
+	
+	// the correct checkbox value
+	numTargets++;
+	html = html.replace('name="is_target[]" value="1"', 'name="is_target[]" value="'+numTargets+'"');
+	
+	jQuery('#targetRows').append(html);
 }
 </script>
