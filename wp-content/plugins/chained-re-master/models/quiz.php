@@ -37,7 +37,11 @@ class ChainedQuizQuiz {
 		// delete the quiz
 		$wpdb->query($wpdb->prepare("DELETE FROM ".CHAINED_QUIZZES." WHERE id=%d", $id));
 	}
-
+    function targetizing($quiz){
+    	global $wpdb,$user_ID;
+    	$user_id=empty($user_ID) ? 0: $user_ID;
+    	
+    }
 	function finalize($quiz, $points) {		
 	    global $wpdb, $user_ID;
 	    
