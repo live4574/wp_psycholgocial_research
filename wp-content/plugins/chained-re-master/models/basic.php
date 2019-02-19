@@ -32,15 +32,16 @@ class ChainedQuiz {
 			$wpdb->query($sql);
 	  } 
 	 //targets
-	 if($wpdb->get_var("SHOW TABLES LIKE '".CHAINED_QUIZ_TARGET"'") !=CHAINED_QUIZ_TARGET){
-	 		$sql= "CREATE TABLE '" . CHAINED_QUIZ_TARGET ."' (
-	 			  'question_id' INT UNSIGED NOT NULL DEFAULT 0,
-	 			  'target_id INT UNSIGED NOT NULL DEFAULT 0,
-	 			  'target_name' VARCHAR(255) NOT NULL DEFAULT
-	 			) DEFAULT CHARET=utf8;"
-	 		$wpdb->query($sql);
-	 }
-	  
+	  if($wpdb->get_var("SHOW TABLES LIKE '".CHAINED_TARGETS."'") != CHAINED_TARGETS) {        
+			$sql = "CREATE TABLE `" . CHAINED_TARGETS . "` (
+				  `question_id` INT UNSIGNED NOT NULL DEFAULT 0,
+				  `target_id` INT UNSIGNED NOT NULL DEFAULT 0,
+				  `target_name` VARCHAR(255) NOT NULL DEFAULT '',			  
+				) DEFAULT CHARSET=utf8;";
+			
+			$wpdb->query($sql);
+	  }
+	 
 	  // choices
      if($wpdb->get_var("SHOW TABLES LIKE '".CHAINED_CHOICES."'") != CHAINED_CHOICES) {        
 			$sql = "CREATE TABLE `" . CHAINED_CHOICES . "` (
@@ -179,7 +180,7 @@ class ChainedQuiz {
 		// define table names 
 		define( 'CHAINED_QUIZZES', $wpdb->prefix. "chained_quizzes");
 		define( 'CHAINED_QUESTIONS', $wpdb->prefix. "chained_questions");
-		define('CHAINED_QUIZ_TARGETS', $wpdb->prefix. "chained_quiz_targets")
+		define('CHAINED_TARGETS', $wpdb->prefix. "chained_targets");
 		define( 'CHAINED_CHOICES', $wpdb->prefix. "chained_choices");
 		define( 'CHAINED_RESULTS', $wpdb->prefix. "chained_results");
 		define( 'CHAINED_COMPLETED', $wpdb->prefix. "chained_completed");

@@ -35,6 +35,17 @@
 		</div>
 		
 		<p><input type="submit" value="<?php _e('Save question and answers','chained')?>" class="button-primary"></p>
+		<h4><?php _e('Targets for this question', 'chained')?></h4>
+		<p> <input type="button" value="<?php _e('Add more rows', 'chained')?>" onclick="chainedQuizAddTarget();" class="button"></p>
+		<div id="targetRows">
+			<?php if(!empty($targets) and sizeof($targets)):
+				foreach($targets as $target):
+					include(CHAIEND_PATH."/views/target.html.php");
+				endforeach;
+			endif;
+			unset($target);
+			include(CHAIEND_PATH."/views/target.html.php");?>
+		</div>
 		<input type="hidden" name="ok" value="1">
 		<input type="hidden" name="quiz_id" value="<?php echo $quiz->id?>">
 	</form>
@@ -52,6 +63,20 @@ function chainedQuizAddChoice() {
 	// the correct checkbox value
 	numChoices++;
 	html = html.replace('name="is_correct[]" value="1"', 'name="is_correct[]" value="'+numChoices+'"');
+	
+	jQuery('#answerRows').append(html);
+}
+var numTargets=1;
+function chainedQuizAddTarget() {
+	html = '<?php ob_start();
+	include(CHAINED_PATH."/views/target.html.php");
+	$content = ob_get_clean();	
+	$content = str_replace("\n", '', $content);
+	echo $content; ?>';
+	
+	// the correct checkbox value
+	numChoices++;
+	html = html.replace('name="is_correct[]" value="1"', 'name="is_correct[]" value="'+numTargets+'"');
 	
 	jQuery('#answerRows').append(html);
 }
