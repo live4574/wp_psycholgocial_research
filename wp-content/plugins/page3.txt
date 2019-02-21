@@ -1,0 +1,22 @@
+<html>
+<style>
+ table.explanation{
+   background-color: #e2e2e2;
+ }
+</style>
+<table class="explanation">
+ <tbody>
+ <tr>
+  <td>
+
+참여자께서는 화면 중앙에 제시되는 단어가 왼편 상단의 단어에 해당된다고 생각되면 L 버튼을,
+오른편 상단의 단어에 해당된다고 생각되면 R 버튼을 누르시면 됩니다. 버튼을 잘못 누르시는 경우에는
+'X' 표시가 나타나며, 이 경우에는 다시 버튼을 눌러주시면 됩니다.
+
+
+   </td>
+
+ </tr>
+ </tbody>
+</table>
+</html>

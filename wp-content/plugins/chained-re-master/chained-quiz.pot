@@ -1,0 +1,6 @@
+# Copyright (C) 2019 Chained Research / modified by chained quiz
+# This file is distributed under the same license as the Chained Research package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Chained Research 1.0\n"
+
