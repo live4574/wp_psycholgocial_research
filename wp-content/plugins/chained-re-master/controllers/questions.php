@@ -24,7 +24,8 @@ class ChainedQuizQuestions {
 			try {
 				$_POST['quiz_id'] = $_GET['quiz_id'];
 				$qid = $_question->add($_POST);		
-				$_question->save_choices($_POST, $qid);	
+				$_question->save_choices($_POST, $qid);
+				$_question->save_targets($_POST, $qid);
 				chained_redirect("admin.php?page=chainedquiz_questions&quiz_id=".$_GET['quiz_id']);
 			}
 			catch(Exception $e) {
@@ -48,6 +49,7 @@ class ChainedQuizQuestions {
 			try {
 				$_question->save($_POST, $_GET['id']);
 				$_question->save_choices($_POST, $_GET['id']);
+				$_question->save_targets($_POST, $_GET['id']);
 			}
 			catch(Exception $e) {
 				$error = $e->getMessage();
@@ -60,6 +62,8 @@ class ChainedQuizQuestions {
 
 		// select question choices
 		$choices = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".CHAINED_CHOICES." WHERE question_id=%d ORDER BY id ", $question->id));	
+		//select targets
+		$targets = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".CHAINED_TARGETS." WHERE question_id=%d ORDER BY id ", $question->id));	
 		
 		// select other questions for the go-to dropdown
 		$other_questions = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".CHAINED_QUESTIONS." 

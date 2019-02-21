@@ -113,7 +113,9 @@ You achieved {{points}} points from {{questions}} questions.', 'chained');
 		 // select possible answers
 		 $choices = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".CHAINED_CHOICES." 
 		 	WHERE quiz_id=%d AND question_id=%d ORDER BY id", $quiz->id, $question->id));
-		 			 	
+		 $targets =$wpdb->get_results($wpdb->prepare("SELECT * FROM ".CHAINED_TARGETS." 
+		 	WHERE quiz_id=%d AND question_id=%d ORDER BY id", $quiz->id, $question->id));
+		  
 		 $first_load = true;			 	
 		 include(CHAINED_PATH."/views/display-quiz.html.php");
 	}
@@ -168,6 +170,9 @@ You achieved {{points}} points from {{questions}} questions.', 'chained');
 		if(!empty($next_question->id)) {
 			$question = $next_question;
 			$choices = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".CHAINED_CHOICES." 
+		 	WHERE quiz_id=%d AND question_id=%d ORDER BY id", $quiz->id, $question->id));
+			include(CHAINED_PATH."/views/display-quiz.html.php");
+			$targets = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".CHAINED_TARGETS." 
 		 	WHERE quiz_id=%d AND question_id=%d ORDER BY id", $quiz->id, $question->id));
 			include(CHAINED_PATH."/views/display-quiz.html.php");
 		}

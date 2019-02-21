@@ -34,10 +34,10 @@ class ChainedQuiz {
 	 //targets
 	  if($wpdb->get_var("SHOW TABLES LIKE '".CHAINED_TARGETS."'") != CHAINED_TARGETS) {        
 			$sql = "CREATE TABLE `" . CHAINED_TARGETS . "` (
+				  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
 				  `quiz_id` INT UNSIGED NOT NULL DEFAULT 0,
 				  `question_id` INT UNSIGNED NOT NULL DEFAULT 0,
-				  `target_id` INT UNSIGNED NOT NULL DEFAULT 0,
-				  `target_name` VARCHAR(255) NOT NULL DEFAULT '',			  
+				  `target` TEXT,			  
 				) DEFAULT CHARSET=utf8;";
 			
 			$wpdb->query($sql);

@@ -34,8 +34,7 @@
 			include(CHAINED_PATH."/views/choice.html.php");?>
 		</div>
 		
-		<p><input type="submit" value="<?php _e('Save question and answers','chained')?>" class="button-primary"></p>
-		<h4><?php _e('Targets for this question', 'chained')?></h4>
+		<h3><?php _e('Targets for this question', 'chained')?></h3>
 		<p> <input type="button" value="<?php _e('Add more rows', 'chained')?>" onclick="chainedQuizAddTarget();" class="button"></p>
 		<div id="targetRows">
 			<?php if(!empty($targets) and sizeof($targets)):
@@ -46,6 +45,7 @@
 			unset($target);
 			include(CHAIEND_PATH."/views/target.html.php");?>
 		</div>
+		<p><input type="submit" value="<?php _e('Save question and answers','chained')?>" class="button-primary"></p>
 		<input type="hidden" name="ok" value="1">
 		<input type="hidden" name="quiz_id" value="<?php echo $quiz->id?>">
 	</form>
