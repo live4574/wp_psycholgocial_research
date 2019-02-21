@@ -92,21 +92,22 @@ class ChainedQuizQuestion {
 			
 			// else update
 			$wpdb->query($wpdb->prepare("UPDATE ".CHAINED_TARGETS." SET
-				target=%s, WHERE id=%d", 
-				$_POST['answer'.$target->id], $target->id));
+				target=%s, points=%s, is_correct=%d, goto=%s WHERE id=%d", 
+				$_POST['answer'.$target->id], $_POST['points'.$target->id], @$_POST['is_correct'.$target->id], $_POST['goto'.$target->id], $target->id));
 		}	
 		
 		// add new targets
 		$counter = 1;
 		$target_array = @$_POST['is_target'];
 		foreach($_POST['answers'] as $answer) {
+			$targeting = @in_array($counter, $target_array) ? 1 : 0;
 			$counter++;
 			if($answer === '') continue;
 		
 			// now insert the target
 			$wpdb->query( $wpdb->prepare("INSERT INTO ".CHAINED_TARGET." SET
-				question_id=%d, target=%s, quiz_id=%d", 
-				$id, $answer,  $_POST['quiz_id']) );
+				question_id=%d, target=%s, is_correct=%d, quiz_id=%d", 
+				$id, $answer, $targeting, $_POST['quiz_id']) );
 		}
 	} // end save_targets
 
