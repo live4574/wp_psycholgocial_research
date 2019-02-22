@@ -33,7 +33,7 @@
 
 <script type="text/javascript" >
 function chainedConfirmDelete(qid) {
-	if(confirm("<?php _e('Are you sure?', 'chained')?>")) {
+	if(confirm("<?php _e('정말 삭제합니까?', 'chained')?>")) {
 		window.location = 'admin.php?page=chainedquiz_questions&quiz_id=<?php echo $quiz->id?>&del=1&id='+qid;
 	}
 }

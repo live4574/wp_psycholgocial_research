@@ -100,7 +100,7 @@ class ChainedQuizCompleted {
 			$csv=implode($newline,$rows);		
 			
 			$now = gmdate('D, d M Y H:i:s') . ' GMT';	
-			$filename = 'research-'.$quiz->id.'-results.csv';	
+			$filename = 'quiz-'.$quiz->id.'-results.csv';	
 			header('Content-Type: ' . kiboko_get_mime_type());
 			header('Expires: ' . $now);
 			header('Content-Disposition: attachment; filename="'.$filename.'"');

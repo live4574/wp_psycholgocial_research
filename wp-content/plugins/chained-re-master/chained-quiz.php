@@ -27,6 +27,7 @@ require_once(CHAINED_PATH.'/helpers/htmlhelper.php');
 add_action('init', array("ChainedQuiz", "init"));
 
 register_activation_hook(__FILE__, array("ChainedQuiz", "install"));
+
 add_action('admin_menu', array("ChainedQuiz", "menu"));
 add_action('admin_enqueue_scripts', array("ChainedQuiz", "scripts"));
 

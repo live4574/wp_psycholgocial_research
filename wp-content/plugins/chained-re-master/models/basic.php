@@ -6,7 +6,6 @@ class ChainedQuiz {
    	$wpdb -> show_errors();
    	
    	if(!$update) self::init();
-	  
 	   // quizzes
    	if($wpdb->get_var("SHOW TABLES LIKE '".CHAINED_QUIZZES."'") != CHAINED_QUIZZES) {        
 			$sql = "CREATE TABLE `" . CHAINED_QUIZZES . "` (
@@ -31,18 +30,7 @@ class ChainedQuiz {
 			
 			$wpdb->query($sql);
 	  } 
-	 //targets
-	  if($wpdb->get_var("SHOW TABLES LIKE '".CHAINED_TARGETS."'") != CHAINED_TARGETS) {        
-			$sql = "CREATE TABLE `" . CHAINED_TARGETS . "` (
-				  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-				  `quiz_id` INT UNSIGED NOT NULL DEFAULT 0,
-				  `question_id` INT UNSIGNED NOT NULL DEFAULT 0,
-				  `target` TEXT,			  
-				) DEFAULT CHARSET=utf8;";
-			
-			$wpdb->query($sql);
-	  }
-	 
+	  
 	  // choices
      if($wpdb->get_var("SHOW TABLES LIKE '".CHAINED_CHOICES."'") != CHAINED_CHOICES) {        
 			$sql = "CREATE TABLE `" . CHAINED_CHOICES . "` (
@@ -57,7 +45,18 @@ class ChainedQuiz {
 			
 			$wpdb->query($sql);
 	  } 
-	  
+	    // targets
+   	if($wpdb->get_var("SHOW TABLES LIKE '".CHAINED_TARGETS."'") != CHAINED_TARGETS) {        
+			$sql = "CREATE TABLE `" . CHAINED_TARGETS . "` (
+				  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+				  `quiz_id` INT UNSIGNED NOT NULL DEFAULT 0,
+				  `question_id` INT UNSIGNED NOT NULL DEFAULT 0,
+				  `target` TEXT,
+				  `is_correct` TINYINT UNSIGNED NOT NULL DEFAULT 0,
+				) DEFAULT CHARSET=utf8;";
+			
+			$wpdb->query($sql);
+	  }
 	  // results
 	  if($wpdb->get_var("SHOW TABLES LIKE '".CHAINED_RESULTS."'") != CHAINED_RESULTS) {        
 			$sql = "CREATE TABLE `" . CHAINED_RESULTS . "` (
@@ -66,7 +65,8 @@ class ChainedQuiz {
 				  `points_bottom` DECIMAL(8,2) NOT NULL DEFAULT '0.00',
 				  `points_top` DECIMAL(8,2) NOT NULL DEFAULT '0.00',
 				  `title` VARCHAR(255) NOT NULL DEFAULT '',
-				  `description` TEXT 
+				  `description` TEXT,
+				  `check` TEXT, 
 				) DEFAULT CHARSET=utf8;";
 			
 			$wpdb->query($sql);
@@ -106,6 +106,14 @@ class ChainedQuiz {
 	  chainedquiz_add_db_fields(array(
 	  	  array("name" => 'autocontinue', 'type' => 'TINYINT UNSIGNED NOT NULL DEFAULT 0'),
 	  	  array("name" => 'sort_order', 'type' => 'INT UNSIGNED NOT NULL DEFAULT 0'),
+	  	  array("name" => 'target','type'=>'INT UNSIGNED NOT NULL DEFAULT 0'),
+	  	  array("name" => 'target1', 'type'=>'TEXT'),
+	  	  array("name" => 'target2', 'type'=>'TEXT'),
+	  	  array("name" => 'target3', 'type'=>'TEXT'),
+	  	  array("name" => 'target4', 'type'=>'TEXT'),
+	  	  array("name" => 'target5', 'type'=>'TEXT'),
+	  	  array("name" => 'target6', 'type'=>'TEXT'),
+	  	  array("name" => 'target7', 'type'=>'TEXT'),
 	  ), CHAINED_QUESTIONS);
 	  
 	  chainedquiz_add_db_fields(array(
@@ -116,7 +124,8 @@ class ChainedQuiz {
 	  	  array("name" => 'email_admin', 'type' => "TINYINT UNSIGNED NOT NULL DEFAULT 0"),
 	  	  array("name" => 'email_user', 'type' => "TINYINT UNSIGNED NOT NULL DEFAULT 0"),
 	  ), CHAINED_QUIZZES);
-	  
+
+
 	  chainedquiz_add_db_fields(array(
 	  	  array("name" => 'not_empty', 'type' => "TINYINT NOT NULL DEFAULT 0"), /*When initially creating a record, it is empty. If it remains so we have to delete it.*/
 	  ), CHAINED_COMPLETED);
@@ -168,7 +177,7 @@ class ChainedQuiz {
 		);
 		wp_enqueue_script("chained-common");
 		
-		$translation_array = array('please_answer' => __('Please answer the question', 'chained'));
+		$translation_array = array('please_answer' => __('질문에 응답해주세요.', 'chained'));
 		wp_localize_script( 'chained-common', 'chained_i18n', $translation_array );	
 	}
 	
@@ -181,8 +190,8 @@ class ChainedQuiz {
 		// define table names 
 		define( 'CHAINED_QUIZZES', $wpdb->prefix. "chained_quizzes");
 		define( 'CHAINED_QUESTIONS', $wpdb->prefix. "chained_questions");
-		define('CHAINED_TARGETS', $wpdb->prefix. "chained_targets");
 		define( 'CHAINED_CHOICES', $wpdb->prefix. "chained_choices");
+		define( 'CHAINED_TARGETS', $wpdb->prefix. "chained_targets");
 		define( 'CHAINED_RESULTS', $wpdb->prefix. "chained_results");
 		define( 'CHAINED_COMPLETED', $wpdb->prefix. "chained_completed");
 		define( 'CHAINED_USER_ANSWERS', $wpdb->prefix. "chained_user_answers");
@@ -202,7 +211,32 @@ class ChainedQuiz {
 		if($version < '0.67') self::install(true);
 	}
 			
+	// manage general options
+	static function options() {
+		if(!empty($_POST['ok'])) {
+			update_option('wphostel_currency', $_POST['currency']);
+			update_option('wphostel_booking_mode', $_POST['booking_mode']);
+			update_option('wphostel_email_options', array("do_email_admin"=>@$_POST['do_email_admin'], 
+				"admin_email"=>$_POST['admin_email'], "do_email_user"=>@$_POST['do_email_user'], 
+				"email_admin_subject"=>$_POST['email_admin_subject'], "email_admin_message"=>$_POST['email_admin_message'],
+				"email_user_subject"=>$_POST['email_user_subject'], "email_user_message"=>$_POST['email_user_message']));
+			update_option('wphostel_paypal', $_POST['paypal']);
+			update_option('wphostel_booking_url', $_POST['booking_url']);		
+		}		
 		
+		$currency = get_option('wphostel_currency');
+		$currencies=array('USD'=>'$', "EUR"=>"&euro;", "GBP"=>"&pound;", "JPY"=>"&yen;", "AUD"=>"AUD",
+		   "CAD"=>"CAD", "CHF"=>"CHF", "CZK"=>"CZK", "DKK"=>"DKK", "HKD"=>"HKD", "HUF"=>"HUF",
+		   "ILS"=>"ILS", "MXN"=>"MXN", "NOK"=>"NOK", "NZD"=>"NZD", "PLN"=>"PLN", "SEK"=>"SEK",
+		   "SGD"=>"SGD");
+		   
+		$booking_mode = get_option('wphostel_booking_mode');   
+		$email_options = get_option('wphostel_email_options');
+		$paypal = get_option('wphostel_paypal');
+		   	
+		require(CHAINED_PATH."/views/options.php");
+	}	
+	//유료
 	static function help() {
 		require(CHAINED_PATH."/views/help.php");
 	}	

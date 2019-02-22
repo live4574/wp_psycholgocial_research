@@ -34,26 +34,56 @@
 			include(CHAINED_PATH."/views/choice.html.php");?>
 		</div>
 		
-		<h3><?php _e('Targets for this question', 'chained')?></h3>
-		<p> <input type="button" value="<?php _e('Add more rows', 'chained')?>" onclick="chainedQuizAddTarget();" class="button"></p>
-		<div id="targetRows">
-			<?php if(!empty($targets) and sizeof($targets)):
-				foreach($targets as $target):
-					include(CHAIEND_PATH."/views/target.html.php");
-				endforeach;
-			endif;
-			unset($target);
-			include(CHAIEND_PATH."/views/target.html.php");?>
-		</div>
-		<p><input type="submit" value="<?php _e('Save question and answers','chained')?>" class="button-primary"></p>
+		<p><input type="submit" value="<?php _e('저장','chained')?>" class="button-primary"></p>
 		<input type="hidden" name="ok" value="1">
 		<input type="hidden" name="quiz_id" value="<?php echo $quiz->id?>">
+	</form>
+	<form method="post">
+	<h3><?php _e('Target for this question','chained')?></h3>
+		<div id="targetRows">
+			<textarea rows="1" cols="15" name="targetGroup"><?php echo $question->target?></textarea> 
+			<textarea rows="1" cols="15" name="target1"><?php echo $question->target1?></textarea> 
+			<textarea rows="1" cols="15" name="target2"><?php echo $question->target2?></textarea>
+			<textarea rows="1" cols="15" name="target3"><?php echo $question->target3?></textarea>
+			<textarea rows="1" cols="15" name="target4"><?php echo $question->target4?></textarea>
+			<textarea rows="1" cols="15" name="target5"><?php echo $question->target5?></textarea>
+			<textarea rows="1" cols="15" name="target6"><?php echo $question->target6?></textarea>
+			<textarea rows="1" cols="15" name="target7"><?php echo $question->target7?></textarea>
+		</div>
+		<?php
+		global $wpdb;
+		$wpdb->update(
+			$wpdb->prefix . "chained_questions",
+			array(
+				"target"=> $_POST['targetGroup'],
+				"target1" => $_POST['target1'],
+				"target2" => $_POST['target2'],
+				"target3" => $_POST['target3'],
+				"target4" => $_POST['target4'],
+				"target5" => $_POST['target5'],
+				"target6" => $_POST['target6'],
+				"target7" => $_POST['target7']
+			),
+			array('id'=> $question->id),
+			array('%d',
+				  '%s',
+				  '%s',
+				  '%s',
+				  '%s',
+				  '%s',
+				  '%s',
+				  '%s',
+			),
+			array('%d')
+		);
+		?>
+		<p><input type="submit" value="<?php _e('저장','chained')?>" class="button-primary"></p>
+		
 	</form>
 </div>
 
 <script type="text/javascript" >
 var numChoices = 1;
-var numTargets=1;
 function chainedQuizAddChoice() {
 	html = '<?php ob_start();
 	include(CHAINED_PATH."/views/choice.html.php");
@@ -70,24 +100,10 @@ function chainedQuizAddChoice() {
 
 function chainedQuizValidate(frm) {
 	if(frm.title.value == '') {
-		alert("<?php _e('Please enter question title', 'chained')?>");
+		alert("<?php _e('question title을 입력해주세요', 'chained')?>");
 		frm.title.focus();
 		return false;
 	}
-	
 	return true;
-}
-function chainedQuizAddTarget() {
-	html = '<?php ob_start();
-	include(CHAINED_PATH."/views/target.html.php");
-	$content = ob_get_clean();	
-	$content = str_replace("\n", '', $content);
-	echo $content; ?>';
-	
-	// the correct checkbox value
-	numTargets++;
-	html = html.replace('name="is_target[]" value="1"', 'name="is_target[]" value="'+numTargets+'"');
-	
-	jQuery('#targetRows').append(html);
 }
 </script>

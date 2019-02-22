@@ -34,8 +34,6 @@ class ChainedQuizQuestion {
 	
 		// delete choices		
 		$wpdb->query($wpdb->prepare("DELETE FROM ".CHAINED_CHOICES." WHERE question_id=%d", $id));
-		//delete targets
-		$wpdb->query($wpdb->prepare("DELETE FROM ".CHAINED_TARGETS." WHERE question_id=%d", $id));
 		
 		// delete question
 		$result = $wpdb->query($wpdb->prepare("DELETE FROM ".CHAINED_QUESTIONS." WHERE id=%d", $id));
@@ -50,7 +48,7 @@ class ChainedQuizQuestion {
 		
 		// edit/delete existing choices
 		$choices = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".CHAINED_CHOICES." WHERE question_id=%d ORDER BY id ", $id));
-	
+		
 		foreach($choices as $choice) {
 			if(!empty($_POST['dels']) and in_array($choice->id, $_POST['dels'])) {
 				$wpdb->query($wpdb->prepare("DELETE FROM ".CHAINED_CHOICES." WHERE id=%d", $choice->id));
@@ -77,39 +75,6 @@ class ChainedQuizQuestion {
 				$id, $answer, $_POST['points'][($counter-2)], $correct, $_POST['goto'][($counter-2)], $_POST['quiz_id']) );
 		}
 	} // end save_choices
-	// saves the targets on a question
-	function save_targets($vars, $id) {
-		global $wpdb;
-		
-		// edit/delete existing targets
-		$targets = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".CHAINED_TARGETS." WHERE question_id=%d ORDER BY id ", $id));
-	
-		foreach($targets as $target) {
-			if(!empty($_POST['dels']) and in_array($target->id, $_POST['dels'])) {
-				$wpdb->query($wpdb->prepare("DELETE FROM ".CHAINED_TARGETS." WHERE id=%d", $target->id));
-				continue;
-			}
-			
-			// else update
-			$wpdb->query($wpdb->prepare("UPDATE ".CHAINED_TARGETS." SET
-				target=%s, points=%s, is_correct=%d, goto=%s WHERE id=%d", 
-				$_POST['answer'.$target->id], $_POST['points'.$target->id], @$_POST['is_correct'.$target->id], $_POST['goto'.$target->id], $target->id));
-		}	
-		
-		// add new targets
-		$counter = 1;
-		$target_array = @$_POST['is_target'];
-		foreach($_POST['answers'] as $answer) {
-			$targeting = @in_array($counter, $target_array) ? 1 : 0;
-			$counter++;
-			if($answer === '') continue;
-		
-			// now insert the target
-			$wpdb->query( $wpdb->prepare("INSERT INTO ".CHAINED_TARGET." SET
-				question_id=%d, target=%s, is_correct=%d, quiz_id=%d", 
-				$id, $answer, $targeting, $_POST['quiz_id']) );
-		}
-	} // end save_targets
 
 	// displays the question contents
 	function display_question($question) {

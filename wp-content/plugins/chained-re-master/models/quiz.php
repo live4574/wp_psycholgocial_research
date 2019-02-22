@@ -28,9 +28,6 @@ class ChainedQuizQuiz {
 		// delete questions
 		$wpdb->query($wpdb->prepare("DELETE FROM ".CHAINED_QUESTIONS." WHERE quiz_id=%d", $id));
 		
-		//delete targets
-		$wpdb->query($wpdb->prepare("DELETE FROM ".CHAINED_TARGETS." WHERE quiz_id=%d", $id));
-		
 		// delete choices
 		$wpdb->query($wpdb->prepare("DELETE FROM ".CHAINED_CHOICES." WHERE quiz_id=%d", $id));
 		
@@ -40,11 +37,7 @@ class ChainedQuizQuiz {
 		// delete the quiz
 		$wpdb->query($wpdb->prepare("DELETE FROM ".CHAINED_QUIZZES." WHERE id=%d", $id));
 	}
-    function targetizing($quiz){
-    	global $wpdb,$user_ID;
-    	$user_id=empty($user_ID) ? 0: $user_ID;
-    	
-    }
+
 	function finalize($quiz, $points) {		
 	    global $wpdb, $user_ID;
 	    

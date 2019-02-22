@@ -19,7 +19,7 @@ class ChainedQuizResult {
 		 points_bottom=%s, points_top=%s, title=%s, description=%s, redirect_url=%s WHERE id=%d", 
 		$vars['points_bottom'], $vars['points_top'], $vars['title'], $vars['description'], 
 		$vars['redirect_url'], $id));
-		
+			
 		if($result === false) throw new Exception(__('DB Error', 'chained'));
 		return true;	
 	}
@@ -43,8 +43,8 @@ class ChainedQuizResult {
 			WHERE quiz_id = %d ORDER BY points_bottom DESC", $quiz->id));
 		foreach($results as $result) {
 			if($result->points_bottom <= $points and $points <= $result->points_top) return $result;
-    }
+    }	
     
-    return null; // in case of nothing 
+    return null; // in case of nothing found
 	}
 }
