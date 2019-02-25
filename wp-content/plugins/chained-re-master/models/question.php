@@ -201,6 +201,7 @@ class ChainedQuizQuestion {
 			return $question;	
 		}
 		if($key =='time_next'){
+			//show grey x function
 			sleep(2); //when select wrong choice wait 2seconds. to show x_grey
 			// select next question by sort_order
 			$question = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".CHAINED_QUESTIONS." 
