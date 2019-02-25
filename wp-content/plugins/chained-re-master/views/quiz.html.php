@@ -12,7 +12,7 @@
 		
 		<p><label><?php _e('Final Output', 'chained')?></label> <?php echo wp_editor($output, 'output')?></p>
 		
-		<p><?php _e('This is the content that is shown to the user after they complete the research. The following variables can be used:', 'chained')?></p>
+		<p><?php _e('다음과 같은 변수가 사용될 수 있습니다.', 'chained')?></p>
 		
 		<ul>
 			<li>{{result-title}} <?php _e('- The result (grade) title', 'chained')?></li>
@@ -22,8 +22,6 @@
 			<!-- (let's leave this for the next version) li>{{correct}} <?php _e('- The number of correctly answered questions', 'chained')?></li-->
 		</ul>	
 		
-		<p><input type="checkbox" name="email_admin" value="1" <?php if(!empty($quiz->email_admin)) echo 'checked'?>> <?php _e('Send me email when user completes this research. It will be delivered to the email address from your main WP Settings page.', 'chained');?></p>
-			<p><input type="checkbox" name="email_user" value="1" <?php if(!empty($quiz->email_user)) echo 'checked'?>> <?php _e('Send email to user with their result. If the user is not logged in visitor an optional "Enter email" field will automatically appear above the research.', 'chained');?></p>
 		
 		<p><input type="submit" value="<?php _e('Save Research', 'chained')?>" class="button-primary"></p>
 		<input type="hidden" name="ok" value="1">

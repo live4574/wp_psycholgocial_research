@@ -36,7 +36,7 @@
 <script type="text/javascript" >
 function validateChainedResult(frm) {	
 	if(frm.title.value == '') {
-		alert("<?php _e('Please enter title', 'chained')?>");
+		alert("<?php _e('제목을 입력해주세요', 'chained')?>");
 		frm.title.focus();
 		return false;
 	}
@@ -45,7 +45,7 @@ function validateChainedResult(frm) {
 }
 
 function confirmDelChainedResult(frm) {
-	if(confirm("<?php _e('Are you sure?', 'chained')?>")) {
+	if(confirm("<?php _e('정말 삭제합니까?', 'chained')?>")) {
 		frm.del.value=1;
 		frm.submit();
 	}
