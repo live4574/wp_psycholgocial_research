@@ -84,8 +84,49 @@ class ChainedQuizQuestion {
 	    		 
 		$content = stripslashes($question->question);
 		$content = str_replace('{{target1}}', @$question->target1, $content);
-		$content = str_replace('{{target2}}', stripslashes(@$question->target2), $content);
-		$content = str_replace('{{target3}}', $question->target3, $content);
+		$content = str_replace('{{target2}}', @$question->target2, $content);
+		$content = str_replace('{{target3}}', @$question->target3, $content);
+		$content = str_replace('{{target4}}', @$question->target4, $content);
+		$content = str_replace('{{target5}}', @$question->target5, $content);
+		$content = str_replace('{{target6}}', @$question->target6, $content);
+		$content = str_replace('{{target7}}', @$question->target7, $content);
+		$content = str_replace('{{target8}}', @$question->target8, $content);
+		$content = str_replace('{{target9}}', @$question->target9, $content);
+		$content = str_replace('{{target10}}', @$question->target10, $content);
+		
+		$content = str_replace('{{target11}}', @$question->target11, $content);
+		$content = str_replace('{{target12}}', @$question->target12, $content);
+		$content = str_replace('{{target13}}', @$question->target13, $content);
+		$content = str_replace('{{target14}}', @$question->target14, $content);
+		$content = str_replace('{{target15}}', @$question->target15, $content);
+		$content = str_replace('{{target16}}', @$question->target16, $content);
+		$content = str_replace('{{target17}}', @$question->target17, $content);
+		$content = str_replace('{{target18}}', @$question->target18, $content);
+		$content = str_replace('{{target19}}', @$question->target19, $content);
+		$content = str_replace('{{target20}}', @$question->target20, $content);
+		
+		$content = str_replace('{{target21}}', @$question->target11, $content);
+		$content = str_replace('{{target22}}', @$question->target12, $content);
+		$content = str_replace('{{target23}}', @$question->target13, $content);
+		$content = str_replace('{{target24}}', @$question->target14, $content);
+		$content = str_replace('{{target25}}', @$question->target15, $content);
+		$content = str_replace('{{target26}}', @$question->target16, $content);
+		$content = str_replace('{{target27}}', @$question->target17, $content);
+		$content = str_replace('{{target28}}', @$question->target18, $content);
+		$content = str_replace('{{target29}}', @$question->target19, $content);
+		$content = str_replace('{{target30}}', @$question->target20, $content);
+
+		$content = str_replace('{{target31}}', @$question->target11, $content);
+		$content = str_replace('{{target32}}', @$question->target12, $content);
+		$content = str_replace('{{target33}}', @$question->target13, $content);
+		$content = str_replace('{{target34}}', @$question->target14, $content);
+		$content = str_replace('{{target35}}', @$question->target15, $content);
+		$content = str_replace('{{target36}}', @$question->target16, $content);
+		$content = str_replace('{{target37}}', @$question->target17, $content);
+		$content = str_replace('{{target38}}', @$question->target18, $content);
+		$content = str_replace('{{target39}}', @$question->target19, $content);
+		$content = str_replace('{{target40}}', @$question->target20, $content);
+		
 		$content = do_shortcode($content);
 		$content = wpautop($content);
 

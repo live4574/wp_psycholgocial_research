@@ -5,7 +5,7 @@
 			<div class="chained-quiz-email">
 				<p><label><?php _e('Your email address:', 'chained');?></label> <input type="text" name="chained_email" value="<?php echo @$_POST['chained_email']?>"></p>
 			</div>
-		<?php endif;?> 
+		<?php endif;?>
 		<div class="chained-quiz-question">
 			<?php echo $_question->display_question($question);?>
 		</div>
