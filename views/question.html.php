@@ -34,12 +34,10 @@
 			include(CHAINED_PATH."/views/choice.html.php");?>
 		</div>
 		
-		<p><input type="submit" value="<?php _e('저장','chained')?>" class="button-primary"></p>
 		<input type="hidden" name="ok" value="1">
 		<input type="hidden" name="quiz_id" value="<?php echo $quiz->id?>">
-	</form>
-	<form method="post">
-	<h3><?php _e('Target for this question','chained')?></h3>
+	
+	<h3><?php _e('Keywords for this question','chained')?></h3>
 		<div id="targetRows">
 			<textarea rows="1" cols="15" name="targetGroup"><?php echo $question->target?></textarea> 
 			<textarea rows="1" cols="15" name="target1"><?php echo $question->target1?></textarea> 
@@ -49,6 +47,9 @@
 			<textarea rows="1" cols="15" name="target5"><?php echo $question->target5?></textarea>
 			<textarea rows="1" cols="15" name="target6"><?php echo $question->target6?></textarea>
 			<textarea rows="1" cols="15" name="target7"><?php echo $question->target7?></textarea>
+			<textarea rows="1" cols="15" name="target7"><?php echo $question->target8?></textarea>
+			<textarea rows="1" cols="15" name="target7"><?php echo $question->target9?></textarea>
+			<textarea rows="1" cols="15" name="target7"><?php echo $question->target10?></textarea>
 		</div>
 		<?php
 		global $wpdb;
