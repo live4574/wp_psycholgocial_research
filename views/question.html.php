@@ -50,6 +50,40 @@
 			<textarea rows="1" cols="15" name="target7"><?php echo $question->target8?></textarea>
 			<textarea rows="1" cols="15" name="target7"><?php echo $question->target9?></textarea>
 			<textarea rows="1" cols="15" name="target7"><?php echo $question->target10?></textarea>
+			<br>
+			<textarea rows="1" cols="15" name="target1"><?php echo $question->target11?></textarea> 
+			<textarea rows="1" cols="15" name="target2"><?php echo $question->target12?></textarea>
+			<textarea rows="1" cols="15" name="target3"><?php echo $question->target13?></textarea>
+			<textarea rows="1" cols="15" name="target4"><?php echo $question->target14?></textarea>
+			<textarea rows="1" cols="15" name="target5"><?php echo $question->target15?></textarea>
+			<textarea rows="1" cols="15" name="target6"><?php echo $question->target16?></textarea>
+			<textarea rows="1" cols="15" name="target7"><?php echo $question->target17?></textarea>
+			<textarea rows="1" cols="15" name="target7"><?php echo $question->target18?></textarea>
+			<textarea rows="1" cols="15" name="target7"><?php echo $question->target19?></textarea>
+			<textarea rows="1" cols="15" name="target7"><?php echo $question->target20?></textarea>
+			<br>
+			<textarea rows="1" cols="15" name="target1"><?php echo $question->target21?></textarea> 
+			<textarea rows="1" cols="15" name="target2"><?php echo $question->target22?></textarea>
+			<textarea rows="1" cols="15" name="target3"><?php echo $question->target23?></textarea>
+			<textarea rows="1" cols="15" name="target4"><?php echo $question->target24?></textarea>
+			<textarea rows="1" cols="15" name="target5"><?php echo $question->target25?></textarea>
+			<textarea rows="1" cols="15" name="target6"><?php echo $question->target26?></textarea>
+			<textarea rows="1" cols="15" name="target7"><?php echo $question->target27?></textarea>
+			<textarea rows="1" cols="15" name="target7"><?php echo $question->target28?></textarea>
+			<textarea rows="1" cols="15" name="target7"><?php echo $question->target29?></textarea>
+			<textarea rows="1" cols="15" name="target7"><?php echo $question->target30?></textarea>
+			<br>
+			<textarea rows="1" cols="15" name="target1"><?php echo $question->target31?></textarea> 
+			<textarea rows="1" cols="15" name="target2"><?php echo $question->target32?></textarea>
+			<textarea rows="1" cols="15" name="target3"><?php echo $question->target33?></textarea>
+			<textarea rows="1" cols="15" name="target4"><?php echo $question->target34?></textarea>
+			<textarea rows="1" cols="15" name="target5"><?php echo $question->target35?></textarea>
+			<textarea rows="1" cols="15" name="target6"><?php echo $question->target36?></textarea>
+			<textarea rows="1" cols="15" name="target7"><?php echo $question->target37?></textarea>
+			<textarea rows="1" cols="15" name="target7"><?php echo $question->target38?></textarea>
+			<textarea rows="1" cols="15" name="target7"><?php echo $question->target39?></textarea>
+			<textarea rows="1" cols="15" name="target7"><?php echo $question->target40?></textarea>
+			
 		</div>
 		<?php
 		global $wpdb;
@@ -66,10 +100,70 @@
 				"target7" => $_POST['target7'],
 				"target7" => $_POST['target8'],
 				"target7" => $_POST['target9'],
-				"target7" => $_POST['target10']
+				"target7" => $_POST['target10'],
+				"target1" => $_POST['target11'],
+				"target2" => $_POST['target12'],
+				"target3" => $_POST['target13'],
+				"target4" => $_POST['target14'],
+				"target5" => $_POST['target15'],
+				"target6" => $_POST['target16'],
+				"target7" => $_POST['target17'],
+				"target7" => $_POST['target18'],
+				"target7" => $_POST['target19'],
+				"target7" => $_POST['target20'],
+				"target1" => $_POST['target21'],
+				"target2" => $_POST['target22'],
+				"target3" => $_POST['target23'],
+				"target4" => $_POST['target24'],
+				"target5" => $_POST['target25'],
+				"target6" => $_POST['target26'],
+				"target7" => $_POST['target27'],
+				"target7" => $_POST['target28'],
+				"target7" => $_POST['target29'],
+				"target7" => $_POST['target30'],
+				"target1" => $_POST['target31'],
+				"target2" => $_POST['target32'],
+				"target3" => $_POST['target33'],
+				"target4" => $_POST['target34'],
+				"target5" => $_POST['target35'],
+				"target6" => $_POST['target36'],
+				"target7" => $_POST['target37'],
+				"target7" => $_POST['target38'],
+				"target7" => $_POST['target39'],
+				"target7" => $_POST['target40']
 			),
 			array('id'=> $question->id),
 			array('%d',
+				  '%s',
+				  '%s',
+				  '%s',
+				  '%s',
+				  '%s',
+				  '%s',
+				  '%s',
+				  '%s',
+				  '%s',
+				  '%s',
+				  '%s',
+				  '%s',
+				  '%s',
+				  '%s',
+				  '%s',
+				  '%s',
+				  '%s',
+				  '%s',
+				  '%s',
+				  '%s',
+				  '%s',
+				  '%s',
+				  '%s',
+				  '%s',
+				  '%s',
+				  '%s',
+				  '%s',
+				  '%s',
+				  '%s',
+				  '%s',
 				  '%s',
 				  '%s',
 				  '%s',
