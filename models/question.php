@@ -217,4 +217,20 @@ class ChainedQuizQuestion {
 	  // just in case
 	  return false;		
 	} // end next()
+	function getKeywords($question) {		
+	    global $wpdb, $user_ID;
+	    
+	    $user_id = empty($user_ID) ? 0 : $user_ID;
+	    
+		 // get final screen 
+		 $output = stripslashes($question->question);
+		 $output = str_replace('{{target1}}', @$question->target1, $output);
+		 $output = str_replace('{{target2}}', stripslashes(@$question->target2), $output);
+		 $output = str_replace('{{target3}}', $question->target3, $output);
+		 		 
+		 $output = do_shortcode($output);
+		 $output = wpautop($output);
+		
+		 return $output;
+   } // end getKeywords
 }
