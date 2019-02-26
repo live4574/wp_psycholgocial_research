@@ -19,8 +19,7 @@
 			<li>{{result-text}} <?php _e('- The result (점수) 텍스트/설명', 'chained')?></li>
 			<li>{{points}} <?php _e('- 모은 점수', 'chained')?></li>
 			<li>{{questions}} <?php _e('- 총 대답한 질문 수', 'chained')?></li>
-			<!-- (let's leave this for the next version) li>{{correct}} <?php _e('- The number of correctly answered questions', 'chained')?></li-->
-		</ul>	
+		</ul>
 		
 		<p><input type="submit" value="<?php _e('Save Research', 'chained')?>" class="button-primary"></p>
 		<input type="hidden" name="ok" value="1">
@@ -28,7 +27,7 @@
 </div>
 
 <script type="text/javascript" >
-function validateChainedQuiz(frm) {
+function validateChainedQuiz(frm){
 	if(frm.title.value == '') {
 		alert("<?php _e('Title is required', 'chained')?>");
 		frm.title.focus();
