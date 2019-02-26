@@ -63,10 +63,16 @@
 				"target4" => $_POST['target4'],
 				"target5" => $_POST['target5'],
 				"target6" => $_POST['target6'],
-				"target7" => $_POST['target7']
+				"target7" => $_POST['target7'],
+				"target7" => $_POST['target8'],
+				"target7" => $_POST['target9'],
+				"target7" => $_POST['target10']
 			),
 			array('id'=> $question->id),
 			array('%d',
+				  '%s',
+				  '%s',
+				  '%s',
 				  '%s',
 				  '%s',
 				  '%s',
