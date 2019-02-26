@@ -49,9 +49,6 @@
 			<textarea rows="1" cols="15" name="target5"><?php echo $question->target5?></textarea>
 			<textarea rows="1" cols="15" name="target6"><?php echo $question->target6?></textarea>
 			<textarea rows="1" cols="15" name="target7"><?php echo $question->target7?></textarea>
-			<textarea rows="1" cols="15" name="target7"><?php echo $question->target8?></textarea>
-			<textarea rows="1" cols="15" name="target7"><?php echo $question->target9?></textarea>
-			<textarea rows="1" cols="15" name="target7"><?php echo $question->target10?></textarea>
 		</div>
 		<?php
 		global $wpdb;
@@ -65,16 +62,10 @@
 				"target4" => $_POST['target4'],
 				"target5" => $_POST['target5'],
 				"target6" => $_POST['target6'],
-				"target7" => $_POST['target7'],
-				"target6" => $_POST['target8'],
-				"target6" => $_POST['target9'],
-				"target6" => $_POST['target10']
+				"target7" => $_POST['target7']
 			),
 			array('id'=> $question->id),
 			array('%d',
-				  '%s',
-				  '%s',
-				  '%s',
 				  '%s',
 				  '%s',
 				  '%s',

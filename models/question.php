@@ -201,7 +201,6 @@ class ChainedQuizQuestion {
 			return $question;	
 		}
 		if($key =='time_next'){
-			//show grey x function
 			sleep(2); //when select wrong choice wait 2seconds. to show x_grey
 			// select next question by sort_order
 			$question = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".CHAINED_QUESTIONS." 
@@ -218,29 +217,4 @@ class ChainedQuizQuestion {
 	  // just in case
 	  return false;		
 	} // end next()
-	function showKeywords($question){
-	  global $wpdb, $user_ID;
-	    
-	    $user_id = empty($user_ID) ? 0 : $user_ID;
-	    
-		 $_result = new ChainedQuizQuestion();
-		
-		 // get final screen and replace vars
-		 $output = stripslashes($question->question);
-		 $output = str_replace('{{target1}}', @$question->target1, $output);
-		 $output = str_replace('{{target2}}', stripslashes(@$result->description), $output);
-		 $output = str_replace('{{target3}}', @$question->target3, $output);
-		 $output = str_replace('{{target4}}', @$question->target4, $output);
-		 $output = str_replace('{{target5}}', @$question->target5, $output);
-		 $output =str_replace('{{target6}}', @$question->target6, $output);
-		 $output= str_replace('{{target7}}', @$question->target7, $output);
-		 $output= str_replace('{{target8}}', @$question->target8, $output);
-		 $output= str_replace('{{target9}}', @$question->target9, $output);
-		 $output= str_replace('{{target10}}', @$question->target10, $output);
-		 		 
-		 
-		 $output = do_shortcode($output);
-		 $output = wpautop($output);
-		
-		 return $output;
-	}
+}
