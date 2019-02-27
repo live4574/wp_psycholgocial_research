@@ -15,7 +15,9 @@
 		</div>
 		
 		<div class="chained-quiz-action">
-			<input type="button" id="chained-quiz-action-<?php echo $quiz->id?>" value="<?php _e('확인', 'chained')?>" onclick="chainedQuiz.goon(<?php echo $quiz->id?>, '<?php echo admin_url('admin-ajax.php')?>');">
+			<p align="right">
+				<input type="button" id="chained-quiz-action-<?php echo $quiz->id?>" value="<?php _e('확인', 'chained')?>" onclick="chainedQuiz.goon(<?php echo $quiz->id?>, '<?php echo admin_url('admin-ajax.php')?>');">
+		    </p>
 		</div>
 	</div>
 	<input type="hidden" name="question_id" value="<?php echo $question->id?>">
