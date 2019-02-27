@@ -83,7 +83,13 @@ class ChainedQuizQuestion {
 	    $user_id = empty($user_ID) ? 0 : $user_ID;
 	    		 
 		$content = stripslashes($question->question);
-		$content = str_replace('{{target1}}', @$question->target1, $content);
+
+		$randomCount=1;
+		$sql=${"target".randomCount};
+		//데이터베이스에 타겟값에 따라 랜덤값 각 저장해놓고 각 타겟숫자명에 
+		//그값으로 저장
+		
+		$content = str_replace('{{target1}}', @$question->$sql, $content);
 		$content = str_replace('{{target2}}', @$question->target2, $content);
 		$content = str_replace('{{target3}}', @$question->target3, $content);
 		$content = str_replace('{{target4}}', @$question->target4, $content);
@@ -266,5 +272,26 @@ class ChainedQuizQuestion {
 	  // just in case
 	  return false;		
 	} // end next()
-	
+	function getRandomKeyword($question){
+		if($question->target=='1'){
+			$randomCount=mt_rand(1,10);
+		}else if($question->target=='2'){
+			$randomCount=mt_rand(1,10);
+		}else if($question->target=='3'){
+			$randomCount=mt_rand(1,10);
+		}else if($question->target==4){
+			$randomCount=mt_rand(1,10);
+		}else if($question->target=='5'){
+			$randomCount=mt_rand(1,10);
+		}else if($question->target=='6'){
+			$randomCount=mt_rand(1,10);
+		}else if($question->target=='7'){
+			$randomCount=mt_rand(1,10);
+		}else{
+			$randomCount=1;
+		}
+		
+		$sql=@$question->${"target".$randomCount};
+		return $sql;
+	}
 }
