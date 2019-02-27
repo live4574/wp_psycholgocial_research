@@ -77,7 +77,7 @@ class ChainedQuizQuestion {
 	} // end save_choices
 
 	// displays the question contents
-	function display_question($question,$visit) {
+	function display_question($question) {
 		//   only add stripslashes and autop
 		global $wpdb, $user_ID;
 	    $user_id = empty($user_ID) ? 0 : $user_ID;
@@ -88,6 +88,7 @@ class ChainedQuizQuestion {
 		//$sql=${"target".randomCount};
 		//데이터베이스에 타겟값에 따라 랜덤값 각 저장해놓고 각 타겟숫자명에 
 		//그값으로 저장
+		$now_target=$question->target;
 		$randomSort=array();
 		if($question->target==1){
 			array_push($randomSort,$question->target1);
@@ -100,7 +101,7 @@ class ChainedQuizQuestion {
 			array_push($randomSort,$question->target8);
 			array_push($randomSort,$question->target9);
 			array_push($randomSort,$question->target10);
-			if($visit==0){ 
+			if($question->id==6){ 
 				shuffle($randomSort);
 			}
 		}
