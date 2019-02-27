@@ -7,7 +7,7 @@
 			</div>
 		<?php endif;?>
 		<div class="chained-quiz-question">
-			<?php echo $_question->display_question($question);?>
+			<?php echo $_question->display_question($question,0);?>
 		</div>
 		
 		<div class="chained-quiz-choices">
