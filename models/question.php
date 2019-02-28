@@ -679,27 +679,27 @@ class ChainedQuizQuestion {
 		$content = str_replace('{{target19}}', @$retrieve_question->ranTarget19, $content);
 		$content = str_replace('{{target20}}', @$retrieve_question->ranTarget20, $content);
 		
-		$content = str_replace('{{target21}}', @$retrieve_question->ranTarget1, $content);
-		$content = str_replace('{{target22}}', @$retrieve_question->ranTarget2, $content);
-		$content = str_replace('{{target23}}', @$retrieve_question->ranTarget3, $content);
-		$content = str_replace('{{target24}}', @$retrieve_question->ranTarget4, $content);
-		$content = str_replace('{{target25}}', @$retrieve_question->ranTarget5, $content);
-		$content = str_replace('{{target26}}', @$retrieve_question->ranTarget6, $content);
-		$content = str_replace('{{target27}}', @$retrieve_question->ranTarget7, $content);
-		$content = str_replace('{{target28}}', @$retrieve_question->ranTarget8, $content);
-		$content = str_replace('{{target29}}', @$retrieve_question->ranTarget9, $content);
-		$content = str_replace('{{target30}}', @$retrieve_question->ranTarget10, $content);
+		$content = str_replace('{{target21}}', @$retrieve_question->ranTarget21, $content);
+		$content = str_replace('{{target22}}', @$retrieve_question->ranTarget22, $content);
+		$content = str_replace('{{target23}}', @$retrieve_question->ranTarget23, $content);
+		$content = str_replace('{{target24}}', @$retrieve_question->ranTarget24, $content);
+		$content = str_replace('{{target25}}', @$retrieve_question->ranTarget25, $content);
+		$content = str_replace('{{target26}}', @$retrieve_question->ranTarget26, $content);
+		$content = str_replace('{{target27}}', @$retrieve_question->ranTarget27, $content);
+		$content = str_replace('{{target28}}', @$retrieve_question->ranTarget28, $content);
+		$content = str_replace('{{target29}}', @$retrieve_question->ranTarget29, $content);
+		$content = str_replace('{{target30}}', @$retrieve_question->ranTarget30, $content);
 		
-		$content = str_replace('{{target31}}', @$retrieve_question->ranTarget1, $content);
-		$content = str_replace('{{target32}}', @$retrieve_question->ranTarget2, $content);
-		$content = str_replace('{{target33}}', @$retrieve_question->ranTarget3, $content);
-		$content = str_replace('{{target34}}', @$retrieve_question->ranTarget4, $content);
-		$content = str_replace('{{target35}}', @$retrieve_question->ranTarget5, $content);
-		$content = str_replace('{{target36}}', @$retrieve_question->ranTarget6, $content);
-		$content = str_replace('{{target37}}', @$retrieve_question->ranTarget7, $content);
-		$content = str_replace('{{target38}}', @$retrieve_question->ranTarget8, $content);
-		$content = str_replace('{{target39}}', @$retrieve_question->ranTarget9, $content);
-		$content = str_replace('{{target40}}', @$retrieve_question->ranTarget10, $content);
+		$content = str_replace('{{target31}}', @$retrieve_question->ranTarget31, $content);
+		$content = str_replace('{{target32}}', @$retrieve_question->ranTarget32, $content);
+		$content = str_replace('{{target33}}', @$retrieve_question->ranTarget33, $content);
+		$content = str_replace('{{target34}}', @$retrieve_question->ranTarget34, $content);
+		$content = str_replace('{{target35}}', @$retrieve_question->ranTarget35, $content);
+		$content = str_replace('{{target36}}', @$retrieve_question->ranTarget36, $content);
+		$content = str_replace('{{target37}}', @$retrieve_question->ranTarget37, $content);
+		$content = str_replace('{{target38}}', @$retrieve_question->ranTarget38, $content);
+		$content = str_replace('{{target39}}', @$retrieve_question->ranTarget39, $content);
+		$content = str_replace('{{target40}}', @$retrieve_question->ranTarget40, $content);
 	
 		$content = do_shortcode($content);
 		$content = wpautop($content);
