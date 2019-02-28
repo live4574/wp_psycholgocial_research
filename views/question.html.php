@@ -18,7 +18,7 @@
 			<option value="text" <?php if(!empty($question->id) and $question->qtype == 'text') echo 'selected'?>><?php _e('Text box (open-end, essay question)','chained')?></option>
 		</select>
 		
-		<span id="chainedAutoContinue" style="display:<?php echo (empty($question->id) or $question->qtype == 'radio' or $question->qtype =='button') ? 'inline' : 'none';?>"><input type="checkbox" name="autocontinue" value="1" <?php if(!empty($question->autocontinue)) echo 'checked'?>> <?php _e('Automatically continue to the next question when a choice is selected', 'chained')?></span> </p>
+		<span id="chainedAutoContinue" style="display:<?php echo (empty($question->id) or $question->qtype == 'radio' or $question->qtype =='button') ? 'inline' : 'none';?>"><input type="checkbox" name="autocontinue" value="1" <?php if(!empty($question->autocontinue)) echo 'checked'?>> <?php _e('선택시 다음으로 자동으로 넘어가짐', 'chained')?></span> </p>
 		
 		<h3><?php _e('Choices/Answers for this question', 'chained')?></h3>
 		
