@@ -505,7 +505,7 @@ class ChainedQuizQuestion {
 			}
 		}
 		if($question->target==7){
-			if($question->id==153){ 
+			if($question->id==173){ 
 				array_push($sortArray,$question->target1);
 				array_push($sortArray,$question->target2);
 				array_push($sortArray,$question->target3);
