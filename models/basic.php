@@ -147,6 +147,16 @@ class ChainedQuiz {
 	  	  array("name" => 'target38', 'type'=>'TEXT'),
 	  	  array("name" => 'target39', 'type'=>'TEXT'),
 	  	  array("name" => 'target40', 'type'=>'TEXT'),
+	  	  array("name" => 'ranTarget1', 'type'=>'TEXT'),
+	  	  array("name" => 'ranTarget2', 'type'=>'TEXT'),
+	  	  array("name" => 'ranTarget3', 'type'=>'TEXT'),
+	  	  array("name" => 'ranTarget4', 'type'=>'TEXT'),
+	  	  array("name" => 'ranTarget5', 'type'=>'TEXT'),
+	  	  array("name" => 'ranTarget6', 'type'=>'TEXT'),
+	  	  array("name" => 'ranTarget7', 'type'=>'TEXT'),
+	  	  array("name" => 'ranTarget8', 'type'=>'TEXT'),
+	  	  array("name" => 'ranTarget9', 'type'=>'TEXT'),
+	  	  array("name" => 'ranTarget10', 'type'=>'TEXT'),
 	  ), CHAINED_QUESTIONS);
 	  
 	  chainedquiz_add_db_fields(array(
@@ -243,33 +253,7 @@ class ChainedQuiz {
 		$version = get_option('chainedquiz_version');
 		if($version < '0.67') self::install(true);
 	}
-			
-	// manage general options
-	static function options() {
-		if(!empty($_POST['ok'])) {
-			update_option('wphostel_currency', $_POST['currency']);
-			update_option('wphostel_booking_mode', $_POST['booking_mode']);
-			update_option('wphostel_email_options', array("do_email_admin"=>@$_POST['do_email_admin'], 
-				"admin_email"=>$_POST['admin_email'], "do_email_user"=>@$_POST['do_email_user'], 
-				"email_admin_subject"=>$_POST['email_admin_subject'], "email_admin_message"=>$_POST['email_admin_message'],
-				"email_user_subject"=>$_POST['email_user_subject'], "email_user_message"=>$_POST['email_user_message']));
-			update_option('wphostel_paypal', $_POST['paypal']);
-			update_option('wphostel_booking_url', $_POST['booking_url']);		
-		}		
-		
-		$currency = get_option('wphostel_currency');
-		$currencies=array('USD'=>'$', "EUR"=>"&euro;", "GBP"=>"&pound;", "JPY"=>"&yen;", "AUD"=>"AUD",
-		   "CAD"=>"CAD", "CHF"=>"CHF", "CZK"=>"CZK", "DKK"=>"DKK", "HKD"=>"HKD", "HUF"=>"HUF",
-		   "ILS"=>"ILS", "MXN"=>"MXN", "NOK"=>"NOK", "NZD"=>"NZD", "PLN"=>"PLN", "SEK"=>"SEK",
-		   "SGD"=>"SGD");
-		   
-		$booking_mode = get_option('wphostel_booking_mode');   
-		$email_options = get_option('wphostel_email_options');
-		$paypal = get_option('wphostel_paypal');
-		   	
-		require(CHAINED_PATH."/views/options.php");
-	}	
-	//유료
+
 	static function help() {
 		require(CHAINED_PATH."/views/help.php");
 	}	

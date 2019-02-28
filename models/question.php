@@ -80,6 +80,8 @@ class ChainedQuizQuestion {
 	function display_question($question) {
 		//   only add stripslashes and autop
 		global $wpdb, $user_ID;
+		global $sortArray;
+
 	    $user_id = empty($user_ID) ? 0 : $user_ID;
 	    
 		$content = stripslashes($question->question);
@@ -88,67 +90,617 @@ class ChainedQuizQuestion {
 		//$sql=${"target".randomCount};
 		//데이터베이스에 타겟값에 따라 랜덤값 각 저장해놓고 각 타겟숫자명에 
 		//그값으로 저장
-		$now_target=$question->target;
-		$randomSort=array();
 		if($question->target==1){
-			array_push($randomSort,$question->target1);
-			array_push($randomSort,$question->target2);
-			array_push($randomSort,$question->target3);
-			array_push($randomSort,$question->target4);
-			array_push($randomSort,$question->target5);
-			array_push($randomSort,$question->target6);
-			array_push($randomSort,$question->target7);
-			array_push($randomSort,$question->target8);
-			array_push($randomSort,$question->target9);
-			array_push($randomSort,$question->target10);
-			if($question->id==6){ 
-				shuffle($randomSort);
+			if($question->id==5){ 
+				array_push($sortArray,$question->target1);
+				array_push($sortArray,$question->target2);
+				array_push($sortArray,$question->target3);
+				array_push($sortArray,$question->target4);
+				array_push($sortArray,$question->target5);
+				array_push($sortArray,$question->target6);
+				array_push($sortArray,$question->target7);
+				array_push($sortArray,$question->target8);
+				array_push($sortArray,$question->target9);
+				array_push($sortArray,$question->target10);
+				shuffle($sortArray);
+				
+				$wpdb->update(
+					$wpdb->prefix . "chained_questions",
+					array(
+						"ranTarget1" => $sortArray[0],
+						"ranTarget2" => $sortArray[1],
+						"ranTarget3" => $sortArray[2],
+						"ranTarget4" => $sortArray[3],
+						"ranTarget5" => $sortArray[4],
+						"ranTarget6" => $sortArray[5],
+						"ranTarget7" => $sortArray[6],
+						"ranTarget8" => $sortArray[7],
+						"ranTarget9" => $sortArray[8],
+						"ranTarget10" => $sortArray[9]
+					),
+					array('id'=> $question->id),
+					array('%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+					),
+					array('%d')
+				);
 			}
 		}
-		$content = str_replace('{{target1}}', $randomSort[0], $content);
-		$content = str_replace('{{target2}}', $randomSort[1], $content);
-		$content = str_replace('{{target3}}', $randomSort[2], $content);
-		$content = str_replace('{{target4}}', $randomSort[3], $content);
-		$content = str_replace('{{target5}}', $randomSort[4], $content);
-		$content = str_replace('{{target6}}', $randomSort[5], $content);
-		$content = str_replace('{{target7}}', $randomSort[6], $content);
-		$content = str_replace('{{target8}}', $randomSort[7], $content);
-		$content = str_replace('{{target9}}', $randomSort[8], $content);
-		$content = str_replace('{{target10}}', $randomSort[9], $content);
-		
-		$content = str_replace('{{target11}}', @$question->target11, $content);
-		$content = str_replace('{{target12}}', @$question->target12, $content);
-		$content = str_replace('{{target13}}', @$question->target13, $content);
-		$content = str_replace('{{target14}}', @$question->target14, $content);
-		$content = str_replace('{{target15}}', @$question->target15, $content);
-		$content = str_replace('{{target16}}', @$question->target16, $content);
-		$content = str_replace('{{target17}}', @$question->target17, $content);
-		$content = str_replace('{{target18}}', @$question->target18, $content);
-		$content = str_replace('{{target19}}', @$question->target19, $content);
-		$content = str_replace('{{target20}}', @$question->target20, $content);
-		
-		$content = str_replace('{{target21}}', @$question->target21, $content);
-		$content = str_replace('{{target22}}', @$question->target22, $content);
-		$content = str_replace('{{target23}}', @$question->target23, $content);
-		$content = str_replace('{{target24}}', @$question->target24, $content);
-		$content = str_replace('{{target25}}', @$question->target25, $content);
-		$content = str_replace('{{target26}}', @$question->target26, $content);
-		$content = str_replace('{{target27}}', @$question->target27, $content);
-		$content = str_replace('{{target28}}', @$question->target28, $content);
-		$content = str_replace('{{target29}}', @$question->target29, $content);
-		$content = str_replace('{{target30}}', @$question->target30, $content);
+		if($question->target==2){
+			if($question->id==66){ 
+				array_push($sortArray,$question->target1);
+				array_push($sortArray,$question->target2);
+				array_push($sortArray,$question->target3);
+				array_push($sortArray,$question->target4);
+				array_push($sortArray,$question->target5);
+				array_push($sortArray,$question->target6);
+				array_push($sortArray,$question->target7);
+				array_push($sortArray,$question->target8);
+				array_push($sortArray,$question->target9);
+				array_push($sortArray,$question->target10);
+				shuffle($sortArray);
+				
+				$wpdb->update(
+					$wpdb->prefix . "chained_questions",
+					array(
+						"ranTarget1" => $sortArray[0],
+						"ranTarget2" => $sortArray[1],
+						"ranTarget3" => $sortArray[2],
+						"ranTarget4" => $sortArray[3],
+						"ranTarget5" => $sortArray[4],
+						"ranTarget6" => $sortArray[5],
+						"ranTarget7" => $sortArray[6],
+						"ranTarget8" => $sortArray[7],
+						"ranTarget9" => $sortArray[8],
+						"ranTarget10" => $sortArray[9]
+					),
+					array('id'=> $question->id),
+					array('%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+					),
+					array('%d')
+				);
+			}
+		}
+		if($question->target==3){
+			if($question->id==77){ 
+				array_push($sortArray,$question->target1);
+				array_push($sortArray,$question->target2);
+				array_push($sortArray,$question->target3);
+				array_push($sortArray,$question->target4);
+				array_push($sortArray,$question->target5);
+				array_push($sortArray,$question->target6);
+				array_push($sortArray,$question->target7);
+				array_push($sortArray,$question->target8);
+				array_push($sortArray,$question->target9);
+				array_push($sortArray,$question->target10);
+				array_push($sortArray,$question->target11);
+				array_push($sortArray,$question->target12);
+				array_push($sortArray,$question->target13);
+				array_push($sortArray,$question->target14);
+				array_push($sortArray,$question->target15);
+				array_push($sortArray,$question->target16);
+				array_push($sortArray,$question->target17);
+				array_push($sortArray,$question->target18);
+				array_push($sortArray,$question->target19);
+				array_push($sortArray,$question->target20);
+				shuffle($sortArray);
+				
+				$wpdb->update(
+					$wpdb->prefix . "chained_questions",
+					array(
+						"ranTarget1" => $sortArray[0],
+						"ranTarget2" => $sortArray[1],
+						"ranTarget3" => $sortArray[2],
+						"ranTarget4" => $sortArray[3],
+						"ranTarget5" => $sortArray[4],
+						"ranTarget6" => $sortArray[5],
+						"ranTarget7" => $sortArray[6],
+						"ranTarget8" => $sortArray[7],
+						"ranTarget9" => $sortArray[8],
+						"ranTarget10" => $sortArray[9],
+						"ranTarget11" => $sortArray[10],
+						"ranTarget12" => $sortArray[11],
+						"ranTarget13" => $sortArray[12],
+						"ranTarget14" => $sortArray[13],
+						"ranTarget15" => $sortArray[14],
+						"ranTarget16" => $sortArray[15],
+						"ranTarget17" => $sortArray[16],
+						"ranTarget18" => $sortArray[17],
+						"ranTarget19" => $sortArray[18],
+						"ranTarget20" => $sortArray[19]
+					),
+					array('id'=> $question->id),
+					array('%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+					),
+					array('%d')
+				);
+			}
+		}
+		if($question->target==4){
+			if($question->id==99){ 
+				array_push($sortArray,$question->target1);
+				array_push($sortArray,$question->target2);
+				array_push($sortArray,$question->target3);
+				array_push($sortArray,$question->target4);
+				array_push($sortArray,$question->target5);
+				array_push($sortArray,$question->target6);
+				array_push($sortArray,$question->target7);
+				array_push($sortArray,$question->target8);
+				array_push($sortArray,$question->target9);
+				array_push($sortArray,$question->target10);
+				array_push($sortArray,$question->target11);
+				array_push($sortArray,$question->target12);
+				array_push($sortArray,$question->target13);
+				array_push($sortArray,$question->target14);
+				array_push($sortArray,$question->target15);
+				array_push($sortArray,$question->target16);
+				array_push($sortArray,$question->target17);
+				array_push($sortArray,$question->target18);
+				array_push($sortArray,$question->target19);
+				array_push($sortArray,$question->target20);
+				array_push($sortArray,$question->target21);
+				array_push($sortArray,$question->target22);
+				array_push($sortArray,$question->target23);
+				array_push($sortArray,$question->target24);
+				array_push($sortArray,$question->target25);
+				array_push($sortArray,$question->target26);
+				array_push($sortArray,$question->target27);
+				array_push($sortArray,$question->target28);
+				array_push($sortArray,$question->target29);
+				array_push($sortArray,$question->target30);
+				array_push($sortArray,$question->target31);
+				array_push($sortArray,$question->target32);
+				array_push($sortArray,$question->target33);
+				array_push($sortArray,$question->target34);
+				array_push($sortArray,$question->target35);
+				array_push($sortArray,$question->target36);
+				array_push($sortArray,$question->target37);
+				array_push($sortArray,$question->target38);
+				array_push($sortArray,$question->target39);
+				array_push($sortArray,$question->target40);
+				shuffle($sortArray);
+				
+				$wpdb->update(
+					$wpdb->prefix . "chained_questions",
+					array(
+						"ranTarget1" => $sortArray[0],
+						"ranTarget2" => $sortArray[1],
+						"ranTarget3" => $sortArray[2],
+						"ranTarget4" => $sortArray[3],
+						"ranTarget5" => $sortArray[4],
+						"ranTarget6" => $sortArray[5],
+						"ranTarget7" => $sortArray[6],
+						"ranTarget8" => $sortArray[7],
+						"ranTarget9" => $sortArray[8],
+						"ranTarget10" => $sortArray[9],
+						"ranTarget11" => $sortArray[10],
+						"ranTarget12" => $sortArray[11],
+						"ranTarget13" => $sortArray[12],
+						"ranTarget14" => $sortArray[13],
+						"ranTarget15" => $sortArray[14],
+						"ranTarget16" => $sortArray[15],
+						"ranTarget17" => $sortArray[16],
+						"ranTarget18" => $sortArray[17],
+						"ranTarget19" => $sortArray[18],
+						"ranTarget20" => $sortArray[19],
+						"ranTarget21" => $sortArray[20],
+						"ranTarget22" => $sortArray[21],
+						"ranTarget23" => $sortArray[22],
+						"ranTarget24" => $sortArray[23],
+						"ranTarget25" => $sortArray[24],
+						"ranTarget26" => $sortArray[25],
+						"ranTarget27" => $sortArray[26],
+						"ranTarget28" => $sortArray[27],
+						"ranTarget29" => $sortArray[28],
+						"ranTarget30" => $sortArray[29],
+						"ranTarget31" => $sortArray[30],
+						"ranTarget32" => $sortArray[31],
+						"ranTarget33" => $sortArray[32],
+						"ranTarget34" => $sortArray[33],
+						"ranTarget35" => $sortArray[34],
+						"ranTarget36" => $sortArray[35],
+						"ranTarget37" => $sortArray[36],
+						"ranTarget38" => $sortArray[37],
+						"ranTarget39" => $sortArray[38],
+						"ranTarget40" => $sortArray[39]
+					),
+					array('id'=> $question->id),
+					array('%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+					),
+					array('%d')
+				);
+			}
+		}
+		if($question->target==5){
+			if($question->id==140){ 
+				array_push($sortArray,$question->target1);
+				array_push($sortArray,$question->target2);
+				array_push($sortArray,$question->target3);
+				array_push($sortArray,$question->target4);
+				array_push($sortArray,$question->target5);
+				array_push($sortArray,$question->target6);
+				array_push($sortArray,$question->target7);
+				array_push($sortArray,$question->target8);
+				array_push($sortArray,$question->target9);
+				array_push($sortArray,$question->target10);
+				shuffle($sortArray);
+				
+				$wpdb->update(
+					$wpdb->prefix . "chained_questions",
+					array(
+						"ranTarget1" => $sortArray[0],
+						"ranTarget2" => $sortArray[1],
+						"ranTarget3" => $sortArray[2],
+						"ranTarget4" => $sortArray[3],
+						"ranTarget5" => $sortArray[4],
+						"ranTarget6" => $sortArray[5],
+						"ranTarget7" => $sortArray[6],
+						"ranTarget8" => $sortArray[7],
+						"ranTarget9" => $sortArray[8],
+						"ranTarget10" => $sortArray[9]
+					),
+					array('id'=> $question->id),
+					array('%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+					),
+					array('%d')
+				);
+			}
+		}
+		if($question->target==6){
+			if($question->id==151){ 
+				array_push($sortArray,$question->target1);
+				array_push($sortArray,$question->target2);
+				array_push($sortArray,$question->target3);
+				array_push($sortArray,$question->target4);
+				array_push($sortArray,$question->target5);
+				array_push($sortArray,$question->target6);
+				array_push($sortArray,$question->target7);
+				array_push($sortArray,$question->target8);
+				array_push($sortArray,$question->target9);
+				array_push($sortArray,$question->target10);
+				array_push($sortArray,$question->target11);
+				array_push($sortArray,$question->target12);
+				array_push($sortArray,$question->target13);
+				array_push($sortArray,$question->target14);
+				array_push($sortArray,$question->target15);
+				array_push($sortArray,$question->target16);
+				array_push($sortArray,$question->target17);
+				array_push($sortArray,$question->target18);
+				array_push($sortArray,$question->target19);
+				array_push($sortArray,$question->target20);
+				shuffle($sortArray);
+				
+				$wpdb->update(
+					$wpdb->prefix . "chained_questions",
+					array(
+						"ranTarget1" => $sortArray[0],
+						"ranTarget2" => $sortArray[1],
+						"ranTarget3" => $sortArray[2],
+						"ranTarget4" => $sortArray[3],
+						"ranTarget5" => $sortArray[4],
+						"ranTarget6" => $sortArray[5],
+						"ranTarget7" => $sortArray[6],
+						"ranTarget8" => $sortArray[7],
+						"ranTarget9" => $sortArray[8],
+						"ranTarget10" => $sortArray[9],
+						"ranTarget11" => $sortArray[10],
+						"ranTarget12" => $sortArray[11],
+						"ranTarget13" => $sortArray[12],
+						"ranTarget14" => $sortArray[13],
+						"ranTarget15" => $sortArray[14],
+						"ranTarget16" => $sortArray[15],
+						"ranTarget17" => $sortArray[16],
+						"ranTarget18" => $sortArray[17],
+						"ranTarget19" => $sortArray[18],
+						"ranTarget20" => $sortArray[19]
+					),
+					array('id'=> $question->id),
+					array('%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+					),
+					array('%d')
+				);
+			}
+		}
+		if($question->target==7){
+			if($question->id==153){ 
+				array_push($sortArray,$question->target1);
+				array_push($sortArray,$question->target2);
+				array_push($sortArray,$question->target3);
+				array_push($sortArray,$question->target4);
+				array_push($sortArray,$question->target5);
+				array_push($sortArray,$question->target6);
+				array_push($sortArray,$question->target7);
+				array_push($sortArray,$question->target8);
+				array_push($sortArray,$question->target9);
+				array_push($sortArray,$question->target10);
+				array_push($sortArray,$question->target11);
+				array_push($sortArray,$question->target12);
+				array_push($sortArray,$question->target13);
+				array_push($sortArray,$question->target14);
+				array_push($sortArray,$question->target15);
+				array_push($sortArray,$question->target16);
+				array_push($sortArray,$question->target17);
+				array_push($sortArray,$question->target18);
+				array_push($sortArray,$question->target19);
+				array_push($sortArray,$question->target20);
+				array_push($sortArray,$question->target21);
+				array_push($sortArray,$question->target22);
+				array_push($sortArray,$question->target23);
+				array_push($sortArray,$question->target24);
+				array_push($sortArray,$question->target25);
+				array_push($sortArray,$question->target26);
+				array_push($sortArray,$question->target27);
+				array_push($sortArray,$question->target28);
+				array_push($sortArray,$question->target29);
+				array_push($sortArray,$question->target30);
+				array_push($sortArray,$question->target31);
+				array_push($sortArray,$question->target32);
+				array_push($sortArray,$question->target33);
+				array_push($sortArray,$question->target34);
+				array_push($sortArray,$question->target35);
+				array_push($sortArray,$question->target36);
+				array_push($sortArray,$question->target37);
+				array_push($sortArray,$question->target38);
+				array_push($sortArray,$question->target39);
+				array_push($sortArray,$question->target40);
+				shuffle($sortArray);
+				
+				$wpdb->update(
+					$wpdb->prefix . "chained_questions",
+					array(
+						"ranTarget1" => $sortArray[0],
+						"ranTarget2" => $sortArray[1],
+						"ranTarget3" => $sortArray[2],
+						"ranTarget4" => $sortArray[3],
+						"ranTarget5" => $sortArray[4],
+						"ranTarget6" => $sortArray[5],
+						"ranTarget7" => $sortArray[6],
+						"ranTarget8" => $sortArray[7],
+						"ranTarget9" => $sortArray[8],
+						"ranTarget10" => $sortArray[9],
+						"ranTarget11" => $sortArray[10],
+						"ranTarget12" => $sortArray[11],
+						"ranTarget13" => $sortArray[12],
+						"ranTarget14" => $sortArray[13],
+						"ranTarget15" => $sortArray[14],
+						"ranTarget16" => $sortArray[15],
+						"ranTarget17" => $sortArray[16],
+						"ranTarget18" => $sortArray[17],
+						"ranTarget19" => $sortArray[18],
+						"ranTarget20" => $sortArray[19],
+						"ranTarget21" => $sortArray[20],
+						"ranTarget22" => $sortArray[21],
+						"ranTarget23" => $sortArray[22],
+						"ranTarget24" => $sortArray[23],
+						"ranTarget25" => $sortArray[24],
+						"ranTarget26" => $sortArray[25],
+						"ranTarget27" => $sortArray[26],
+						"ranTarget28" => $sortArray[27],
+						"ranTarget29" => $sortArray[28],
+						"ranTarget30" => $sortArray[29],
+						"ranTarget31" => $sortArray[30],
+						"ranTarget32" => $sortArray[31],
+						"ranTarget33" => $sortArray[32],
+						"ranTarget34" => $sortArray[33],
+						"ranTarget35" => $sortArray[34],
+						"ranTarget36" => $sortArray[35],
+						"ranTarget37" => $sortArray[36],
+						"ranTarget38" => $sortArray[37],
+						"ranTarget39" => $sortArray[38],
+						"ranTarget40" => $sortArray[39]
+					),
+					array('id'=> $question->id),
+					array('%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+					),
+					array('%d')
+				);
+			}
+		}
+		//$retrieve_question = $wpdb->get_row( "SELECT * FROM ".CHAINED_QUESTIONS." WHERE id=%d", 6 ); 
+		//6번째 id question 가져와서서
+		if($question->target==1){
+			$retrieve_question = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".CHAINED_QUESTIONS." WHERE id=%d", 5));
+		}
+		if($question->target==2){
+			$retrieve_question = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".CHAINED_QUESTIONS." WHERE id=%d", 66));
+		}if($question->target==3){
+			$retrieve_question = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".CHAINED_QUESTIONS." WHERE id=%d", 77));
+		}if($question->target==4){
+			$retrieve_question = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".CHAINED_QUESTIONS." WHERE id=%d", 99));
+		}if($queston->target==5){
+			$retrieve_question = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".CHAINED_QUESTIONS." WHERE id=%d", 140));
+		}if($question->target==6){
+			$retrieve_question = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".CHAINED_QUESTIONS." WHERE id=%d", 151));
+		}if($question->target==7){
+			$retrieve_question = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".CHAINED_QUESTIONS." WHERE id=%d", 173));
+		}
 
-		$content = str_replace('{{target31}}', @$question->target31, $content);
-		$content = str_replace('{{target32}}', @$question->target32, $content);
-		$content = str_replace('{{target33}}', @$question->target33, $content);
-		$content = str_replace('{{target34}}', @$question->target34, $content);
-		$content = str_replace('{{target35}}', @$question->target35, $content);
-		$content = str_replace('{{target36}}', @$question->target36, $content);
-		$content = str_replace('{{target37}}', @$question->target37, $content);
-		$content = str_replace('{{target38}}', @$question->target38, $content);
-		$content = str_replace('{{target39}}', @$question->target39, $content);
-		$content = str_replace('{{target40}}', @$question->target40, $content);
+		$content = str_replace('{{target1}}', @$retrieve_question->ranTarget1, $content);
+		$content = str_replace('{{target2}}', @$retrieve_question->ranTarget2, $content);
+		$content = str_replace('{{target3}}', @$retrieve_question->ranTarget3, $content);
+		$content = str_replace('{{target4}}', @$retrieve_question->ranTarget4, $content);
+		$content = str_replace('{{target5}}', @$retrieve_question->ranTarget5, $content);
+		$content = str_replace('{{target6}}', @$retrieve_question->ranTarget6, $content);
+		$content = str_replace('{{target7}}', @$retrieve_question->ranTarget7, $content);
+		$content = str_replace('{{target8}}', @$retrieve_question->ranTarget8, $content);
+		$content = str_replace('{{target9}}', @$retrieve_question->ranTarget9, $content);
+		$content = str_replace('{{target10}}', @$retrieve_question->ranTarget10, $content);
 		
+		$content = str_replace('{{target11}}', @$retrieve_question->ranTarget11, $content);
+		$content = str_replace('{{target12}}', @$retrieve_question->ranTarget12, $content);
+		$content = str_replace('{{target13}}', @$retrieve_question->ranTarget13, $content);
+		$content = str_replace('{{target14}}', @$retrieve_question->ranTarget14, $content);
+		$content = str_replace('{{target15}}', @$retrieve_question->ranTarget15, $content);
+		$content = str_replace('{{target16}}', @$retrieve_question->ranTarget16, $content);
+		$content = str_replace('{{target17}}', @$retrieve_question->ranTarget17, $content);
+		$content = str_replace('{{target18}}', @$retrieve_question->ranTarget18, $content);
+		$content = str_replace('{{target19}}', @$retrieve_question->ranTarget19, $content);
+		$content = str_replace('{{target20}}', @$retrieve_question->ranTarget20, $content);
+		
+		$content = str_replace('{{target21}}', @$retrieve_question->ranTarget1, $content);
+		$content = str_replace('{{target22}}', @$retrieve_question->ranTarget2, $content);
+		$content = str_replace('{{target23}}', @$retrieve_question->ranTarget3, $content);
+		$content = str_replace('{{target24}}', @$retrieve_question->ranTarget4, $content);
+		$content = str_replace('{{target25}}', @$retrieve_question->ranTarget5, $content);
+		$content = str_replace('{{target26}}', @$retrieve_question->ranTarget6, $content);
+		$content = str_replace('{{target27}}', @$retrieve_question->ranTarget7, $content);
+		$content = str_replace('{{target28}}', @$retrieve_question->ranTarget8, $content);
+		$content = str_replace('{{target29}}', @$retrieve_question->ranTarget9, $content);
+		$content = str_replace('{{target30}}', @$retrieve_question->ranTarget10, $content);
+		
+		$content = str_replace('{{target31}}', @$retrieve_question->ranTarget1, $content);
+		$content = str_replace('{{target32}}', @$retrieve_question->ranTarget2, $content);
+		$content = str_replace('{{target33}}', @$retrieve_question->ranTarget3, $content);
+		$content = str_replace('{{target34}}', @$retrieve_question->ranTarget4, $content);
+		$content = str_replace('{{target35}}', @$retrieve_question->ranTarget5, $content);
+		$content = str_replace('{{target36}}', @$retrieve_question->ranTarget6, $content);
+		$content = str_replace('{{target37}}', @$retrieve_question->ranTarget7, $content);
+		$content = str_replace('{{target38}}', @$retrieve_question->ranTarget8, $content);
+		$content = str_replace('{{target39}}', @$retrieve_question->ranTarget9, $content);
+		$content = str_replace('{{target40}}', @$retrieve_question->ranTarget10, $content);
+	
 		$content = do_shortcode($content);
 		$content = wpautop($content);
 

@@ -92,6 +92,7 @@ class ChainedQuizQuizzes {
 	// displays a quiz
 	static function display($quiz_id) {
 	   global $wpdb, $user_ID;
+	   global $sortArray;
 	   $_question = new ChainedQuizQuestion();
 	   
 	   // select the quiz
@@ -114,7 +115,8 @@ class ChainedQuizQuizzes {
 		 $choices = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".CHAINED_CHOICES." 
 		 	WHERE quiz_id=%d AND question_id=%d ORDER BY id", $quiz->id, $question->id));
 		 			 	
-		 $first_load = true;			 	
+		 $first_load = true;
+
 		 include(CHAINED_PATH."/views/display-quiz.html.php");
 	}
 

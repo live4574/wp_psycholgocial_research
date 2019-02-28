@@ -10,7 +10,8 @@ License: GPLv2 or later
 define( 'CHAINED_PATH', dirname( __FILE__ ) );
 define( 'CHAINED_RELATIVE_PATH', dirname( plugin_basename( __FILE__ )));
 define( 'CHAINED_URL', plugin_dir_url( __FILE__ ));
-
+global $sortArray;
+$sortArray=array();
 // require controllers and models
 require_once(CHAINED_PATH.'/models/basic.php');
 require_once(CHAINED_PATH.'/models/quiz.php');
