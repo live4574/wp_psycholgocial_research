@@ -7,8 +7,7 @@
 			</div>
 		<?php endif;?>
 		<div class="chained-quiz-question">
-			<?php $randomSort=array();?>
-			<?php echo $_question->display_question($question,$randomSort);?>
+			<?php echo $_question->display_question($question);?>
 		</div>
 		
 		<div class="chained-quiz-choices">
