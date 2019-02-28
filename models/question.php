@@ -643,25 +643,25 @@ class ChainedQuizQuestion {
 		if($question->target==1){
 			$retrieve_question = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".CHAINED_QUESTIONS." WHERE id=%d", 5));
 		}
-		if($question->target==2){
+		else if($question->target==2){
 			$retrieve_question = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".CHAINED_QUESTIONS." WHERE id=%d", 66));
 		}
-		if($question->target==3){
+		else if($question->target==3){
 			$retrieve_question = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".CHAINED_QUESTIONS." WHERE id=%d", 77));
 		}
-		if($question->target==4){
+		else if($question->target==4){
 			$retrieve_question = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".CHAINED_QUESTIONS." WHERE id=%d", 99));
 		}
-		if($queston->target==5){
+		else if($queston->target==5){
 			$retrieve_question = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".CHAINED_QUESTIONS." WHERE id=%d", 140));
 		}
-		if($question->target==6){
+		else if($question->target==6){
 			$retrieve_question = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".CHAINED_QUESTIONS." WHERE id=%d", 151));
 		}
-		if($question->target==7){
+		else if($question->target==7){
 			$retrieve_question = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".CHAINED_QUESTIONS." WHERE id=%d", 173));
 		}
-		if($question->id==141||$question->id==142||$question->id==143||$question->id==144||$question->id==145||$question->id==146||$question->id==147||$question->id==148||$question->id==149||$question->id==150||){
+		if($question->id==141 or $question->id==142 or $question->id==143 or $question->id==144 or $question->id==145 or $question->id==146 or $question->id==147 or $question->id==148 or $question->id==149 or $question->id==150){
 			$retrieve_question = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".CHAINED_QUESTIONS." WHERE id=%d", 140));
 		}
 
