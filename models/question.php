@@ -849,25 +849,6 @@ class ChainedQuizQuestion {
 	  return false;		
 	} // end next()
 	function getRandomKeyword($question){
-		if($question->target=='1'){
-			$randomCount=mt_rand(1,10);
-		}else if($question->target=='2'){
-			$randomCount=mt_rand(1,10);
-		}else if($question->target=='3'){
-			$randomCount=mt_rand(1,10);
-		}else if($question->target==4){
-			$randomCount=mt_rand(1,10);
-		}else if($question->target=='5'){
-			$randomCount=mt_rand(1,10);
-		}else if($question->target=='6'){
-			$randomCount=mt_rand(1,10);
-		}else if($question->target=='7'){
-			$randomCount=mt_rand(1,10);
-		}else{
-			$randomCount=1;
-		}
-		
-		$sql=@$question->${"target".$randomCount};
-		return $sql;
+			
 	}
 }
