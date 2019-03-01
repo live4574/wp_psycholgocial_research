@@ -81,15 +81,16 @@ class ChainedQuizQuestion {
 		//   only add stripslashes and autop
 		global $wpdb, $user_ID;
 		global $sortArray;
-
+		global $ansArray;
 	    $user_id = empty($user_ID) ? 0 : $user_ID;
 	    
 		$content = stripslashes($question->question);
 
 		$randomCount=mt_rand(1,10);
 		//$sql=${"target".randomCount};
-		//ë°ì´í„°ë² ì´ìŠ¤ì— íƒ€ê²Ÿê°’ì— ë”°ë¼ ëžœë¤ê°’ ê° ì €ìž¥í•´ë†“ê³  ê° íƒ€ê²Ÿìˆ«ìžëª…ì— 
-		//ê·¸ê°’ìœ¼ë¡œ ì €ìž¥
+		//µ¥ÀÌÅÍº£ÀÌ½º¿¡ Å¸°Ù°ª¿¡ µû¶ó ·£´ý°ª °¢ ÀúÀåÇØ³õ°í °¢ Å¸°Ù¼ýÀÚ¸í¿¡ 
+		//±×°ªÀ¸·Î ÀúÀå
+		$ansArray=Array();
 		if($question->target==1){
 			if($question->id==5){ 
 				array_push($sortArray,$question->target1);
@@ -102,39 +103,22 @@ class ChainedQuizQuestion {
 				array_push($sortArray,$question->target8);
 				array_push($sortArray,$question->target9);
 				array_push($sortArray,$question->target10);
-				$originArr=Array();
-				array_push($originArr,$question->target1);
-				array_push($originArr,$question->target2);
-				array_push($originArr,$question->target3);
-				array_push($originArr,$question->target4);
-				array_push($originArr,$question->target5);
-				array_push($originArr,$question->target6);
-				array_push($originArr,$question->target7);
-				array_push($originArr,$question->target8);
-				array_push($originArr,$question->target9);
-				array_push($originArr,$question->target10);
-				
+				$originArr=$sortArray;
 				shuffle($sortArray);
-				$returnArr=Array();
-				for($i=0;$i<10;$i++){
-					for($j=0;$j<10;$j++){
-						if(strcmp($sortArray[$i],$originArr[$j])==0){
-							array_push($returnArr, $j);
-							break;
-						}
-					}
-				}
-				$ansArr=Array();
-				array_push($ansArr,$question->targetAns1);
-				array_push($ansArr,$question->targetAns2);
-				array_push($ansArr,$question->targetAns3);
-				array_push($ansArr,$question->targetAns4);
-				array_push($ansArr,$question->targetAns5);
-				array_push($ansArr,$question->targetAns6);
-				array_push($ansArr,$question->targetAns7);
-				array_push($ansArr,$question->targetAns8);
-				array_push($ansArr,$question->targetAns9);
-				array_push($ansArr,$question->targetAns10);
+				//sortArrayÁ¤·Ä
+				$resultArr=getRandomPosArr($question,$sortArray,$originArr,0,10);
+				//´ä ¹è¿­ ¾î¶»°Ô ¹Ù²å´ÂÁö ¾Ë±âÀ§ÇÑ ¹è¿­¹Þ¾Æ¿È
+				array_push($ansArray,$question->ranTargetAns1);
+				array_push($ansArray,$question->ranTargetAns2);
+				array_push($ansArray,$question->ranTargetAns3);
+				array_push($ansArray,$question->ranTargetAns4);
+				array_push($ansArray,$question->ranTargetAns5);
+				array_push($ansArray,$question->ranTargetAns6);
+				array_push($ansArray,$question->ranTargetAns7);
+				array_push($ansArray,$question->ranTargetAns8);
+				array_push($ansArray,$question->ranTargetAns9);
+				array_push($ansArray,$question->ranTargetAns10);
+				//ansArray¿¡ ¿ø·¡ Á¤·Ä ³Ö¾î³õ°í
 
 				$wpdb->update(
 					$wpdb->prefix . "chained_questions",
@@ -167,16 +151,16 @@ class ChainedQuizQuestion {
 				$wpdb->update(
 					$wpdb->prefix . "chained_questions",
 					array(
-						"ranTargetAns1" => $ansArr[$returnArr[0]],
-						"ranTargetAns2" => $ansArr[$returnArr[1]],
-						"ranTargetAns3" => $ansArr[$returnArr[2]],
-						"ranTargetAns4" => $ansArr[$returnArr[3]],
-						"ranTargetAns5" => $ansArr[$returnArr[4]],
-						"ranTargetAns6" => $ansArr[$returnArr[5]],
-						"ranTargetAns7" => $ansArr[$returnArr[6]],
-						"ranTargetAns8" => $ansArr[$returnArr[7]],
-						"ranTargetAns9" => $ansArr[$returnArr[8]],
-						"ranTargetAns10" => $ansArr[$returnArr[9]]
+						"ranTargetAns1" => $ansArray[$resultArr[0]],
+						"ranTargetAns2" => $ansArray[$resultArr[1]],
+						"ranTargetAns3" => $ansArray[$resultArr[2]],
+						"ranTargetAns4" => $ansArray[$resultArr[3]],
+						"ranTargetAns5" => $ansArray[$resultArr[4]],
+						"ranTargetAns6" => $ansArray[$resultArr[5]],
+						"ranTargetAns7" => $ansArray[$resultArr[6]],
+						"ranTargetAns8" => $ansArray[$resultArr[7]],
+						"ranTargetAns9" => $ansArray[$resultArr[8]],
+						"ranTargetAns10" =>  $ansArray[$resultArr[9]]
 					),
 					array('id'=> $question->id),
 					array('%s',
@@ -206,42 +190,8 @@ class ChainedQuizQuestion {
 				array_push($sortArray,$question->target8);
 				array_push($sortArray,$question->target9);
 				array_push($sortArray,$question->target10);
-				
-				$originArr=Array();
-				array_push($originArr,$question->target1);
-				array_push($originArr,$question->target2);
-				array_push($originArr,$question->target3);
-				array_push($originArr,$question->target4);
-				array_push($originArr,$question->target5);
-				array_push($originArr,$question->target6);
-				array_push($originArr,$question->target7);
-				array_push($originArr,$question->target8);
-				array_push($originArr,$question->target9);
-				array_push($originArr,$question->target10);
-				
 				shuffle($sortArray);
 				
-				$returnArr=Array();
-				for($i=0;$i<10;$i++){
-					for($j=0;$j<10;$j++){
-						if(strcmp($sortArray[$i],$originArr[$j])==0){
-							array_push($returnArr, $j);
-							break;
-						}
-					}
-				}
-				$ansArr=Array();
-				array_push($ansArr,$question->targetAns1);
-				array_push($ansArr,$question->targetAns2);
-				array_push($ansArr,$question->targetAns3);
-				array_push($ansArr,$question->targetAns4);
-				array_push($ansArr,$question->targetAns5);
-				array_push($ansArr,$question->targetAns6);
-				array_push($ansArr,$question->targetAns7);
-				array_push($ansArr,$question->targetAns8);
-				array_push($ansArr,$question->targetAns9);
-				array_push($ansArr,$question->targetAns10);
-
 				$wpdb->update(
 					$wpdb->prefix . "chained_questions",
 					array(
@@ -255,34 +205,6 @@ class ChainedQuizQuestion {
 						"ranTarget8" => $sortArray[7],
 						"ranTarget9" => $sortArray[8],
 						"ranTarget10" => $sortArray[9]
-					),
-					array('id'=> $question->id),
-					array('%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-					),
-					array('%d')
-				);
-				$wpdb->update(
-					$wpdb->prefix . "chained_questions",
-					array(
-						"ranTargetAns1" => $ansArr[$returnArr[0]],
-						"ranTargetAns2" => $ansArr[$returnArr[1]],
-						"ranTargetAns3" => $ansArr[$returnArr[2]],
-						"ranTargetAns4" => $ansArr[$returnArr[3]],
-						"ranTargetAns5" => $ansArr[$returnArr[4]],
-						"ranTargetAns6" => $ansArr[$returnArr[5]],
-						"ranTargetAns7" => $ansArr[$returnArr[6]],
-						"ranTargetAns8" => $ansArr[$returnArr[7]],
-						"ranTargetAns9" => $ansArr[$returnArr[8]],
-						"ranTargetAns10" => $ansArr[$returnArr[9]]
 					),
 					array('id'=> $question->id),
 					array('%s',
@@ -322,62 +244,8 @@ class ChainedQuizQuestion {
 				array_push($sortArray,$question->target18);
 				array_push($sortArray,$question->target19);
 				array_push($sortArray,$question->target20);
-				
-				$originArr=Array();
-				array_push($originArr,$question->target1);
-				array_push($originArr,$question->target2);
-				array_push($originArr,$question->target3);
-				array_push($originArr,$question->target4);
-				array_push($originArr,$question->target5);
-				array_push($originArr,$question->target6);
-				array_push($originArr,$question->target7);
-				array_push($originArr,$question->target8);
-				array_push($originArr,$question->target9);
-				array_push($originArr,$question->target10);
-				array_push($originArr,$question->target11);
-				array_push($originArr,$question->target12);
-				array_push($originArr,$question->target13);
-				array_push($originArr,$question->target14);
-				array_push($originArr,$question->target15);
-				array_push($originArr,$question->target16);
-				array_push($originArr,$question->target17);
-				array_push($originArr,$question->target18);
-				array_push($originArr,$question->target19);
-				array_push($originArr,$question->target20);
-
 				shuffle($sortArray);
 				
-				$returnArr=Array();
-				for($i=0;$i<20;$i++){
-					for($j=0;$j<20;$j++){
-						if(strcmp($sortArray[$i],$originArr[$j])==0){
-							array_push($returnArr, $j);
-							break;
-						}
-					}
-				}
-				$ansArr=Array();
-				array_push($ansArr,$question->targetAns1);
-				array_push($ansArr,$question->targetAns2);
-				array_push($ansArr,$question->targetAns3);
-				array_push($ansArr,$question->targetAns4);
-				array_push($ansArr,$question->targetAns5);
-				array_push($ansArr,$question->targetAns6);
-				array_push($ansArr,$question->targetAns7);
-				array_push($ansArr,$question->targetAns8);
-				array_push($ansArr,$question->targetAns9);
-				array_push($ansArr,$question->targetAns10);
-				array_push($ansArr,$question->targetAns11);
-				array_push($ansArr,$question->targetAns12);
-				array_push($ansArr,$question->targetAns13);
-				array_push($ansArr,$question->targetAns14);
-				array_push($ansArr,$question->targetAns15);
-				array_push($ansArr,$question->targetAns16);
-				array_push($ansArr,$question->targetAns17);
-				array_push($ansArr,$question->targetAns18);
-				array_push($ansArr,$question->targetAns19);
-				array_push($ansArr,$question->targetAns20);
-
 				$wpdb->update(
 					$wpdb->prefix . "chained_questions",
 					array(
@@ -401,54 +269,6 @@ class ChainedQuizQuestion {
 						"ranTarget18" => $sortArray[17],
 						"ranTarget19" => $sortArray[18],
 						"ranTarget20" => $sortArray[19]
-					),
-					array('id'=> $question->id),
-					array('%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-					),
-					array('%d')
-				);
-				$wpdb->update(
-					$wpdb->prefix . "chained_questions",
-					array(
-						"ranTargetAns1" => $ansArr[$returnArr[0]],
-						"ranTargetAns2" => $ansArr[$returnArr[1]],
-						"ranTargetAns3" => $ansArr[$returnArr[2]],
-						"ranTargetAns4" => $ansArr[$returnArr[3]],
-						"ranTargetAns5" => $ansArr[$returnArr[4]],
-						"ranTargetAns6" => $ansArr[$returnArr[5]],
-						"ranTargetAns7" => $ansArr[$returnArr[6]],
-						"ranTargetAns8" => $ansArr[$returnArr[7]],
-						"ranTargetAns9" => $ansArr[$returnArr[8]],
-						"ranTargetAns10" => $ansArr[$returnArr[9]],
-						"ranTargetAns11" => $ansArr[$returnArr[10]],
-						"ranTargetAns12" => $ansArr[$returnArr[11]],
-						"ranTargetAns13" => $ansArr[$returnArr[12]],
-						"ranTargetAns14" => $ansArr[$returnArr[13]],
-						"ranTargetAns15" => $ansArr[$returnArr[14]],
-						"ranTargetAns16" => $ansArr[$returnArr[15]],
-						"ranTargetAns17" => $ansArr[$returnArr[16]],
-						"ranTargetAns18" => $ansArr[$returnArr[17]],
-						"ranTargetAns19" => $ansArr[$returnArr[18]],
-						"ranTargetAns20" => $ansArr[$returnArr[19]]
 					),
 					array('id'=> $question->id),
 					array('%s',
@@ -518,101 +338,7 @@ class ChainedQuizQuestion {
 				array_push($sortArray,$question->target38);
 				array_push($sortArray,$question->target39);
 				array_push($sortArray,$question->target40);
-				
-				$originArr=Array();
-				array_push($originArr,$question->target1);
-				array_push($originArr,$question->target2);
-				array_push($originArr,$question->target3);
-				array_push($originArr,$question->target4);
-				array_push($originArr,$question->target5);
-				array_push($originArr,$question->target6);
-				array_push($originArr,$question->target7);
-				array_push($originArr,$question->target8);
-				array_push($originArr,$question->target9);
-				array_push($originArr,$question->target10);
-				array_push($originArr,$question->target11);
-				array_push($originArr,$question->target12);
-				array_push($originArr,$question->target13);
-				array_push($originArr,$question->target14);
-				array_push($originArr,$question->target15);
-				array_push($originArr,$question->target16);
-				array_push($originArr,$question->target17);
-				array_push($originArr,$question->target18);
-				array_push($originArr,$question->target19);
-				array_push($originArr,$question->target20);
-				array_push($originArr,$question->target21);
-				array_push($originArr,$question->target22);
-				array_push($originArr,$question->target23);
-				array_push($originArr,$question->target24);
-				array_push($originArr,$question->target25);
-				array_push($originArr,$question->target26);
-				array_push($originArr,$question->target27);
-				array_push($originArr,$question->target28);
-				array_push($originArr,$question->target29);
-				array_push($originArr,$question->target30);
-				array_push($originArr,$question->target31);
-				array_push($originArr,$question->target32);
-				array_push($originArr,$question->target33);
-				array_push($originArr,$question->target34);
-				array_push($originArr,$question->target35);
-				array_push($originArr,$question->target36);
-				array_push($originArr,$question->target37);
-				array_push($originArr,$question->target38);
-				array_push($originArr,$question->target39);
-				array_push($originArr,$question->target40);
-				
 				shuffle($sortArray);
-				
-				$returnArr=Array();
-				for($i=0;$i<40;$i++){
-					for($j=0;$j<40;$j++){
-						if(strcmp($sortArray[$i],$originArr[$j])==0){
-							array_push($returnArr, $j);
-							break;
-						}
-					}
-				}
-				$ansArr=Array();
-				array_push($ansArr,$question->targetAns1);
-				array_push($ansArr,$question->targetAns2);
-				array_push($ansArr,$question->targetAns3);
-				array_push($ansArr,$question->targetAns4);
-				array_push($ansArr,$question->targetAns5);
-				array_push($ansArr,$question->targetAns6);
-				array_push($ansArr,$question->targetAns7);
-				array_push($ansArr,$question->targetAns8);
-				array_push($ansArr,$question->targetAns9);
-				array_push($ansArr,$question->targetAns10);
-				array_push($ansArr,$question->targetAns11);
-				array_push($ansArr,$question->targetAns12);
-				array_push($ansArr,$question->targetAns13);
-				array_push($ansArr,$question->targetAns14);
-				array_push($ansArr,$question->targetAns15);
-				array_push($ansArr,$question->targetAns16);
-				array_push($ansArr,$question->targetAns17);
-				array_push($ansArr,$question->targetAns18);
-				array_push($ansArr,$question->targetAns19);
-				array_push($ansArr,$question->targetAns20);
-				array_push($ansArr,$question->targetAns21);
-				array_push($ansArr,$question->targetAns22);
-				array_push($ansArr,$question->targetAns23);
-				array_push($ansArr,$question->targetAns24);
-				array_push($ansArr,$question->targetAns25);
-				array_push($ansArr,$question->targetAns26);
-				array_push($ansArr,$question->targetAns27);
-				array_push($ansArr,$question->targetAns28);
-				array_push($ansArr,$question->targetAns29);
-				array_push($ansArr,$question->targetAns30);
-				array_push($ansArr,$question->targetAns31);
-				array_push($ansArr,$question->targetAns32);
-				array_push($ansArr,$question->targetAns33);
-				array_push($ansArr,$question->targetAns34);
-				array_push($ansArr,$question->targetAns35);
-				array_push($ansArr,$question->targetAns36);
-				array_push($ansArr,$question->targetAns37);
-				array_push($ansArr,$question->targetAns38);
-				array_push($ansArr,$question->targetAns39);
-				array_push($ansArr,$question->targetAns40);
 				
 				$wpdb->update(
 					$wpdb->prefix . "chained_questions",
@@ -702,94 +428,6 @@ class ChainedQuizQuestion {
 					),
 					array('%d')
 				);
-				$wpdb->update(
-					$wpdb->prefix . "chained_questions",
-					array(
-						"ranTargetAns1" => $ansArr[$returnArr[0]],
-						"ranTargetAns2" => $ansArr[$returnArr[1]],
-						"ranTargetAns3" => $ansArr[$returnArr[2]],
-						"ranTargetAns4" => $ansArr[$returnArr[3]],
-						"ranTargetAns5" => $ansArr[$returnArr[4]],
-						"ranTargetAns6" => $ansArr[$returnArr[5]],
-						"ranTargetAns7" => $ansArr[$returnArr[6]],
-						"ranTargetAns8" => $ansArr[$returnArr[7]],
-						"ranTargetAns9" => $ansArr[$returnArr[8]],
-						"ranTargetAns10" => $ansArr[$returnArr[9]],
-						"ranTargetAns11" => $ansArr[$returnArr[10]],
-						"ranTargetAns12" => $ansArr[$returnArr[11]],
-						"ranTargetAns13" => $ansArr[$returnArr[12]],
-						"ranTargetAns14" => $ansArr[$returnArr[13]],
-						"ranTargetAns15" => $ansArr[$returnArr[14]],
-						"ranTargetAns16" => $ansArr[$returnArr[15]],
-						"ranTargetAns17" => $ansArr[$returnArr[16]],
-						"ranTargetAns18" => $ansArr[$returnArr[17]],
-						"ranTargetAns19" => $ansArr[$returnArr[18]],
-						"ranTargetAns20" => $ansArr[$returnArr[19]],
-						"ranTargetAns21" => $ansArr[$returnArr[20]],
-						"ranTargetAns22" => $ansArr[$returnArr[21]],
-						"ranTargetAns23" => $ansArr[$returnArr[22]],
-						"ranTargetAns24" => $ansArr[$returnArr[23]],
-						"ranTargetAns25" => $ansArr[$returnArr[24]],
-						"ranTargetAns26" => $ansArr[$returnArr[25]],
-						"ranTargetAns27" => $ansArr[$returnArr[26]],
-						"ranTargetAns28" => $ansArr[$returnArr[27]],
-						"ranTargetAns29" => $ansArr[$returnArr[28]],
-						"ranTargetAns30" => $ansArr[$returnArr[29]],
-						"ranTargetAns31" => $ansArr[$returnArr[30]],
-						"ranTargetAns32" => $ansArr[$returnArr[31]],
-						"ranTargetAns33" => $ansArr[$returnArr[32]],
-						"ranTargetAns34" => $ansArr[$returnArr[33]],
-						"ranTargetAns35" => $ansArr[$returnArr[34]],
-						"ranTargetAns36" => $ansArr[$returnArr[35]],
-						"ranTargetAns37" => $ansArr[$returnArr[36]],
-						"ranTargetAns38" => $ansArr[$returnArr[37]],
-						"ranTargetAns39" => $ansArr[$returnArr[38]],
-						"ranTargetAns40" => $ansArr[$returnArr[39]]
-					),
-					array('id'=> $question->id),
-					array('%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-					),
-					array('%d')
-				);
 			}
 		}
 		if($question->target==5){
@@ -804,42 +442,8 @@ class ChainedQuizQuestion {
 				array_push($sortArray,$question->target8);
 				array_push($sortArray,$question->target9);
 				array_push($sortArray,$question->target10);
-				
-				$originArr=Array();
-				array_push($originArr,$question->target1);
-				array_push($originArr,$question->target2);
-				array_push($originArr,$question->target3);
-				array_push($originArr,$question->target4);
-				array_push($originArr,$question->target5);
-				array_push($originArr,$question->target6);
-				array_push($originArr,$question->target7);
-				array_push($originArr,$question->target8);
-				array_push($originArr,$question->target9);
-				array_push($originArr,$question->target10);
-				
 				shuffle($sortArray);
 				
-				$returnArr=Array();
-				for($i=0;$i<10;$i++){
-					for($j=0;$j<10;$j++){
-						if(strcmp($sortArray[$i],$originArr[$j])==0){
-							array_push($returnArr, $j);
-							break;
-						}
-					}
-				}
-				$ansArr=Array();
-				array_push($ansArr,$question->targetAns1);
-				array_push($ansArr,$question->targetAns2);
-				array_push($ansArr,$question->targetAns3);
-				array_push($ansArr,$question->targetAns4);
-				array_push($ansArr,$question->targetAns5);
-				array_push($ansArr,$question->targetAns6);
-				array_push($ansArr,$question->targetAns7);
-				array_push($ansArr,$question->targetAns8);
-				array_push($ansArr,$question->targetAns9);
-				array_push($ansArr,$question->targetAns10);
-
 				$wpdb->update(
 					$wpdb->prefix . "chained_questions",
 					array(
@@ -853,34 +457,6 @@ class ChainedQuizQuestion {
 						"ranTarget8" => $sortArray[7],
 						"ranTarget9" => $sortArray[8],
 						"ranTarget10" => $sortArray[9]
-					),
-					array('id'=> $question->id),
-					array('%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-					),
-					array('%d')
-				);
-				$wpdb->update(
-					$wpdb->prefix . "chained_questions",
-					array(
-						"ranTargetAns1" => $ansArr[$returnArr[0]],
-						"ranTargetAns2" => $ansArr[$returnArr[1]],
-						"ranTargetAns3" => $ansArr[$returnArr[2]],
-						"ranTargetAns4" => $ansArr[$returnArr[3]],
-						"ranTargetAns5" => $ansArr[$returnArr[4]],
-						"ranTargetAns6" => $ansArr[$returnArr[5]],
-						"ranTargetAns7" => $ansArr[$returnArr[6]],
-						"ranTargetAns8" => $ansArr[$returnArr[7]],
-						"ranTargetAns9" => $ansArr[$returnArr[8]],
-						"ranTargetAns10" => $ansArr[$returnArr[9]]
 					),
 					array('id'=> $question->id),
 					array('%s',
@@ -920,62 +496,9 @@ class ChainedQuizQuestion {
 				array_push($sortArray,$question->target18);
 				array_push($sortArray,$question->target19);
 				array_push($sortArray,$question->target20);
-				
-				$originArr=Array();
-				array_push($originArr,$question->target1);
-				array_push($originArr,$question->target2);
-				array_push($originArr,$question->target3);
-				array_push($originArr,$question->target4);
-				array_push($originArr,$question->target5);
-				array_push($originArr,$question->target6);
-				array_push($originArr,$question->target7);
-				array_push($originArr,$question->target8);
-				array_push($originArr,$question->target9);
-				array_push($originArr,$question->target10);
-				array_push($originArr,$question->target11);
-				array_push($originArr,$question->target12);
-				array_push($originArr,$question->target13);
-				array_push($originArr,$question->target14);
-				array_push($originArr,$question->target15);
-				array_push($originArr,$question->target16);
-				array_push($originArr,$question->target17);
-				array_push($originArr,$question->target18);
-				array_push($originArr,$question->target19);
-				array_push($originArr,$question->target20);
-				
+
 				shuffle($sortArray);
 				
-				$returnArr=Array();
-				for($i=0;$i<20;$i++){
-					for($j=0;$j<20;$j++){
-						if(strcmp($sortArray[$i],$originArr[$j])==0){
-							array_push($returnArr, $j);
-							break;
-						}
-					}
-				}
-				$ansArr=Array();
-				array_push($ansArr,$question->targetAns1);
-				array_push($ansArr,$question->targetAns2);
-				array_push($ansArr,$question->targetAns3);
-				array_push($ansArr,$question->targetAns4);
-				array_push($ansArr,$question->targetAns5);
-				array_push($ansArr,$question->targetAns6);
-				array_push($ansArr,$question->targetAns7);
-				array_push($ansArr,$question->targetAns8);
-				array_push($ansArr,$question->targetAns9);
-				array_push($ansArr,$question->targetAns10);
-				array_push($ansArr,$question->targetAns11);
-				array_push($ansArr,$question->targetAns12);
-				array_push($ansArr,$question->targetAns13);
-				array_push($ansArr,$question->targetAns14);
-				array_push($ansArr,$question->targetAns15);
-				array_push($ansArr,$question->targetAns16);
-				array_push($ansArr,$question->targetAns17);
-				array_push($ansArr,$question->targetAns18);
-				array_push($ansArr,$question->targetAns19);
-				array_push($ansArr,$question->targetAns20);
-
 				$wpdb->update(
 					$wpdb->prefix . "chained_questions",
 					array(
@@ -999,54 +522,6 @@ class ChainedQuizQuestion {
 						"ranTarget18" => $sortArray[17],
 						"ranTarget19" => $sortArray[18],
 						"ranTarget20" => $sortArray[19]
-					),
-					array('id'=> $question->id),
-					array('%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-					),
-					array('%d')
-				);
-				$wpdb->update(
-					$wpdb->prefix . "chained_questions",
-					array(
-						"ranTargetAns1" => $ansArr[$returnArr[0]],
-						"ranTargetAns2" => $ansArr[$returnArr[1]],
-						"ranTargetAns3" => $ansArr[$returnArr[2]],
-						"ranTargetAns4" => $ansArr[$returnArr[3]],
-						"ranTargetAns5" => $ansArr[$returnArr[4]],
-						"ranTargetAns6" => $ansArr[$returnArr[5]],
-						"ranTargetAns7" => $ansArr[$returnArr[6]],
-						"ranTargetAns8" => $ansArr[$returnArr[7]],
-						"ranTargetAns9" => $ansArr[$returnArr[8]],
-						"ranTargetAns10" => $ansArr[$returnArr[9]],
-						"ranTargetAns11" => $ansArr[$returnArr[10]],
-						"ranTargetAns12" => $ansArr[$returnArr[11]],
-						"ranTargetAns13" => $ansArr[$returnArr[12]],
-						"ranTargetAns14" => $ansArr[$returnArr[13]],
-						"ranTargetAns15" => $ansArr[$returnArr[14]],
-						"ranTargetAns16" => $ansArr[$returnArr[15]],
-						"ranTargetAns17" => $ansArr[$returnArr[16]],
-						"ranTargetAns18" => $ansArr[$returnArr[17]],
-						"ranTargetAns19" => $ansArr[$returnArr[18]],
-						"ranTargetAns20" => $ansArr[$returnArr[19]]
 					),
 					array('id'=> $question->id),
 					array('%s',
@@ -1116,102 +591,8 @@ class ChainedQuizQuestion {
 				array_push($sortArray,$question->target38);
 				array_push($sortArray,$question->target39);
 				array_push($sortArray,$question->target40);
-				
-				$originArr=Array();
-				array_push($originArr,$question->target1);
-				array_push($originArr,$question->target2);
-				array_push($originArr,$question->target3);
-				array_push($originArr,$question->target4);
-				array_push($originArr,$question->target5);
-				array_push($originArr,$question->target6);
-				array_push($originArr,$question->target7);
-				array_push($originArr,$question->target8);
-				array_push($originArr,$question->target9);
-				array_push($originArr,$question->target10);
-				array_push($originArr,$question->target11);
-				array_push($originArr,$question->target12);
-				array_push($originArr,$question->target13);
-				array_push($originArr,$question->target14);
-				array_push($originArr,$question->target15);
-				array_push($originArr,$question->target16);
-				array_push($originArr,$question->target17);
-				array_push($originArr,$question->target18);
-				array_push($originArr,$question->target19);
-				array_push($originArr,$question->target20);
-				array_push($originArr,$question->target21);
-				array_push($originArr,$question->target22);
-				array_push($originArr,$question->target23);
-				array_push($originArr,$question->target24);
-				array_push($originArr,$question->target25);
-				array_push($originArr,$question->target26);
-				array_push($originArr,$question->target27);
-				array_push($originArr,$question->target28);
-				array_push($originArr,$question->target29);
-				array_push($originArr,$question->target30);
-				array_push($originArr,$question->target31);
-				array_push($originArr,$question->target32);
-				array_push($originArr,$question->target33);
-				array_push($originArr,$question->target34);
-				array_push($originArr,$question->target35);
-				array_push($originArr,$question->target36);
-				array_push($originArr,$question->target37);
-				array_push($originArr,$question->target38);
-				array_push($originArr,$question->target39);
-				array_push($originArr,$question->target40);
-				
 				shuffle($sortArray);
 				
-				$returnArr=Array();
-				for($i=0;$i<40;$i++){
-					for($j=0;$j<40;$j++){
-						if(strcmp($sortArray[$i],$originArr[$j])==0){
-							array_push($returnArr, $j);
-							break;
-						}
-					}
-				}
-				$ansArr=Array();
-			    array_push($ansArr,$question->targetAns1);
-				array_push($ansArr,$question->targetAns2);
-				array_push($ansArr,$question->targetAns3);
-				array_push($ansArr,$question->targetAns4);
-				array_push($ansArr,$question->targetAns5);
-				array_push($ansArr,$question->targetAns6);
-				array_push($ansArr,$question->targetAns7);
-				array_push($ansArr,$question->targetAns8);
-				array_push($ansArr,$question->targetAns9);
-				array_push($ansArr,$question->targetAns10);
-				array_push($ansArr,$question->targetAns11);
-				array_push($ansArr,$question->targetAns12);
-				array_push($ansArr,$question->targetAns13);
-				array_push($ansArr,$question->targetAns14);
-				array_push($ansArr,$question->targetAns15);
-				array_push($ansArr,$question->targetAns16);
-				array_push($ansArr,$question->targetAns17);
-				array_push($ansArr,$question->targetAns18);
-				array_push($ansArr,$question->targetAns19);
-				array_push($ansArr,$question->targetAns20);
-				array_push($ansArr,$question->targetAns21);
-				array_push($ansArr,$question->targetAns22);
-				array_push($ansArr,$question->targetAns23);
-				array_push($ansArr,$question->targetAns24);
-				array_push($ansArr,$question->targetAns25);
-				array_push($ansArr,$question->targetAns26);
-				array_push($ansArr,$question->targetAns27);
-				array_push($ansArr,$question->targetAns28);
-				array_push($ansArr,$question->targetAns29);
-				array_push($ansArr,$question->targetAns30);
-				array_push($ansArr,$question->targetAns31);
-				array_push($ansArr,$question->targetAns32);
-				array_push($ansArr,$question->targetAns33);
-				array_push($ansArr,$question->targetAns34);
-				array_push($ansArr,$question->targetAns35);
-				array_push($ansArr,$question->targetAns36);
-				array_push($ansArr,$question->targetAns37);
-				array_push($ansArr,$question->targetAns38);
-				array_push($ansArr,$question->targetAns39);
-				array_push($ansArr,$question->targetAns40);
-
 				$wpdb->update(
 					$wpdb->prefix . "chained_questions",
 					array(
@@ -1300,98 +681,10 @@ class ChainedQuizQuestion {
 					),
 					array('%d')
 				);
-				$wpdb->update(
-					$wpdb->prefix . "chained_questions",
-					array(
-						"ranTargetAns1" => $ansArr[$returnArr[0]],
-						"ranTargetAns2" => $ansArr[$returnArr[1]],
-						"ranTargetAns3" => $ansArr[$returnArr[2]],
-						"ranTargetAns4" => $ansArr[$returnArr[3]],
-						"ranTargetAns5" => $ansArr[$returnArr[4]],
-						"ranTargetAns6" => $ansArr[$returnArr[5]],
-						"ranTargetAns7" => $ansArr[$returnArr[6]],
-						"ranTargetAns8" => $ansArr[$returnArr[7]],
-						"ranTargetAns9" => $ansArr[$returnArr[8]],
-						"ranTargetAns10" => $ansArr[$returnArr[9]],
-						"ranTargetAns11" => $ansArr[$returnArr[10]],
-						"ranTargetAns12" => $ansArr[$returnArr[11]],
-						"ranTargetAns13" => $ansArr[$returnArr[12]],
-						"ranTargetAns14" => $ansArr[$returnArr[13]],
-						"ranTargetAns15" => $ansArr[$returnArr[14]],
-						"ranTargetAns16" => $ansArr[$returnArr[15]],
-						"ranTargetAns17" => $ansArr[$returnArr[16]],
-						"ranTargetAns18" => $ansArr[$returnArr[17]],
-						"ranTargetAns19" => $ansArr[$returnArr[18]],
-						"ranTargetAns20" => $ansArr[$returnArr[19]],
-						"ranTargetAns21" => $ansArr[$returnArr[20]],
-						"ranTargetAns22" => $ansArr[$returnArr[21]],
-						"ranTargetAns23" => $ansArr[$returnArr[22]],
-						"ranTargetAns24" => $ansArr[$returnArr[23]],
-						"ranTargetAns25" => $ansArr[$returnArr[24]],
-						"ranTargetAns26" => $ansArr[$returnArr[25]],
-						"ranTargetAns27" => $ansArr[$returnArr[26]],
-						"ranTargetAns28" => $ansArr[$returnArr[27]],
-						"ranTargetAns29" => $ansArr[$returnArr[28]],
-						"ranTargetAns30" => $ansArr[$returnArr[29]],
-						"ranTargetAns31" => $ansArr[$returnArr[30]],
-						"ranTargetAns32" => $ansArr[$returnArr[31]],
-						"ranTargetAns33" => $ansArr[$returnArr[32]],
-						"ranTargetAns34" => $ansArr[$returnArr[33]],
-						"ranTargetAns35" => $ansArr[$returnArr[34]],
-						"ranTargetAns36" => $ansArr[$returnArr[35]],
-						"ranTargetAns37" => $ansArr[$returnArr[36]],
-						"ranTargetAns38" => $ansArr[$returnArr[37]],
-						"ranTargetAns39" => $ansArr[$returnArr[38]],
-						"ranTargetAns40" => $ansArr[$returnArr[39]]
-					),
-					array('id'=> $question->id),
-					array('%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-						  '%s',
-					),
-					array('%d')
-				);
 			}
 		}
 		//$retrieve_question = $wpdb->get_row( "SELECT * FROM ".CHAINED_QUESTIONS." WHERE id=%d", 6 ); 
-		//6ë²ˆì§¸ id question ê°€ì ¸ì™€ì„œì„œ
+		//6¹øÂ° id question °¡Á®¿Í¼­¼­
 		if($question->target==1){
 			$retrieve_question = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".CHAINED_QUESTIONS." WHERE id=%d", 5));
 		}
@@ -1600,5 +893,19 @@ class ChainedQuizQuestion {
 	  // just in case
 	  return false;		
 	} // end next()
-		
+	function getRandomPosArr($question,$sortedArr,$originArr,$num,$maxNum){
+		$returnArr=Array();
+		for($i=0;$i<$maxNum;$i++){
+			$ranTargetAns=$sortedArr[$i];
+			for($j=0;$j<$maxNum;$j++){
+				if($ranTargetAns=$originArr[$j]){
+					array_push($returnArr, $j);
+					break;
+				}
+				if($j==$maxNum-1) break;
+			}
+			if($i==$maxNum-1)break;
+		}
+		return $returnArr;
+	}
 }
