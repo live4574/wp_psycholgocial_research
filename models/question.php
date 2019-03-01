@@ -103,6 +103,8 @@ class ChainedQuizQuestion {
 				array_push($sortArray,$question->target9);
 				array_push($sortArray,$question->target10);
 				shuffle($sortArray);
+				$originArr=
+				$ansArr=getRandomPosArr($question,$sortArray,$originArr,0,10);
 				
 				$wpdb->update(
 					$wpdb->prefix . "chained_questions",
@@ -117,6 +119,34 @@ class ChainedQuizQuestion {
 						"ranTarget8" => $sortArray[7],
 						"ranTarget9" => $sortArray[8],
 						"ranTarget10" => $sortArray[9]
+					),
+					array('id'=> $question->id),
+					array('%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+						  '%s',
+					),
+					array('%d')
+				);
+				$wpdb->update(
+					$wpdb->prefix . "chained_questions",
+					array(
+						"ranTargetAns1" => $ansArr[0],
+						"ranTargetAns2" => $ansArr[1],
+						"ranTargetAns3" => $ansArr[2],
+						"ranTargetAns4" => $ansArr[3],
+						"ranTargetAns5" => $ansArr[4],
+						"ranTargetAns6" => $ansArr[5],
+						"ranTargetAns7" => $ansArr[6],
+						"ranTargetAns8" => $ansArr[7],
+						"ranTargetAns9" => $ansArr[8],
+						"ranTargetAns10" => $ansArr[9]
 					),
 					array('id'=> $question->id),
 					array('%s',
@@ -452,6 +482,7 @@ class ChainedQuizQuestion {
 				array_push($sortArray,$question->target18);
 				array_push($sortArray,$question->target19);
 				array_push($sortArray,$question->target20);
+
 				shuffle($sortArray);
 				
 				$wpdb->update(
@@ -848,7 +879,16 @@ class ChainedQuizQuestion {
 	  // just in case
 	  return false;		
 	} // end next()
-	function getRandomKeyword($question){
-			
+	function getRandomPosArr($question,$sortedArr,$originArr,$num,$maxNum){
+		$ranTargetAns=$sortedArr[$num];
+		$returnArr=Array();
+		for($j=0;$i<=$maxNum;$i++){
+			for($j=0;$j<=$maxNum;$j++){
+				if($ranTargetAns=$originArr[$j]){
+					array_push($returnArr, $originArr[$j]);
+				}
+			}
+		}
+		return $returnArr;
 	}
 }
