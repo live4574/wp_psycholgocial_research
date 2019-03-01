@@ -81,7 +81,7 @@ class ChainedQuizQuestion {
 		//   only add stripslashes and autop
 		global $wpdb, $user_ID;
 		global $sortArray;
-
+		global $ansArray;
 	    $user_id = empty($user_ID) ? 0 : $user_ID;
 	    
 		$content = stripslashes($question->question);
@@ -90,6 +90,7 @@ class ChainedQuizQuestion {
 		//$sql=${"target".randomCount};
 		//데이터베이스에 타겟값에 따라 랜덤값 각 저장해놓고 각 타겟숫자명에 
 		//그값으로 저장
+		$ansArray=Array();
 		if($question->target==1){
 			if($question->id==5){ 
 				array_push($sortArray,$question->target1);
@@ -102,10 +103,23 @@ class ChainedQuizQuestion {
 				array_push($sortArray,$question->target8);
 				array_push($sortArray,$question->target9);
 				array_push($sortArray,$question->target10);
+				$originArr=$sortArray;
 				shuffle($sortArray);
-				$originArr=
-				$ansArr=getRandomPosArr($question,$sortArray,$originArr,0,10);
-				
+				//sortArray정렬
+				$resultArr=getRandomPosArr($question,$sortArray,$originArr,0,10);
+				//답 배열 어떻게 바꿨는지 알기위한 배열받아옴
+				array_push($ansArray,$question->ranTargetAns1);
+				array_push($ansArray,$question->ranTargetAns2);
+				array_push($ansArray,$question->ranTargetAns3);
+				array_push($ansArray,$question->ranTargetAns4);
+				array_push($ansArray,$question->ranTargetAns5);
+				array_push($ansArray,$question->ranTargetAns6);
+				array_push($ansArray,$question->ranTargetAns7);
+				array_push($ansArray,$question->ranTargetAns8);
+				array_push($ansArray,$question->ranTargetAns9);
+				array_push($ansArray,$question->ranTargetAns10);
+				//ansArray에 원래 정렬 넣어놓고
+
 				$wpdb->update(
 					$wpdb->prefix . "chained_questions",
 					array(
@@ -137,16 +151,16 @@ class ChainedQuizQuestion {
 				$wpdb->update(
 					$wpdb->prefix . "chained_questions",
 					array(
-						"ranTargetAns1" => $ansArr[0],
-						"ranTargetAns2" => $ansArr[1],
-						"ranTargetAns3" => $ansArr[2],
-						"ranTargetAns4" => $ansArr[3],
-						"ranTargetAns5" => $ansArr[4],
-						"ranTargetAns6" => $ansArr[5],
-						"ranTargetAns7" => $ansArr[6],
-						"ranTargetAns8" => $ansArr[7],
-						"ranTargetAns9" => $ansArr[8],
-						"ranTargetAns10" => $ansArr[9]
+						"ranTargetAns1" => $ansArray[$resultArr[0]],
+						"ranTargetAns2" => $ansArray[$resultArr[1]],
+						"ranTargetAns3" => $ansArray[$resultArr[2]],
+						"ranTargetAns4" => $ansArray[$resultArr[3]],
+						"ranTargetAns5" => $ansArray[$resultArr[4]],
+						"ranTargetAns6" => $ansArray[$resultArr[5]],
+						"ranTargetAns7" => $ansArray[$resultArr[6]],
+						"ranTargetAns8" => $ansArray[$resultArr[7]],
+						"ranTargetAns9" => $ansArray[$resultArr[8]],
+						"ranTargetAns10" =>  $ansArray[$resultArr[9]]
 					),
 					array('id'=> $question->id),
 					array('%s',
@@ -880,14 +894,17 @@ class ChainedQuizQuestion {
 	  return false;		
 	} // end next()
 	function getRandomPosArr($question,$sortedArr,$originArr,$num,$maxNum){
-		$ranTargetAns=$sortedArr[$num];
 		$returnArr=Array();
-		for($j=0;$i<=$maxNum;$i++){
-			for($j=0;$j<=$maxNum;$j++){
+		for($i=0;$i<$maxNum;$i++){
+			$ranTargetAns=$sortedArr[$i];
+			for($j=0;$j<$maxNum;$j++){
 				if($ranTargetAns=$originArr[$j]){
-					array_push($returnArr, $originArr[$j]);
+					array_push($returnArr, $j);
+					break;
 				}
+				if($j==$maxNum-1) break;
 			}
+			if($i==$maxNum-1)break;
 		}
 		return $returnArr;
 	}
