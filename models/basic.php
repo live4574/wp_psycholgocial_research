@@ -266,7 +266,8 @@ class ChainedQuiz {
 		  array("name" => 'ranTargetAns37', 'type'=>'TEXT'),
 		  array("name" => 'ranTargetAns38', 'type'=>'TEXT'),
 		  array("name" => 'ranTargetAns39', 'type'=>'TEXT'),
-		  array("name" => 'ranTargetAns40', 'type'=>'TEXT'),	
+		  array("name" => 'ranTargetAns40', 'type'=>'TEXT'),
+		  array("name" => 'answerTime', 'type'=>'INT UNSIGNED NOT NULL DEFAULT 0'),	
 	  ), CHAINED_QUESTIONS);
 	  
 	  chainedquiz_add_db_fields(array(
