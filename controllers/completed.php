@@ -90,17 +90,20 @@ class ChainedQuizCompleted {
 			$csv = "";
 			$rows=array();
 			$rows[]=__("Record ID", 'chained')."\t".__("User name or IP", 'chained')."\t".
-				__("Date / time", 'chained')."\t".__("Points", 'chained')."\t".__("Record ID", 'chained');
+				__("Date / time", 'chained')."\t".__("반응시간",'chained');
 			foreach($records as $record) {
 				$row = $record->id . "\t" . (empty($record->user_id) ? $record->ip : $record->user_nicename) 
 					. "\t" . date_i18n($dateformat.' '.$timeformat, strtotime($record->datetime)) 
-					. "\t" . $record->points ."\t" . stripslashes($record->result_title);
+					. "\t" . $record->details;
+					foreach($record->details as $detail){
+						$row=$row."\t".$answer_text;
+					}
 				$rows[] = $row;		
 			} // end foreach taking
 			$csv=implode($newline,$rows);		
 			
 			$now = gmdate('D, d M Y H:i:s') . ' GMT';	
-			$filename = 'quiz-'.$quiz->id.'-results.csv';	
+			$filename = 'research-'.$quiz->id.'-results.csv';	
 			header('Content-Type: ' . kiboko_get_mime_type());
 			header('Expires: ' . $now);
 			header('Content-Disposition: attachment; filename="'.$filename.'"');
