@@ -11,7 +11,7 @@
 		<?php _e('(Will export TAB delimited file.)', 'chained')?></p>
 		<table class="widefat">
 			<tr><th><a href="admin.php?page=chainedquiz_list&quiz_id=<?php echo $quiz->id?>&ob=tC.id&dir=<?php echo self :: define_dir('tC.id', $ob, $dir);?>"><?php _e('Record ID','chained')?></a></th><th><?php _e('User name or IP','chained')?></th><th><a href="admin.php?page=chainedquiz_list&quiz_id=<?php echo $quiz->id?>&ob=datetime&dir=<?php echo self :: define_dir('datetime', $ob, $dir);?>"><?php _e('Date/time','chained')?></a></th>
-			<th><a href="admin.php?page=chainedquiz_list&quiz_id=<?php echo $quiz->id?>&ob=points&dir=<?php echo self :: define_dir('points', $ob, $dir);?>"><?php _e('Points','chained')?></a></th><th><a href="admin.php?page=chainedquiz_list&quiz_id=<?php echo $quiz->id?>&ob=result_title&dir=<?php echo self :: define_dir('result_title', $ob, $dir);?>"><?php _e('Result','chained')?></a></th>
+			<th><a href="admin.php?page=chainedquiz_list&quiz_id=<?php echo $quiz->id?>&ob=result_title&dir=<?php echo self :: define_dir('result_title', $ob, $dir);?>"><?php _e('Result','chained')?></a></th>
 			<th><?php _e('Delete', 'chained')?></th></tr>
 			<?php foreach($records as $record):
 				$class = ('alternate' == @$class) ? '' : 'alternate';?>
@@ -44,10 +44,10 @@
 			<a href="admin.php?page=chainedquiz_list&quiz_id=<?php echo $quiz->id?>&offset=<?php echo ($offset + 25)?>&ob=<?php echo $ob?>&dir=<?php echo $dir?>"><?php _e('next page', 'chained')?></a> <?php endif;?></p>
 			
 			<form method="post">
-				<p><input type="checkbox" onclick="this.checked ? jQuery('#chainedCleanupButton').show() : jQuery('#chainedCleanupButton').hide();"> <?php _e('Show me a button to cleanup all submitted data on this research.', 'chained')?></p>
+				<p><input type="checkbox" onclick="this.checked ? jQuery('#chainedCleanupButton').show() : jQuery('#chainedCleanupButton').hide();"> <?php _e('데이터 전부 삭제 버튼 보여주기.', 'chained')?></p>
 				
 				<div id="chainedCleanupButton" style="display:none;">
-					<p style="color:red;"><b><?php _e('These operations cannot be undone!', 'chained')?></b></p>
+					<p style="color:red;"><b><?php _e('한번 적용하면 되돌릴수 없습니다!', 'chained')?></b></p>
 					<p><input type="submit" name="cleanup_all" value="<?php _e('Cleanup all data', 'chained')?>"></p>				
 				</div>
 			</form>
