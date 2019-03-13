@@ -12,14 +12,6 @@
 		
 		<p><label><?php _e('Final Output', 'chained')?></label> <?php echo wp_editor($output, 'output')?></p>
 		
-		<p><?php _e('다음과 같은 변수들이 사용될 수 있습니다.', 'chained')?></p>
-		
-		<ul>
-			<li>{{result-title}} <?php _e('- The result (점수) title', 'chained')?></li>
-			<li>{{result-text}} <?php _e('- The result (점수) 텍스트/설명', 'chained')?></li>
-			<li>{{points}} <?php _e('- 모은 점수', 'chained')?></li>
-			<li>{{questions}} <?php _e('- 총 대답한 질문 수', 'chained')?></li>
-		</ul>
 		
 		<p><input type="submit" value="<?php _e('Save Research', 'chained')?>" class="button-primary"></p>
 		<input type="hidden" name="ok" value="1">

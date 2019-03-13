@@ -14,11 +14,13 @@
 				<?php echo $_question->display_choices($question, $choices);?>
 		</div>
 		
+		<?php if($question->qtype!='button'){?>
 		<div class="chained-quiz-action">
 			<p align="right">
 				<input type="button" id="chained-quiz-action-<?php echo $quiz->id?>" value="<?php _e('확인', 'chained')?>" onclick="chainedQuiz.goon(<?php echo $quiz->id?>, '<?php echo admin_url('admin-ajax.php')?>');isRight($question);">
 		    </p>
 		</div>
+		<?php }?>
 	</div>
 	<input type="hidden" name="question_id" value="<?php echo $question->id?>">
 	<input type="hidden" name="quiz_id" value="<?php echo $quiz->id?>">
