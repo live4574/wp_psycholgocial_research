@@ -1583,13 +1583,7 @@ class ChainedQuizQuestion {
 				WHERE quiz_id=%d AND sort_order > %d ORDER BY sort_order LIMIT 1", $question->quiz_id, $question->sort_order));
 			return $question;	
 		}
-		if($key =='time_next'){
-			sleep(2); //when select wrong choice wait 2seconds. to show x_grey
-			// select next question by sort_order
-			$question = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".CHAINED_QUESTIONS." 
-				WHERE quiz_id=%d AND sort_order > %d ORDER BY sort_order LIMIT 1", $question->quiz_id, $question->sort_order));
-			return $question;		
-		}
+	
 	
 	  if(is_numeric($key)) {
 	  	$question = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".CHAINED_QUESTIONS." 
