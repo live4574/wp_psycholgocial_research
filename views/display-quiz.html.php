@@ -13,11 +13,11 @@
 		<div class="chained-quiz-choices">
 				<?php echo $_question->display_choices($question, $choices);?>
 		</div>
-		
+
 		<?php if($question->qtype!='button'){?>
 		<div class="chained-quiz-action">
 			<p align="right">
-				<input type="button" id="chained-quiz-action-<?php echo $quiz->id?>" value="<?php _e('확인', 'chained')?>" onclick="chainedQuiz.goon(<?php echo $quiz->id?>, '<?php echo admin_url('admin-ajax.php')?>');isRight($question);">
+				<input type="button" id="chained-quiz-action-<?php echo $quiz->id?>" value="<?php _e('확인', 'chained')?>" onclick="chainedQuiz.goon(<?php echo $quiz->id?>, '<?php echo admin_url('admin-ajax.php')?>');">
 		    </p>
 		</div>
 		<?php }?>
@@ -34,10 +34,8 @@
 jQuery(function(){
 	chainedQuiz.initializeQuestion(<?php echo $quiz->id?>);	
 });
-function isRight($question){
-	if($question->id==6){
-		document.getElementById('greyX').style.display='block';
-		sleep(3);
-	}
+function showImage(){
+	 document.getElementById("imageX").style.display="block";
+	 sleep(0.3);
 }
 </script><?php endif;?>
