@@ -1504,7 +1504,18 @@ class ChainedQuizQuestion {
 							text-align:center;
 						}
      					</style>
-     					<div class='chained-quiz-choice'><label class='chained-quiz-label'><input class='chained-quiz-frontend chained-quiz-$type' type='$type' style= 'width:80pt; height:80pt; border-radius: 13em/8em' name='$name' value='".$choice_text."' $autocontinue>$choice_text</label></div>";
+     					<div class='chained-quiz-choice'><label class='chained-quiz-label'><input class='chained-quiz-frontend chained-quiz-$type' type='button' style= 'width:80pt; height:80pt; border-radius: 13em/8em' name='$name' value='".$choice->id."' $autocontinue>$choice_text</label></div>
+     					<script type=\"text/javascript\">
+     					function postdata(link) {
+							$.ajax({
+							    url: link,
+							    type: \"POST\",
+							    data: {
+							        date:$(link).val();
+							    }
+							})
+							}
+     					</script>";
 					}
 					else{
 						$output .= "<div class='chained-quiz-choice'><label class='chained-quiz-label'><input class='chained-quiz-frontend chained-quiz-$type' type='$type' name='$name' value='".$choice->id."' $autocontinue>$choice_text</label></div>";	
@@ -1549,10 +1560,14 @@ class ChainedQuizQuestion {
 			}
 		} 
 		else {
-			if($question->qtype == 'text' ||$question->qtype=='none'||$question->qtype=='button') {
+			if($question->qtype == 'text' ||$question->qtype=='none') {
 					$answer = $wpdb->get_var($wpdb->prepare("SELECT id FROM ".CHAINED_CHOICES."
 	  		  WHERE question_id=%d AND choice LIKE %s", $question->id, $answer));				
 			} 
+			if($question->qtype=='button'){
+				//$answer=<script>document.answer.value</script>;
+			}
+			echo $answer;
 			if(!empty($answer)) $answer_ids[] = $answer; // radio buttons and text areas
 		} 
 		
@@ -1594,5 +1609,5 @@ class ChainedQuizQuestion {
 	  // just in case
 	  return false;		
 	} // end next()
-		
+
 }
