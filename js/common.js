@@ -11,7 +11,7 @@ chainedQuiz.goon = function(quizID, url) {
 	// is any checked?
 	var anyChecked = false;
 	jQuery('#chained-quiz-form-' + quizID + ' .' + chkClass).each(function(){
-		if(this.checked) anyChecked = true; 	
+		if(this.checked) anyChecked = true;
 	});
 	if(qType=='none'&&jQuery('#chained-quiz-form-' + quizID + ' textarea[name=answer]').val() == ''){
 		//jQuery('#chained-quiz-form-' + quizID + ' textarea[name=answer]').val() == "nonetype"

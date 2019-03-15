@@ -6,7 +6,7 @@
 		| <a href="admin.php?page=chained_quizzes&action=edit&id=<?php echo $quiz->id?>"><?php _e('Edit This Research', 'chained')?></a>
 	</p>
 	
-	<form method="post" onsubmit="return chainedQuizValidate(this);">
+	<form method="post"">
 		<p><label><?php _e('Question title', 'chained')?></label> <input type="text" name="title" size="40" value="<?php echo @$question->title?>"></p>
 		<p><label><?php _e('Question contents', 'chained')?></label> <?php echo wp_editor(stripslashes(@$question->question), 'question')?></p>
 		<p><label><?php _e('Question type:', 'chained')?></label> <select name="qtype" onchange="(this.value == 'radio' ||this.value=='button') ? jQuery('#chainedAutoContinue').show() : jQuery('#chainedAutoContinue').hide();">
