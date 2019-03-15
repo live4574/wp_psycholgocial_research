@@ -13,7 +13,7 @@
 		<div class="chained-quiz-choices">
 				<?php echo $_question->display_choices($question, $choices);?>
 		</div>
-
+	
 		<?php if($question->qtype!='button'){?>
 		<div class="chained-quiz-action">
 			<p align="right">
@@ -32,11 +32,18 @@
 <?php if(!empty($first_load)):?>
 </div>
 <script type="text/javascript" >
+window.onload = function(){
+    document.getElementsByName("answer").onclick = function(){
+        document.getElementsByName("postvar")[0].value = this.value;
+        document.forms.chained-quiz-form-<?php echo $quiz->id?>.submit();
+    }
+};
 jQuery(function(){
 	chainedQuiz.initializeQuestion(<?php echo $quiz->id?>);	
 });
 function showImage(){
 	 document.getElementById("imageX").style.display="block";
 	 sleep(0.3);
-}
+};
+
 </script><?php endif;?>

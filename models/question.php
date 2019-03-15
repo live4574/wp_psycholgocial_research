@@ -1565,7 +1565,9 @@ class ChainedQuizQuestion {
 	  		  WHERE question_id=%d AND choice LIKE %s", $question->id, $answer));				
 			} 
 			if($question->qtype=='button'){
-				//$answer=<script>document.answer.value</script>;
+				if(isset($_GET['answer'])){
+    				$answer=$_GET['answer'];
+				}
 			}
 			echo $answer;
 			if(!empty($answer)) $answer_ids[] = $answer; // radio buttons and text areas
