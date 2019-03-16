@@ -60,7 +60,7 @@ function updateBtn0() {
             type: "POST", // POST형식으로 폼 전송
             url: "quizzes.php", // 목적지
             timeout: 10000,
-            data: ({comment: _comment, mid: _mid}),
+            data: ({postvar: postValue}),
             cache: false,
             dataType: "text",
             error: function(xhr, textStatus, errorThrown) { // 전송 실패
@@ -85,7 +85,7 @@ function updateBtn1() {
             type: "POST", // POST형식으로 폼 전송
             url: "quizzes.php", // 목적지
             timeout: 10000,
-            data: ({comment: _comment, mid: _mid}),
+            data: (	{comment: _comment, mid: _mid}),
             cache: false,
             dataType: "text",
             error: function(xhr, textStatus, errorThrown) { // 전송 실패
