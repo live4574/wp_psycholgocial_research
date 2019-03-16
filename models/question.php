@@ -1516,19 +1516,13 @@ class ChainedQuizQuestion {
 						  if (btns[0].value == 'L') {
 						    var postValue='L';
 						    document.getElementById('postvar').value='L';
-						   
 						  } 
-						  console.log(\"$c\",btns[0].value);
-						  console.log(\"$c\",document.getElementById(\"postvar\").value);
 						}
 						function updateBtn1() {
 						  if (btns[1].value == 'R') {
 						    var postValue='R';
 						    document.getElementById(\"postvar\").value='R';
-						 
-						  } 
-						  console.log(\"$c\",btns[1].value);
-						  console.log(\"$c\",document.getElementById('postvar').value);
+        				  } 
 						}
 						</script>";
 					}
@@ -1580,9 +1574,8 @@ class ChainedQuizQuestion {
 	  		  WHERE question_id=%d AND choice LIKE %s", $question->id, $answer));				
 			} 
 			if($question->qtype=='button'){
-				if(isset($_GET['answer'])){
-    				$answer=$_GET['answer'];
-				}
+				  $answer=$_POST["postvar"];
+				//$answer="<script>document.writeln(postValue);</script>";
 			}
 			echo $answer;
 			if(!empty($answer)) $answer_ids[] = $answer; // radio buttons and text areas

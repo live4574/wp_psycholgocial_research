@@ -1,5 +1,5 @@
 <?php if(!empty($first_load)):?><div class="chained-quiz" id="chained-quiz-div-<?php echo $quiz->id?>"><?php endif;?>
-<form method="post" id="chained-quiz-form-<?php echo $quiz->id?>">
+<form method="post" id="chained-quiz-form-<?php echo $quiz->id?>" name="myform">
 	<div class="chained-quiz-area" id="chained-quiz-wrap-<?php echo $quiz->id?>">
 		<?php if(!empty($quiz->email_user) and !is_user_logged_in()):?>
 			<div class="chained-quiz-email">
