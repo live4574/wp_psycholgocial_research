@@ -6,6 +6,7 @@
 				<p><label><?php _e('Your email address:', 'chained');?></label> <input type="text" name="chained_email" value="<?php echo @$_POST['chained_email']?>"></p>
 			</div>
 		<?php endif;?>
+	
 		<div class="chained-quiz-question">
 			<?php echo $_question->display_question($question);?>
 		</div>
@@ -26,17 +27,14 @@
 	<input type="hidden" name="question_id" value="<?php echo $question->id?>">
 	<input type="hidden" name="quiz_id" value="<?php echo $quiz->id?>">
 	<input type="hidden" name="question_type" value="<?php echo $question->qtype?>">
-	<input type="hidden" id="postvar" value="" />
 	<input type="hidden" name="points" value="0">
+	<input type="hidden" name= "postvar" id="postvar" value="<?php echo $question->choice?>">
+	
 </form>
 <?php if(!empty($first_load)):?>
 </div>
 <script type="text/javascript" >
-window.onload = function(){
-    document.getElementsByName("answer").onclick = function(){
-        document.getElementsById("postvar").value=postValue;
-    }
-};
+
 jQuery(function(){
 	chainedQuiz.initializeQuestion(<?php echo $quiz->id?>);	
 });

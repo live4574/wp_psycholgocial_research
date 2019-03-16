@@ -1505,8 +1505,10 @@ class ChainedQuizQuestion {
 						}
      					</style>
      					<div class='chained-quiz-choice'><label class='chained-quiz-label'><input class='chained-quiz-frontend chained-quiz-$type' type='button' style= 'width:80pt; height:80pt; border-radius: 13em/8em' name='$name' value='".$choice_text."' $autocontinue></label></div>
+     					<script src=\"http://code.jquery.com/jquery-2.1.4.min.js\"></script>
      					<script type=\"text/javascript\">
 						var btns = document.querySelectorAll('input');
+						console.log(btns);
 						btns[0].addEventListener('click', updateBtn0);
 						btns[1].addEventListener('click', updateBtn1);
 						
@@ -1514,14 +1516,16 @@ class ChainedQuizQuestion {
 						  if (btns[0].value == 'L') {
 						    var postValue='L';
 						    document.getElementById('postvar').value='L';
+						   
 						  } 
 						  console.log(\"$c\",btns[0].value);
-						  console.log(\"$c\",document.getElementById('postvar').value);
+						  console.log(\"$c\",document.getElementById(\"postvar\").value);
 						}
 						function updateBtn1() {
 						  if (btns[1].value == 'R') {
 						    var postValue='R';
-						    document.getElementById('postvar').value='R';
+						    document.getElementById(\"postvar\").value='R';
+						 
 						  } 
 						  console.log(\"$c\",btns[1].value);
 						  console.log(\"$c\",document.getElementById('postvar').value);
