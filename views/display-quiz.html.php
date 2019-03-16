@@ -35,7 +35,8 @@
 window.onload = function(){
     document.getElementsByName("answer").onclick = function(){
         document.getElementsByName("postvar")[0].value = this.value;
-        document.forms.chained-quiz-form-<?php echo $quiz->id?>.submit();
+        var docName= chained-quiz-form-<?php echo $quiz->id?>;
+        document.forms.docName.submit();
     }
 };
 jQuery(function(){

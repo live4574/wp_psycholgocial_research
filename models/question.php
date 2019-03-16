@@ -1504,18 +1504,25 @@ class ChainedQuizQuestion {
 							text-align:center;
 						}
      					</style>
-     					<div class='chained-quiz-choice'><label class='chained-quiz-label'><input class='chained-quiz-frontend chained-quiz-$type' type='button' style= 'width:80pt; height:80pt; border-radius: 13em/8em' name='$name' value='".$choice->id."' $autocontinue>$choice_text</label></div>
+     					<div class='chained-quiz-choice'><label class='chained-quiz-label'><input class='chained-quiz-frontend chained-quiz-$type' type='button' style= 'width:80pt; height:80pt; border-radius: 13em/8em' name='$name' value='".$choice_text."' $autocontinue></label></div>
      					<script type=\"text/javascript\">
-     					function postdata(link) {
-							$.ajax({
-							    url: link,
-							    type: \"POST\",
-							    data: {
-							        date:$(link).val();
-							    }
-							})
-							}
-     					</script>";
+						var btns = document.querySelectorAll('input');
+						btns[0].addEventListener('click', updateBtn0);
+						btns[1].addEventListener('click', updateBtn1);
+						
+						function updateBtn0() {
+						  if (btns[0].value == 'L') {
+						    var postValue='L';
+						  } 
+						  console.log(\"$c\",btns[0].value);
+						}
+						function updateBtn1() {
+						  if (btns[1].value == 'R') {
+						    var postValue='R';
+						  } 
+						  console.log(\"$c\",btns[1].value);
+						}
+						</script>";
 					}
 					else{
 						$output .= "<div class='chained-quiz-choice'><label class='chained-quiz-label'><input class='chained-quiz-frontend chained-quiz-$type' type='$type' name='$name' value='".$choice->id."' $autocontinue>$choice_text</label></div>";	
