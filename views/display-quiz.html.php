@@ -33,9 +33,6 @@
 </form>
 <?php if(!empty($first_load)):?>
 </div>
-
-<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
-<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script type="text/javascript" >
 var btns = document.querySelectorAll('input');
 	//console.log(btns);
@@ -59,7 +56,18 @@ function updateBtn0() {
   if (btns[0].value == 'L') {
     var postValue='L';
     document.getElementById('postvar').value='L';
+    <?php $question->choice='L';
+      $wpdb->query($wpdb->prepare("INSERT INTO ".CHAINED_USER_ANSWERS." SET quiz_id=%d, completion_id=%d, question_id=%d, answer=%s, points=%f", $quiz->id, $_SESSION['chained_completion_id'], $question->id, $question->choice, $points));
+     $wpdb->update(
+					$wpdb->prefix . "chained_questions",
+					array("choice"=>$question->choice),
+					array('id'=> $question->id),
+					array('%s',),
+					array('%d')
+				);
+      ?>
     console.log(postValue);
+    document.getElementById('postvar').value='L';
   } 
 }
 function updateBtn1() {
@@ -71,7 +79,18 @@ function updateBtn1() {
   if (btns[1].value == 'R') {
     var postValue='R';
     document.getElementById("postvar").value='R';
+    <?php $question->choice='R';
+    $wpdb->query($wpdb->prepare("INSERT INTO ".CHAINED_USER_ANSWERS." SET quiz_id=%d, completion_id=%d, question_id=%d, answer=%s, points=%f",$quiz->id, $_SESSION['chained_completion_id'], $question->id, $quesetion->choice, $points));
+    $wpdb->update(
+					$wpdb->prefix . "chained_questions",
+					array("choice"=>$question->choice),
+					array('id'=> $question->id),
+					array('%s',),
+					array('%d')
+				);
+    ?>
     console.log(postValue);
+    document.getElementById('postvar').value='R';
   } 
 }
 </script><?php endif;?>
