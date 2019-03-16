@@ -135,7 +135,7 @@ class ChainedQuizQuizzes {
 		// prepare $answer var		
 		$answer = ($question->qtype == 'checkbox') ? @$_POST['answers'] : @$_POST['answer'];
 		if($question->qtype=='button'){
-			$answer=$question->choice;
+			$answer=$_POST('postvar');
 			//$answer="<script>document.writeln(postValue);</script>";
 		}
 		echo ($answer);

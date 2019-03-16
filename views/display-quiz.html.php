@@ -33,6 +33,9 @@
 </form>
 <?php if(!empty($first_load)):?>
 </div>
+
+<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script type="text/javascript" >
 var btns = document.querySelectorAll('input');
 	//console.log(btns);
@@ -56,20 +59,7 @@ function updateBtn0() {
   if (btns[0].value == 'L') {
     var postValue='L';
     document.getElementById('postvar').value='L';
-    $.ajax({
-            type: "POST", // POST형식으로 폼 전송
-            url: "quizzes.php", // 목적지
-            timeout: 10000,
-            data: ({postvar: postValue}),
-            cache: false,
-            dataType: "text",
-            error: function(xhr, textStatus, errorThrown) { // 전송 실패
-                alert("전송에 실패했습니다.");
-            }
-        }); 
-
     console.log(postValue);
-    document.getElementById('postvar').value='L';
   } 
 }
 function updateBtn1() {
@@ -81,19 +71,7 @@ function updateBtn1() {
   if (btns[1].value == 'R') {
     var postValue='R';
     document.getElementById("postvar").value='R';
-    $.ajax({
-            type: "POST", // POST형식으로 폼 전송
-            url: "quizzes.php", // 목적지
-            timeout: 10000,
-            data: (	{comment: _comment, mid: _mid}),
-            cache: false,
-            dataType: "text",
-            error: function(xhr, textStatus, errorThrown) { // 전송 실패
-                alert("전송에 실패했습니다.");
-            }
-        }); 
     console.log(postValue);
-    document.getElementById('postvar').value='R';
   } 
 }
 </script><?php endif;?>
