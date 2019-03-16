@@ -1513,14 +1513,18 @@ class ChainedQuizQuestion {
 						function updateBtn0() {
 						  if (btns[0].value == 'L') {
 						    var postValue='L';
+						    document.getElementById('postvar').value='L';
 						  } 
 						  console.log(\"$c\",btns[0].value);
+						  console.log(\"$c\",document.getElementById('postvar').value);
 						}
 						function updateBtn1() {
 						  if (btns[1].value == 'R') {
 						    var postValue='R';
+						    document.getElementById('postvar').value='R';
 						  } 
 						  console.log(\"$c\",btns[1].value);
+						  console.log(\"$c\",document.getElementById('postvar').value);
 						}
 						</script>";
 					}

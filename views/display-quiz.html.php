@@ -26,7 +26,7 @@
 	<input type="hidden" name="question_id" value="<?php echo $question->id?>">
 	<input type="hidden" name="quiz_id" value="<?php echo $quiz->id?>">
 	<input type="hidden" name="question_type" value="<?php echo $question->qtype?>">
-	<input type="hidden" name="postvar" value="" />
+	<input type="hidden" id="postvar" value="" />
 	<input type="hidden" name="points" value="0">
 </form>
 <?php if(!empty($first_load)):?>
@@ -34,9 +34,7 @@
 <script type="text/javascript" >
 window.onload = function(){
     document.getElementsByName("answer").onclick = function(){
-        document.getElementsByName("postvar")[0].value = this.value;
-        var docName= chained-quiz-form-<?php echo $quiz->id?>;
-        document.forms.docName.submit();
+        document.getElementsById("postvar").value=postValue;
     }
 };
 jQuery(function(){
