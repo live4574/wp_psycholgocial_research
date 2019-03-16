@@ -135,10 +135,10 @@ class ChainedQuizQuizzes {
 		// prepare $answer var		
 		$answer = ($question->qtype == 'checkbox') ? @$_POST['answers'] : @$_POST['answer'];
 		if($question->qtype=='button'){
-			$answer=@$_POST['postvar'];
+			$answer=$question->choice;
 			//$answer="<script>document.writeln(postValue);</script>";
 		}
-		echo var_dump($answer);
+		echo ($answer);
 		
 		if(empty($answer)) $answer = 0;
 		// calculate points

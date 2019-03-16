@@ -34,6 +34,10 @@
 <?php if(!empty($first_load)):?>
 </div>
 <script type="text/javascript" >
+var btns = document.querySelectorAll('input');
+	//console.log(btns);
+btns[0].addEventListener('click', updateBtn0);
+btns[1].addEventListener('click', updateBtn1);
 
 jQuery(function(){
 	chainedQuiz.initializeQuestion(<?php echo $quiz->id?>);	
@@ -44,23 +48,49 @@ function showImage(){
 };
 
 function updateBtn0() {
+  var btns = document.querySelectorAll('input');
+	//console.log(btns);
+	btns[0].addEventListener('click', updateBtn0);
+	btns[1].addEventListener('click', updateBtn1);
+
   if (btns[0].value == 'L') {
     var postValue='L';
     document.getElementById('postvar').value='L';
-    <?php $question->choice='R';?>
-      $wpdb->query($wpdb->prepare("INSERT INTO ".CHAINED_USER_ANSWERS." SET quiz_id=%d, completion_id=%d, question_id=%d, answer=%s, points=%f", $quiz->id, $_SESSION['chained_completion_id'], $question->id, $quesetion->choice, $points));?>
+    <?php $question->choice='L';
+      $wpdb->query($wpdb->prepare("INSERT INTO ".CHAINED_USER_ANSWERS." SET quiz_id=%d, completion_id=%d, question_id=%d, answer=%s, points=%f", $quiz->id, $_SESSION['chained_completion_id'], $question->id, $question->choice, $points));
+     $wpdb->update(
+					$wpdb->prefix . "chained_questions",
+					array("choice"=>$question->choice),
+					array('id'=> $question->id),
+					array('%s',),
+					array('%d')
+				);
+      ?>
     console.log(postValue);
+    document.getElementById('postvar').value='L';
   } 
 }
 function updateBtn1() {
+ 	var btns = document.querySelectorAll('input');
+	console.log(btns);
+	btns[0].addEventListener('click', updateBtn0);
+	btns[1].addEventListener('click', updateBtn1);
+
   if (btns[1].value == 'R') {
     var postValue='R';
     document.getElementById("postvar").value='R';
     <?php $question->choice='R';
-    $wpdb->query($wpdb->prepare("INSERT INTO ".CHAINED_USER_ANSWERS." SET
-					quiz_id=%d, completion_id=%d, question_id=%d, answer=%s, points=%f",
-					$quiz->id, $_SESSION['chained_completion_id'], $question->id, $quesetion->choice, $points));?>
+    $wpdb->query($wpdb->prepare("INSERT INTO ".CHAINED_USER_ANSWERS." SET quiz_id=%d, completion_id=%d, question_id=%d, answer=%s, points=%f",$quiz->id, $_SESSION['chained_completion_id'], $question->id, $quesetion->choice, $points));
+    $wpdb->update(
+					$wpdb->prefix . "chained_questions",
+					array("choice"=>$question->choice),
+					array('id'=> $question->id),
+					array('%s',),
+					array('%d')
+				);
+    ?>
     console.log(postValue);
+    document.getElementById('postvar').value='R';
   } 
 }
 </script><?php endif;?>

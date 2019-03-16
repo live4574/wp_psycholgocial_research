@@ -1507,10 +1507,6 @@ class ChainedQuizQuestion {
      					<div class='chained-quiz-choice'><label class='chained-quiz-label'><input class='chained-quiz-frontend chained-quiz-$type' type='button' style= 'width:80pt; height:80pt; border-radius: 13em/8em' name='$name' value='".$choice_text."' $autocontinue></label></div>
      					<script src=\"http://code.jquery.com/jquery-2.1.4.min.js\"></script>
      					<script type=\"text/javascript\">
-						var btns = document.querySelectorAll('input');
-						console.log(btns);
-						btns[0].addEventListener('click', updateBtn0);
-						btns[1].addEventListener('click', updateBtn1);
 						
 						</script>";
 					}
@@ -1599,7 +1595,6 @@ class ChainedQuizQuestion {
 				WHERE quiz_id=%d AND sort_order > %d ORDER BY sort_order LIMIT 1", $question->quiz_id, $question->sort_order));
 			return $question;	
 		}
-	
 	
 	  if(is_numeric($key)) {
 	  	$question = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".CHAINED_QUESTIONS." 
