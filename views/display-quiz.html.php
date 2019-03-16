@@ -56,16 +56,18 @@ function updateBtn0() {
   if (btns[0].value == 'L') {
     var postValue='L';
     document.getElementById('postvar').value='L';
-    <?php $question->choice='L';
-      $wpdb->query($wpdb->prepare("INSERT INTO ".CHAINED_USER_ANSWERS." SET quiz_id=%d, completion_id=%d, question_id=%d, answer=%s, points=%f", $quiz->id, $_SESSION['chained_completion_id'], $question->id, $question->choice, $points));
-     $wpdb->update(
-					$wpdb->prefix . "chained_questions",
-					array("choice"=>$question->choice),
-					array('id'=> $question->id),
-					array('%s',),
-					array('%d')
-				);
-      ?>
+    $.ajax({
+            type: "POST", // POST형식으로 폼 전송
+            url: "quizzes.php", // 목적지
+            timeout: 10000,
+            data: ({comment: _comment, mid: _mid}),
+            cache: false,
+            dataType: "text",
+            error: function(xhr, textStatus, errorThrown) { // 전송 실패
+                alert("전송에 실패했습니다.");
+            }
+        }); 
+
     console.log(postValue);
     document.getElementById('postvar').value='L';
   } 
@@ -79,16 +81,17 @@ function updateBtn1() {
   if (btns[1].value == 'R') {
     var postValue='R';
     document.getElementById("postvar").value='R';
-    <?php $question->choice='R';
-    $wpdb->query($wpdb->prepare("INSERT INTO ".CHAINED_USER_ANSWERS." SET quiz_id=%d, completion_id=%d, question_id=%d, answer=%s, points=%f",$quiz->id, $_SESSION['chained_completion_id'], $question->id, $quesetion->choice, $points));
-    $wpdb->update(
-					$wpdb->prefix . "chained_questions",
-					array("choice"=>$question->choice),
-					array('id'=> $question->id),
-					array('%s',),
-					array('%d')
-				);
-    ?>
+    $.ajax({
+            type: "POST", // POST형식으로 폼 전송
+            url: "quizzes.php", // 목적지
+            timeout: 10000,
+            data: ({comment: _comment, mid: _mid}),
+            cache: false,
+            dataType: "text",
+            error: function(xhr, textStatus, errorThrown) { // 전송 실패
+                alert("전송에 실패했습니다.");
+            }
+        }); 
     console.log(postValue);
     document.getElementById('postvar').value='R';
   } 
