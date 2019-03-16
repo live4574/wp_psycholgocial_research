@@ -1512,20 +1512,11 @@ class ChainedQuizQuestion {
 						btns[0].addEventListener('click', updateBtn0);
 						btns[1].addEventListener('click', updateBtn1);
 						
-						function updateBtn0() {
-						  if (btns[0].value == 'L') {
-						    var postValue='L';
-						    document.getElementById('postvar').value='L';
-						  } 
-						}
-						function updateBtn1() {
-						  if (btns[1].value == 'R') {
-						    var postValue='R';
-						    document.getElementById(\"postvar\").value='R';
-        				  } 
-						}
 						</script>";
 					}
+		
+
+
 					else{
 						$output .= "<div class='chained-quiz-choice'><label class='chained-quiz-label'><input class='chained-quiz-frontend chained-quiz-$type' type='$type' name='$name' value='".$choice->id."' $autocontinue>$choice_text</label></div>";	
 					}
