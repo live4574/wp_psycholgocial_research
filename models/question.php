@@ -1561,7 +1561,7 @@ class ChainedQuizQuestion {
 	  		  WHERE question_id=%d AND choice LIKE %s", $question->id, $answer));				
 			} 
 			if($question->qtype=='button'){
-				  $answer=$_POST["postvar"];
+				  $answer=$_POST["postv"];
 				//$answer="<script>document.writeln(postValue);</script>";
 			}
 			echo $answer;
